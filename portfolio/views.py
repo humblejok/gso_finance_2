@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from rest_framework import viewsets
+from portfolio.models import Portfolio, Account
+from portfolio.serializers import PortfolioSerializer, AccountSerializer
 
-# Create your views here.
+
+class AccountViewSet(viewsets.ModelViewSet):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+
+class PortfolioViewSet(viewsets.ModelViewSet):
+    queryset = Portfolio.objects.all()
+    serializer_class = PortfolioSerializer

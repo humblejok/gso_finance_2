@@ -5,13 +5,13 @@ from common.models import Company, Currency
 from django.contrib.postgres.fields.jsonb import JSONField
 from gso_finance_2.settings import PROVIDERS_DIR, PROVIDERS_COMPLETED_DIR_NAME
 from os.path import isdir
-from security.models import SecurityType
+from security.models import SecurityType, Security
 
 import csv
 import os
 import logging
-
 import shutil
+from portfolio.models import Portfolio
 
 
 LOGGER = logging.getLogger(__name__)
@@ -88,3 +88,18 @@ class ExternalSecurity(models.Model):
 class ExternalSecurityPrice(models.Model):
     security = models.ForeignKey(ExternalSecurity, related_name='external_security_pricing')
     pricing_history = HStoreField(null=True, blank=True)
+    
+class PortfolioHolding(models.Model):
+    external_security = models.ForeignKey(ExternalSecurity, related_name='external_holding')
+    external_price = models.FloatField(default=0.0)
+    external_quantity = models.FloatField(default=0.0)
+    internal_security = models.ForeignKey(Security, related_name='internal_holding')
+    internal_price = models.FloatField(default=0.0)
+    internal_quantity = models.FloatField(default=0.0)
+
+class ExternalPortfolioHoldings(models.Model):
+    portfolio = models.ForeignKey(Portfolio, related_name='portfolio_holdings')
+    application_date = models.DateField()
+    holdings = models.ManyToManyField(PortfolioHolding, related_name='portfolio_holdings_consolidation')
+    
+    
