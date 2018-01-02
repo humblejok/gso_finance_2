@@ -1,0 +1,64 @@
+model;default_name;creation_date;base_currency;addresses;emails;phones;members;subsidiaries;active
+common.models.Company;ABN AMRO Luxembourg;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Ansbacher Bahamas;2015-01-01;;[];[];[];[];[];True
+common.models.Company;BANK JULIUS BAER & Co. Ltd;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Bank Julius Baër & Co. Ltd;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Bank Pictet & Cie (Asia) Ltd.;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Bank Sarasin-Rabo (Asia) Limited;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Banque Cantonale de Genève Private Banking;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Banque Havilland;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Banque Héritage;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Banque Internationale Luxembourg;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Banque J. Safra Sarasin SA;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Banque Palatine;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Banque Piguet & Cie S.A.;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Banque Privée Edmond de Rothschild;2015-01-01;;[];[];[];[];[];True
+common.models.Company;BARCLAYS BANK (SUISSE) SA;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Bloomberg;;;[];[];[];[];[];True
+common.models.Company;Bloomberg LP;1981-01-01;;[];[];[];"[{""person"": ""DE JONCKHEERE St\u00e9phane"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_BDO""}]";[];True
+common.models.Company;BNP Paribas (Suisse) S.A.;2015-01-01;;[];[];[];[];[];True
+common.models.Company;BridPort;2015-01-01;;[];[];[];[];[];True
+common.models.Company;CIM Bank;2015-01-01;;[];[];[];[];[];True
+common.models.Company;CITCO Fund Services (Ireland) Lmited;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Cornèr Banque S.A.;2015-01-01;;[];"[{""model"": ""common.models.Email"", ""address_type"": ""EMAIL_CONTACT"", ""email_address"": ""akeller@sequoia-ge.com""}]";"[{""phone_number"": ""0"", ""model"": ""common.models.Phone"", ""line_type"": ""PHONE_LAND_CONTACT""}]";[];[];True
+common.models.Company;Crédit Agricole (Suisse) SA;2015-01-01;CHF;[];[];[];[];[];True
+common.models.Company;Crédit Suisse AG;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Deutsche Bank (Suisse) SA;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Deutsche Bank London Branch;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Emirates National Bank of Dubai;2015-01-01;;[];"[{""model"": ""common.models.Email"", ""address_type"": ""EMAIL_CONTACT"", ""email_address"": ""finance@sequoia-ge.com""}]";"[{""phone_number"": ""+41 22 319 33 42"", ""model"": ""common.models.Phone"", ""line_type"": ""PHONE_LAND_CONTACT""}]";[];[];True
+common.models.Company;EXONA;2013-01-01;;[];[];[];[];[];True
+common.models.Company;Fagaras SA;2015-01-01;;[];"[{""model"": ""common.models.Email"", ""address_type"": ""EMAIL_CONTACT"", ""email_address"": ""mca""}]";"[{""phone_number"": ""+41 22 354 89 84"", ""model"": ""common.models.Phone"", ""line_type"": ""PHONE_LAND_CONTACT""}]";[];[];True
+common.models.Company;FinaLE Engine;2014-01-01;;[];[];[];[];[];True
+common.models.Company;FinanCE DEMO Company;2015-01-01;CHF;[];"[{""model"": ""common.models.Email"", ""address_type"": ""EMAIL_CONTACT"", ""email_address"": ""finance@sequoia-ge.com""}]";"[{""phone_number"": ""+41 22 319 33 33"", ""model"": ""common.models.Phone"", ""line_type"": ""PHONE_LAND_CONTACT""}]";"[{""person"": ""PM Demo"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_PM""}, {""person"": ""CRO Demo"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_CRO""}, {""person"": ""RM Demo"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_RM""}]";[];True
+common.models.Company;Geneva Swiss Bank;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Goldman Sachs;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Gonet & Cie, Banquiers privés;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Greenwich Dealing;2015-01-01;CHF;"[{""city"": ""GENEVA"", ""line_2"": """", ""country"": ""CH"", ""line_1"": ""Rue de la Tour Maitresse, 10"", ""model"": ""common.models.Address"", ""address_type"": ""ADR_MAIN_OFFICE"", ""zip_code"": ""1204""}]";"[{""model"": ""common.models.Email"", ""address_type"": ""EMAIL_CONTACT"", ""email_address"": ""bernard.couvreur@sequoia-ge.com""}, {""model"": ""common.models.Email"", ""address_type"": ""EMAIL_TECHNICAL"", ""email_address"": ""sdejonckheere@sequoia-ge.com""}]";"[{""phone_number"": ""+41 22 317 40 92"", ""model"": ""common.models.Phone"", ""line_type"": ""PHONE_LAND_CONTACT""}]";[];[];True
+common.models.Company;Greenwich Prime Trading Group;2015-01-01;;[];[];[];[];[];True
+common.models.Company;JCL;2015-01-01;;[];"[{""model"": ""common.models.Email"", ""address_type"": ""EMAIL_CONTACT"", ""email_address"": ""finance@sequoia-ge.com""}]";"[{""phone_number"": ""+41223193333"", ""model"": ""common.models.Phone"", ""line_type"": ""PHONE_LAND_CONTACT""}]";[];[];True
+common.models.Company;KBL European Private Bankers S.A.;2015-01-01;;[];[];[];[];[];True
+common.models.Company;LGT Bank;;;[];[];[];[];[];True
+common.models.Company;LGT Bank Genève;2015-01-01;;[];[];[];[];[];True
+common.models.Company;LGT Bank Liechtenstein Ltd.;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Lyxor Asset Management;1998-01-01;;[];[];[];[];[];True
+common.models.Company;Nemo Asset Management;2013-01-01;;[];[];[];[];[];True
+common.models.Company;NEW FRONTIER;2013-01-01;CHF;[];"[{""model"": ""common.models.Email"", ""address_type"": ""EMAIL_CONTACT"", ""email_address"": ""sdejonckheere@sequoia-ge.com""}]";[];[];[];True
+common.models.Company;NOOR;;USD;[];[];[];"[{""person"": ""NAVILLE Christian"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_COO""}, {""person"": ""COURIOL Olivier"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_CEO""}]";[];True
+common.models.Company;Noor Logo;2015-01-01;USD;[];"[{""model"": ""common.models.Email"", ""address_type"": ""EMAIL_CONTACT"", ""email_address"": ""finance@sequoia-ge.com""}]";"[{""phone_number"": ""+41223193333"", ""model"": ""common.models.Phone"", ""line_type"": ""PHONE_LAND_CONTACT""}]";"[{""person"": ""NAVILLE Christian"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_RM""}]";[];True
+common.models.Company;Pictet & Cie;2015-01-01;;[];[];[];[];[];True
+common.models.Company;POSTFINANCE;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Royal Bank of Canada;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Royal Bank of Scotland/Newedge Bank;2015-01-01;;[];[];[];[];[];True
+common.models.Company;SAFE Asset Management;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Saxo Bank (Schweiz) AG;1992-01-01;;[];[];[];[];[];True
+common.models.Company;Schroders;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Secure Wealth Management;2015-01-01;CHF;[];"[{""model"": ""common.models.Email"", ""address_type"": ""EMAIL_CONTACT"", ""email_address"": ""laurence.cabrol@securewm.com""}]";"[{""phone_number"": ""0223548970"", ""model"": ""common.models.Phone"", ""line_type"": ""PHONE_LAND_CONTACT""}]";[];[];True
+common.models.Company;SEQUOIA Asset Management Ltd.;2015-01-01;CHF;[];[];[];[];[];True
+common.models.Company;SEQUOIA Asset Management SA;;CHF;[];"[{""model"": ""common.models.Email"", ""address_type"": ""EMAIL_TECHNICAL"", ""email_address"": ""finance@sequoia-ge.com""}]";[];[];[];True
+common.models.Company;SEQUOIA Portfolio Management Team;2014-01-01;;[];"[{""model"": ""common.models.Email"", ""address_type"": ""EMAIL_CONTACT"", ""email_address"": ""bloomberg@sequoia-ge.com""}]";"[{""phone_number"": ""+41 22 319 33 33"", ""model"": ""common.models.Phone"", ""line_type"": ""PHONE_LAND_CONTACT""}]";[];[];True
+common.models.Company;SEQUOIA Wealth Management SA;;CHF;"[{""city"": ""Geneva"", ""line_2"": """", ""country"": ""CH"", ""line_1"": ""Route de Florissant, 13"", ""model"": ""common.models.Address"", ""address_type"": ""ADR_MAIN_OFFICE"", ""zip_code"": ""1206""}, {""city"": """", ""line_2"": """", ""country"": ""CH"", ""line_1"": ""http://www.sequoia.ch"", ""model"": ""common.models.Address"", ""address_type"": ""ADR_WEB"", ""zip_code"": """"}]";"[{""model"": ""common.models.Email"", ""address_type"": ""EMAIL_TECHNICAL"", ""email_address"": ""finance@sequoia-ge.com""}, {""model"": ""common.models.Email"", ""address_type"": ""EMAIL_CONTACT"", ""email_address"": ""info@sequoia-ge.com""}, {""model"": ""common.models.Email"", ""address_type"": ""EMAIL_PERSONAL"", ""email_address"": ""info@sequoia-ge.com""}]";"[{""phone_number"": ""+41 22 354 89 89"", ""model"": ""common.models.Phone"", ""line_type"": ""PHONE_LAND_CONTACT""}, {""phone_number"": ""+41 22 354 89 88"", ""model"": ""common.models.Phone"", ""line_type"": ""PHONE_FAX_WORK""}]";"[{""person"": ""PYTHON FILIPOWSKI Vincent Patrizia"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_RM""}, {""person"": ""DEVILLAIRE Eric"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_RM""}, {""person"": ""SCHAFFTER Elena"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_RM""}, {""person"": ""CARCASSONNE Michel"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_RM""}, {""person"": ""HERZI Anastassia"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_RM""}, {""person"": ""ROUVINET CANTELE Danja Yann"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_RM""}, {""person"": ""TLAPANCO Ernesto"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_RM""}, {""person"": ""KELLER Andr\u00e9"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_PM""}, {""person"": ""USER SWM Technical"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_RM""}, {""person"": ""SOOTS Louis"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_PM""}, {""person"": ""FORMIG\u00c9 Pierre-No\u00ebl"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_CEO""}]";[];True
+common.models.Company;Société Générale;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Société Générale Private Banking (Suisse) SA;2015-01-01;;[];[];[];[];[];True
+common.models.Company;Swiss-Rev Guardian;;;[];[];[];[];[];True
+common.models.Company;UBS Genève;2015-01-01;;[];[];[];"[{""person"": ""ASENJO David"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_CONTACT_PERSON""}, {""person"": ""BOUOUKAZ Amyna"", ""model"": ""common.models.CompanyMember"", ""role"": ""CMR_ALT_CONTACT_PERSON""}]";[];True
+common.models.Company;VP Bank;2015-01-01;;[];[];[];[];[];True

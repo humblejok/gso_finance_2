@@ -1,0 +1,559 @@
+identifier;default_name;quick_access;model
+**;***UNKNOWN***;False;common.models.Country
+AF;AFGHANISTAN;False;common.models.Country
+AX;ÅLAND ISLANDS;False;common.models.Country
+AL;ALBANIA;False;common.models.Country
+DZ;ALGERIA;False;common.models.Country
+AS;AMERICAN SAMOA;False;common.models.Country
+AD;ANDORRA;False;common.models.Country
+AO;ANGOLA;False;common.models.Country
+AI;ANGUILLA;False;common.models.Country
+AQ;ANTARCTICA;False;common.models.Country
+AG;ANTIGUA AND BARBUDA;False;common.models.Country
+AR;ARGENTINA;False;common.models.Country
+AM;ARMENIA;False;common.models.Country
+AW;ARUBA;False;common.models.Country
+AU;AUSTRALIA;False;common.models.Country
+AT;AUSTRIA;False;common.models.Country
+AZ;AZERBAIJAN;False;common.models.Country
+BS;BAHAMAS;False;common.models.Country
+BH;BAHRAIN;False;common.models.Country
+BD;BANGLADESH;False;common.models.Country
+BB;BARBADOS;False;common.models.Country
+BY;BELARUS;False;common.models.Country
+BE;BELGIUM;False;common.models.Country
+BZ;BELIZE;False;common.models.Country
+BJ;BENIN;False;common.models.Country
+BM;BERMUDA;False;common.models.Country
+BT;BHUTAN;False;common.models.Country
+BO;BOLIVIA, PLURINATIONAL STATE OF;False;common.models.Country
+BQ;BONAIRE, SINT EUSTATIUS AND SABA;False;common.models.Country
+BA;BOSNIA AND HERZEGOVINA;False;common.models.Country
+BW;BOTSWANA;False;common.models.Country
+BV;BOUVET ISLAND;False;common.models.Country
+BR;BRAZIL;False;common.models.Country
+IO;BRITISH INDIAN OCEAN TERRITORY;False;common.models.Country
+BN;BRUNEI DARUSSALAM;False;common.models.Country
+BG;BULGARIA;False;common.models.Country
+BF;BURKINA FASO;False;common.models.Country
+BI;BURUNDI;False;common.models.Country
+KH;CAMBODIA;False;common.models.Country
+CM;CAMEROON;False;common.models.Country
+CA;CANADA;False;common.models.Country
+CV;CAPE VERDE;False;common.models.Country
+KY;CAYMAN ISLANDS;False;common.models.Country
+CF;CENTRAL AFRICAN REPUBLIC;False;common.models.Country
+TD;CHAD;False;common.models.Country
+CL;CHILE;False;common.models.Country
+CN;CHINA;False;common.models.Country
+CX;CHRISTMAS ISLAND;False;common.models.Country
+CC;COCOS (KEELING) ISLANDS;False;common.models.Country
+CO;COLOMBIA;False;common.models.Country
+KM;COMOROS;False;common.models.Country
+CG;CONGO;False;common.models.Country
+CD;CONGO, THE DEMOCRATIC REPUBLIC OF THE;False;common.models.Country
+CK;COOK ISLANDS;False;common.models.Country
+CR;COSTA RICA;False;common.models.Country
+CI;CÔTE D'IVOIRE;False;common.models.Country
+HR;CROATIA;False;common.models.Country
+CU;CUBA;False;common.models.Country
+CW;CURAÇAO;False;common.models.Country
+CY;CYPRUS;False;common.models.Country
+CZ;CZECH REPUBLIC;False;common.models.Country
+DK;DENMARK;False;common.models.Country
+DJ;DJIBOUTI;False;common.models.Country
+DM;DOMINICA;False;common.models.Country
+DO;DOMINICAN REPUBLIC;False;common.models.Country
+EC;ECUADOR;False;common.models.Country
+EG;EGYPT;False;common.models.Country
+SV;EL SALVADOR;False;common.models.Country
+GQ;EQUATORIAL GUINEA;False;common.models.Country
+ER;ERITREA;False;common.models.Country
+EE;ESTONIA;False;common.models.Country
+ET;ETHIOPIA;False;common.models.Country
+FK;FALKLAND ISLANDS (MALVINAS);False;common.models.Country
+FO;FAROE ISLANDS;False;common.models.Country
+FJ;FIJI;False;common.models.Country
+FI;FINLAND;False;common.models.Country
+FR;FRANCE;True;common.models.Country
+GF;FRENCH GUIANA;False;common.models.Country
+PF;FRENCH POLYNESIA;False;common.models.Country
+TF;FRENCH SOUTHERN TERRITORIES;False;common.models.Country
+GA;GABON;False;common.models.Country
+GM;GAMBIA;False;common.models.Country
+GE;GEORGIA;False;common.models.Country
+DE;GERMANY;False;common.models.Country
+GH;GHANA;False;common.models.Country
+GI;GIBRALTAR;False;common.models.Country
+GR;GREECE;False;common.models.Country
+GL;GREENLAND;False;common.models.Country
+GD;GRENADA;False;common.models.Country
+GP;GUADELOUPE;False;common.models.Country
+GU;GUAM;False;common.models.Country
+GT;GUATEMALA;False;common.models.Country
+GG;GUERNSEY;False;common.models.Country
+GN;GUINEA;False;common.models.Country
+GW;GUINEA-BISSAU;False;common.models.Country
+GY;GUYANA;False;common.models.Country
+HT;HAITI;False;common.models.Country
+HM;HEARD ISLAND AND MCDONALD ISLANDS;False;common.models.Country
+VA;HOLY SEE (VATICAN CITY STATE);False;common.models.Country
+HN;HONDURAS;False;common.models.Country
+HK;HONG KONG;False;common.models.Country
+HU;HUNGARY;False;common.models.Country
+IS;ICELAND;False;common.models.Country
+IN;INDIA;False;common.models.Country
+ID;INDONESIA;False;common.models.Country
+IR;IRAN, ISLAMIC REPUBLIC OF;False;common.models.Country
+IQ;IRAQ;False;common.models.Country
+IE;IRELAND;True;common.models.Country
+IM;ISLE OF MAN;False;common.models.Country
+IL;ISRAEL;False;common.models.Country
+IT;ITALY;False;common.models.Country
+JM;JAMAICA;False;common.models.Country
+JP;JAPAN;False;common.models.Country
+JE;JERSEY;False;common.models.Country
+JO;JORDAN;False;common.models.Country
+KZ;KAZAKHSTAN;False;common.models.Country
+KE;KENYA;False;common.models.Country
+KI;KIRIBATI;False;common.models.Country
+KP;KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF;False;common.models.Country
+KR;KOREA, REPUBLIC OF;False;common.models.Country
+KW;KUWAIT;False;common.models.Country
+KG;KYRGYZSTAN;False;common.models.Country
+LA;LAO PEOPLE'S DEMOCRATIC REPUBLIC;False;common.models.Country
+LV;LATVIA;False;common.models.Country
+LB;LEBANON;False;common.models.Country
+LS;LESOTHO;False;common.models.Country
+LR;LIBERIA;False;common.models.Country
+LY;LIBYA;False;common.models.Country
+LI;LIECHTENSTEIN;False;common.models.Country
+LT;LITHUANIA;False;common.models.Country
+LU;LUXEMBOURG;True;common.models.Country
+MO;MACAO;False;common.models.Country
+MK;MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF;False;common.models.Country
+MG;MADAGASCAR;False;common.models.Country
+MW;MALAWI;False;common.models.Country
+MY;MALAYSIA;False;common.models.Country
+MV;MALDIVES;False;common.models.Country
+ML;MALI;False;common.models.Country
+MT;MALTA;False;common.models.Country
+MH;MARSHALL ISLANDS;False;common.models.Country
+MQ;MARTINIQUE;False;common.models.Country
+MR;MAURITANIA;False;common.models.Country
+MU;MAURITIUS;False;common.models.Country
+YT;MAYOTTE;False;common.models.Country
+MX;MEXICO;False;common.models.Country
+FM;MICRONESIA, FEDERATED STATES OF;False;common.models.Country
+MD;MOLDOVA, REPUBLIC OF;False;common.models.Country
+MC;MONACO;False;common.models.Country
+MN;MONGOLIA;False;common.models.Country
+ME;MONTENEGRO;False;common.models.Country
+MS;MONTSERRAT;False;common.models.Country
+MA;MOROCCO;False;common.models.Country
+MZ;MOZAMBIQUE;False;common.models.Country
+MM;MYANMAR;False;common.models.Country
+NA;NAMIBIA;False;common.models.Country
+NR;NAURU;False;common.models.Country
+NP;NEPAL;False;common.models.Country
+NL;NETHERLANDS;False;common.models.Country
+NC;NEW CALEDONIA;False;common.models.Country
+NZ;NEW ZEALAND;False;common.models.Country
+NI;NICARAGUA;False;common.models.Country
+NE;NIGER;False;common.models.Country
+NG;NIGERIA;False;common.models.Country
+NU;NIUE;False;common.models.Country
+NF;NORFOLK ISLAND;False;common.models.Country
+MP;NORTHERN MARIANA ISLANDS;False;common.models.Country
+NO;NORWAY;False;common.models.Country
+OM;OMAN;False;common.models.Country
+PK;PAKISTAN;False;common.models.Country
+PW;PALAU;False;common.models.Country
+PS;PALESTINE, STATE OF;False;common.models.Country
+PA;PANAMA;False;common.models.Country
+PG;PAPUA NEW GUINEA;False;common.models.Country
+PY;PARAGUAY;False;common.models.Country
+PE;PERU;False;common.models.Country
+PH;PHILIPPINES;False;common.models.Country
+PN;PITCAIRN;False;common.models.Country
+PL;POLAND;False;common.models.Country
+PT;PORTUGAL;False;common.models.Country
+PR;PUERTO RICO;False;common.models.Country
+QA;QATAR;False;common.models.Country
+RE;RÉUNION;False;common.models.Country
+RO;ROMANIA;False;common.models.Country
+RU;RUSSIAN FEDERATION;False;common.models.Country
+RW;RWANDA;False;common.models.Country
+BL;SAINT BARTHÉLEMY;False;common.models.Country
+SH;SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA;False;common.models.Country
+KN;SAINT KITTS AND NEVIS;False;common.models.Country
+LC;SAINT LUCIA;False;common.models.Country
+MF;SAINT MARTIN (FRENCH PART);False;common.models.Country
+PM;SAINT PIERRE AND MIQUELON;False;common.models.Country
+VC;SAINT VINCENT AND THE GRENADINES;False;common.models.Country
+WS;SAMOA;False;common.models.Country
+SM;SAN MARINO;False;common.models.Country
+ST;SAO TOME AND PRINCIPE;False;common.models.Country
+SA;SAUDI ARABIA;False;common.models.Country
+SN;SENEGAL;False;common.models.Country
+RS;SERBIA;False;common.models.Country
+SC;SEYCHELLES;False;common.models.Country
+SL;SIERRA LEONE;False;common.models.Country
+SG;SINGAPORE;False;common.models.Country
+SX;SINT MAARTEN (DUTCH PART);False;common.models.Country
+SK;SLOVAKIA;False;common.models.Country
+SI;SLOVENIA;False;common.models.Country
+SB;SOLOMON ISLANDS;False;common.models.Country
+SO;SOMALIA;False;common.models.Country
+ZA;SOUTH AFRICA;False;common.models.Country
+GS;SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS;False;common.models.Country
+SS;SOUTH SUDAN;False;common.models.Country
+ES;SPAIN;False;common.models.Country
+LK;SRI LANKA;False;common.models.Country
+SD;SUDAN;False;common.models.Country
+SR;SURINAME;False;common.models.Country
+SJ;SVALBARD AND JAN MAYEN;False;common.models.Country
+SZ;SWAZILAND;False;common.models.Country
+SE;SWEDEN;False;common.models.Country
+CH;SWITZERLAND;True;common.models.Country
+SY;SYRIAN ARAB REPUBLIC;False;common.models.Country
+TW;TAIWAN, PROVINCE OF CHINA;False;common.models.Country
+TJ;TAJIKISTAN;False;common.models.Country
+TZ;TANZANIA, UNITED REPUBLIC OF;False;common.models.Country
+TH;THAILAND;False;common.models.Country
+TL;TIMOR-LESTE;False;common.models.Country
+TG;TOGO;False;common.models.Country
+TK;TOKELAU;False;common.models.Country
+TO;TONGA;False;common.models.Country
+TT;TRINIDAD AND TOBAGO;False;common.models.Country
+TN;TUNISIA;False;common.models.Country
+TR;TURKEY;False;common.models.Country
+TM;TURKMENISTAN;False;common.models.Country
+TC;TURKS AND CAICOS ISLANDS;False;common.models.Country
+TV;TUVALU;False;common.models.Country
+UG;UGANDA;False;common.models.Country
+UA;UKRAINE;False;common.models.Country
+AE;UNITED ARAB EMIRATES;False;common.models.Country
+GB;UNITED KINGDOM;True;common.models.Country
+US;UNITED STATES;True;common.models.Country
+UM;UNITED STATES MINOR OUTLYING ISLANDS;False;common.models.Country
+UY;URUGUAY;False;common.models.Country
+UZ;UZBEKISTAN;False;common.models.Country
+VU;VANUATU;False;common.models.Country
+VE;VENEZUELA, BOLIVARIAN REPUBLIC OF;False;common.models.Country
+VN;VIET NAM;False;common.models.Country
+VG;VIRGIN ISLANDS, BRITISH;False;common.models.Country
+VI;VIRGIN ISLANDS, U.S.;False;common.models.Country
+WF;WALLIS AND FUTUNA;False;common.models.Country
+WI;WEST INDIES;False;common.models.Country
+EH;WESTERN SAHARA;False;common.models.Country
+YE;YEMEN;False;common.models.Country
+ZM;ZAMBIA;False;common.models.Country
+ZW;ZIMBABWE;False;common.models.Country
+***;***UNKNOWN***;False;common.models.Currency
+AED;UAE Dirham;False;common.models.Currency
+AFN;Afghani;False;common.models.Currency
+ALL;Lek;False;common.models.Currency
+AMD;Armenian Dram;False;common.models.Currency
+ANG;Netherlands Antillean Guilder;False;common.models.Currency
+AOA;Kwanza;False;common.models.Currency
+ARS;Argentine Peso;False;common.models.Currency
+AUD;Australian Dollar;False;common.models.Currency
+AWG;Aruban Florin;False;common.models.Currency
+AZN;Azerbaijanian Manat;False;common.models.Currency
+BAM;Convertible Mark;False;common.models.Currency
+BBD;Barbados Dollar;False;common.models.Currency
+BDT;Taka;False;common.models.Currency
+BGN;Bulgarian Lev;False;common.models.Currency
+BHD;Bahraini Dinar;False;common.models.Currency
+BIF;Burundi Franc;False;common.models.Currency
+BMD;Bermudian Dollar;False;common.models.Currency
+BND;Brunei Dollar;False;common.models.Currency
+BOB;Boliviano;False;common.models.Currency
+BOV;Mvdol;False;common.models.Currency
+BRL;Brazilian Real;False;common.models.Currency
+BSD;Bahamian Dollar;False;common.models.Currency
+BTN;Ngultrum;False;common.models.Currency
+BWP;Pula;False;common.models.Currency
+BYR;Belarussian Ruble;False;common.models.Currency
+BZD;Belize Dollar;False;common.models.Currency
+CAD;Canadian Dollar;False;common.models.Currency
+CDF;Congolese Franc;False;common.models.Currency
+CHE;WIR Euro;False;common.models.Currency
+CHF;Swiss Franc;True;common.models.Currency
+CHW;WIR Franc;False;common.models.Currency
+CLF;Unidades de fomento;False;common.models.Currency
+CLP;Chilean Peso;False;common.models.Currency
+CNH;Offshote Chinese Renminbi;False;common.models.Currency
+CNY;Yuan Renminbi;False;common.models.Currency
+COP;Colombian Peso;False;common.models.Currency
+COU;Unidad de Valor Real;False;common.models.Currency
+CRC;Costa Rican Colon;False;common.models.Currency
+CUC;Peso Convertible;False;common.models.Currency
+CUP;Cuban Peso;False;common.models.Currency
+CVE;Cape Verde Escudo;False;common.models.Currency
+CZK;Czech Koruna;False;common.models.Currency
+DJF;Djibouti Franc;False;common.models.Currency
+DKK;Danish Krone;False;common.models.Currency
+DOP;Dominican Peso;False;common.models.Currency
+DZD;Algerian Dinar;False;common.models.Currency
+EGP;Egyptian Pound;False;common.models.Currency
+ERN;Nakfa;False;common.models.Currency
+ETB;Ethiopian Birr;False;common.models.Currency
+EUR;Euro;True;common.models.Currency
+FJD;Fiji Dollar;False;common.models.Currency
+FKP;Falkland Islands Pound;False;common.models.Currency
+GBP;Pound Sterling;True;common.models.Currency
+GBp;Pence Sterling;True;common.models.Currency
+GEL;Lari;False;common.models.Currency
+GHS;Ghana Cedi;False;common.models.Currency
+GIP;Gibraltar Pound;False;common.models.Currency
+GMD;Dalasi;False;common.models.Currency
+GNF;Guinea Franc;False;common.models.Currency
+GTQ;Quetzal;False;common.models.Currency
+GYD;Guyana Dollar;False;common.models.Currency
+HKD;Hong Kong Dollar;False;common.models.Currency
+HNL;Lempira;False;common.models.Currency
+HRK;Croatian Kuna;False;common.models.Currency
+HTG;Gourde;False;common.models.Currency
+HUF;Forint;False;common.models.Currency
+IDR;Rupiah;False;common.models.Currency
+ILS;New Israeli Sheqel;False;common.models.Currency
+INR;Indian Rupee;False;common.models.Currency
+IQD;Iraqi Dinar;False;common.models.Currency
+IRR;Iranian Rial;False;common.models.Currency
+ISK;Iceland Krona;False;common.models.Currency
+JMD;Jamaican Dollar;False;common.models.Currency
+JOD;Jordanian Dinar;False;common.models.Currency
+JPY;Yen;False;common.models.Currency
+KES;Kenyan Shilling;False;common.models.Currency
+KGS;Som;False;common.models.Currency
+KHR;Riel;False;common.models.Currency
+KMF;Comoro Franc;False;common.models.Currency
+KPW;North Korean Won;False;common.models.Currency
+KRW;Won;False;common.models.Currency
+KWD;Kuwaiti Dinar;False;common.models.Currency
+KYD;Cayman Islands Dollar;False;common.models.Currency
+KZT;Tenge;False;common.models.Currency
+LAK;Kip;False;common.models.Currency
+LBP;Lebanese Pound;False;common.models.Currency
+LKR;Sri Lanka Rupee;False;common.models.Currency
+LRD;Liberian Dollar;False;common.models.Currency
+LSL;Loti;False;common.models.Currency
+LTL;Lithuanian Litas;False;common.models.Currency
+LVL;Latvian Lats;False;common.models.Currency
+LYD;Libyan Dinar;False;common.models.Currency
+MAD;Moroccan Dirham;False;common.models.Currency
+MDL;Moldovan Leu;False;common.models.Currency
+MGA;Malagasy Ariary;False;common.models.Currency
+MKD;Denar;False;common.models.Currency
+MMK;Kyat;False;common.models.Currency
+MNT;Tugrik;False;common.models.Currency
+MOP;Pataca;False;common.models.Currency
+MRO;Ouguiya;False;common.models.Currency
+MUR;Mauritius Rupee;False;common.models.Currency
+MVR;Rufiyaa;False;common.models.Currency
+MWK;Kwacha;False;common.models.Currency
+MXN;Mexican Peso;False;common.models.Currency
+MXV;Mexican Unidad de Inversion (UDI);False;common.models.Currency
+MYR;Malaysian Ringgit;False;common.models.Currency
+MZN;Mozambique Metical;False;common.models.Currency
+NAD;Namibia Dollar;False;common.models.Currency
+NGN;Naira;False;common.models.Currency
+NIO;Cordoba Oro;False;common.models.Currency
+NOK;Norwegian Krone;False;common.models.Currency
+NPR;Nepalese Rupee;False;common.models.Currency
+NZD;New Zealand Dollar;False;common.models.Currency
+OMR;Rial Omani;False;common.models.Currency
+PAB;Balboa;False;common.models.Currency
+PEN;Nuevo Sol;False;common.models.Currency
+PGK;Kina;False;common.models.Currency
+PHP;Philippine Peso;False;common.models.Currency
+PKR;Pakistan Rupee;False;common.models.Currency
+PLN;Zloty;False;common.models.Currency
+PYG;Guarani;False;common.models.Currency
+QAR;Qatari Rial;False;common.models.Currency
+RON;New Romanian Leu;False;common.models.Currency
+RSD;Serbian Dinar;False;common.models.Currency
+RUB;Russian Ruble;True;common.models.Currency
+RWF;Rwanda Franc;False;common.models.Currency
+SAR;Saudi Riyal;False;common.models.Currency
+SBD;Solomon Islands Dollar;False;common.models.Currency
+SCR;Seychelles Rupee;False;common.models.Currency
+SDG;Sudanese Pound;False;common.models.Currency
+SEK;Swedish Krona;True;common.models.Currency
+SGD;Singapore Dollar;False;common.models.Currency
+SHP;Saint Helena Pound;False;common.models.Currency
+SLL;Leone;False;common.models.Currency
+SOS;Somali Shilling;False;common.models.Currency
+SRD;Surinam Dollar;False;common.models.Currency
+SSP;South Sudanese Pound;False;common.models.Currency
+STD;Dobra;False;common.models.Currency
+SVC;El Salvador Colon;False;common.models.Currency
+SYP;Syrian Pound;False;common.models.Currency
+SZL;Lilangeni;False;common.models.Currency
+THB;Baht;False;common.models.Currency
+TJS;Somoni;False;common.models.Currency
+TMT;Turkmenistan New Manat;False;common.models.Currency
+TND;Tunisian Dinar;False;common.models.Currency
+TOP;Pa'anga;False;common.models.Currency
+TRY;Turkish Lira;False;common.models.Currency
+TTD;Trinidad and Tobago Dollar;False;common.models.Currency
+TWD;New Taiwan Dollar;False;common.models.Currency
+TZS;Tanzanian Shilling;False;common.models.Currency
+UAH;Hryvnia;False;common.models.Currency
+UGX;Uganda Shilling;False;common.models.Currency
+USD;US Dollar;True;common.models.Currency
+USN;US Dollar (Next day);False;common.models.Currency
+USS;US Dollar (Same day);False;common.models.Currency
+UYI;Uruguay Peso en Unidades Indexadas (URUIURUI);False;common.models.Currency
+UYU;Peso Uruguayo;False;common.models.Currency
+UZS;Uzbekistan Sum;False;common.models.Currency
+VEF;Bolivar;False;common.models.Currency
+VND;Dong;False;common.models.Currency
+VUV;Vatu;False;common.models.Currency
+WST;Tala;False;common.models.Currency
+XAF;CFA Franc BEAC;False;common.models.Currency
+XAG;Silver;True;common.models.Currency
+XAU;Gold;True;common.models.Currency
+XBA;Bond Markets Unit European Composite Unit (EURCO);False;common.models.Currency
+XBB;Bond Markets Unit European Monetary Unit (E.M.U.-6);False;common.models.Currency
+XBC;Bond Markets Unit European Unit of Account 9 (E.U.A.-9);False;common.models.Currency
+XBD;Bond Markets Unit European Unit of Account 17 (E.U.A.-17);False;common.models.Currency
+XBT;Bitcoin;FAlse;common.models.Currency
+XCD;East Caribbean Dollar;False;common.models.Currency
+XDR;SDR (Special Drawing Right);False;common.models.Currency
+XFU;UIC-Franc;False;common.models.Currency
+XOF;CFA Franc BCEAO;False;common.models.Currency
+XPD;Palladium;False;common.models.Currency
+XPF;CFP Franc;False;common.models.Currency
+XPT;Platinum;True;common.models.Currency
+XSU;Sucre;False;common.models.Currency
+XTS;Codes specifically reserved for testing purposes;False;common.models.Currency
+XUA;ADB Unit of Account;False;common.models.Currency
+XXX;The codes assigned for transactions where no currency is involved;False;common.models.Currency
+YER;Yemeni Rial;False;common.models.Currency
+ZAR;Rand;False;common.models.Currency
+ZMW;Zambian Kwacha;False;common.models.Currency
+ZWL;Zimbabwe Dollar;False;common.models.Currency
+PUBLIC;Public;True;common.models.VisibilityLevel
+CONFIDENTIAL;Confidential;True;common.models.VisibilityLevel
+SECRET;Secret;True;common.models.VisibilityLevel
+DEFAULT;Web Address;True;common.models.AddressType
+PERSONAL;Home;True;common.models.AddressType
+WORK;Work;True;common.models.AddressType
+MAIN;Main Office;True;common.models.AddressType
+SUBSIDIARY;Subsidiary Office;True;common.models.AddressType
+PERSONAL;Personal Email;True;common.models.MailType
+WORK;Work Email;True;common.models.MailType
+CONTACT;Contact Email;True;common.models.MailType
+TECHNICAL;Techmical Email;True;common.models.MailType
+PERSONAL_MOBILE;Personal Mobile;True;common.models.PhoneType
+WORK_MOBILE;Work Mobile;True;common.models.PhoneType
+CONTACT_MOBILE;Contact Mobile;True;common.models.PhoneType
+PERSONAL_LAND;Personal Landline;True;common.models.PhoneType
+WORK_LAND;Work Landline;True;common.models.PhoneType
+CONTACT_LAND;Contact Landline;True;common.models.PhoneType
+WORK_FAX;Work Fax;True;common.models.PhoneType
+PERSONAL_FAX;Personal Fax;True;common.models.PhoneType
+CMR_UNKNOWN;Unknown role;True;common.models.CompanyMemberRole
+CMR_COO;Chief Operating Officer;True;common.models.CompanyMemberRole
+CMR_FOUNDER;Founder;True;common.models.CompanyMemberRole
+CMR_BDO;Business Development Officer;True;common.models.CompanyMemberRole
+CMR_CFO;Chief Financial Officer;True;common.models.CompanyMemberRole
+CMR_CIO;Chief Investment Officer;True;common.models.CompanyMemberRole
+CMR_CEO;Chief Executive Officer;True;common.models.CompanyMemberRole
+CMR_CTO;Chief Technology Officer;True;common.models.CompanyMemberRole
+CMR_HOM;Head of Marketing;True;common.models.CompanyMemberRole
+CMR_CRO;Chief Risk Officer;True;common.models.CompanyMemberRole
+CMR_EA;Executive Assistant;True;common.models.CompanyMemberRole
+CMR_EMPLOYEE;Employee;True;common.models.CompanyMemberRole
+CMR_AUDITOR;Internal Auditor;True;common.models.CompanyMemberRole
+CMR_PM;Portfolio Manager;True;common.models.CompanyMemberRole
+CMR_RM;Relationship Manager;True;common.models.CompanyMemberRole
+CMR_ANALYST;Analyst;True;common.models.CompanyMemberRole
+CMR_CHAIRMAN;Chairman;True;common.models.CompanyMemberRole
+CMR_LAWYER;Lawyer;True;common.models.CompanyMemberRole
+CMR_SRM;Senior Relationship Manager;True;common.models.CompanyMemberRole
+CMR_MD;Managing Director;True;common.models.CompanyMemberRole
+CMR_SALES;Salesman;True;common.models.CompanyMemberRole
+CMR_PARTNER;Partner;True;common.models.CompanyMemberRole
+CMR_MO;Middle Officer;True;common.models.CompanyMemberRole
+CMR_CONTACT_PERSON;Contact Person;True;common.models.CompanyMemberRole
+CMR_ALT_CONTACT_PERSON;Alternative Contact Person;True;common.models.CompanyMemberRole
+CSR_HOLDING;Holding;True;common.models.CompanySubsidiaryRole
+CSR_RO;Representative Office;True;common.models.CompanySubsidiaryRole
+CSR_FO;Foreign Office;True;common.models.CompanySubsidiaryRole
+CSR_SUBSIDIARY;Subsidiary Office;True;common.models.CompanySubsidiaryRole
+ACC_FORWARD;Forward Contract;True;portfolio.models.AccountType
+ACC_CURRENT;Current;True;portfolio.models.AccountType
+ACC_SECURITY;Security;True;portfolio.models.AccountType
+ACC_LOAN;Loan;True;portfolio.models.AccountType
+ACC_CAPITAL_CALL;Capital Call;True;portfolio.models.AccountType
+ACC_SAVINGS;Savings;True;portfolio.models.AccountType
+ACC_GUARANTEE;Guarantee;True;portfolio.models.AccountType
+ACC_CURRENT_BANK_TECHNICAL;Technical current account (Bank);True;portfolio.models.AccountType
+ACC_CURRENT_FINANCE_TECHNICAL;Technical current account (Finance);True;portfolio.models.AccountType
+OPE_TYPE_INTERNAL_TRANSFER;Transfer;True;portfolio.models.FinancialOperationType
+OPE_TYPE_BUY;Buy;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_SELL;Sell;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_BUY_FOP;Free of purchase buy;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_SELL_FOP;Free of purchase sell;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_SPOT_BUY;Buy spot;True;portfolio.models.ForexOperationType
+OPE_TYPE_SPOT_SELL;Sell spot;True;portfolio.models.ForexOperationType
+OPE_TYPE_SUB;Subscribe;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_RED;Redeem;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_CASH_WITHDRAWAL;Cashier withdrawal;True;portfolio.models.FinancialOperationType
+OPE_TYPE_CASH_CONTRIBUTION;Cashier contribution;True;portfolio.models.FinancialOperationType
+OPE_TYPE_WITHDRAWAL;Withdrawal;True;portfolio.models.FinancialOperationType
+OPE_TYPE_CONTRIBUTION;Contribution;True;portfolio.models.FinancialOperationType
+OPE_TYPE_SWITCH;Switch;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_COMMISSION;Commission;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_FEES;Fees;True;portfolio.models.FinancialOperationType
+OPE_TYPE_TAX;Common tax;True;portfolio.models.FinancialOperationType
+OPE_TYPE_ACCRUED_PAYMENT;Accrued interests repayment;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_COUPON;Coupon;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_DIVIDEND;Dividend;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_PNL;Profits & losses;True;portfolio.models.FinancialOperationType
+OPE_TYPE_INTEREST;Interest;True;portfolio.models.FinancialOperationType
+OPE_STATUS_PENDING;Pending;True;portfolio.models.OperationStatus
+OPE_STATUS_EXECUTED;Executed;True;portfolio.models.OperationStatus
+OPE_STATUS_CONFIRMED;Confirmed;True;portfolio.models.OperationStatus
+OPE_STATUS_CANCELLED;Cancelled;True;portfolio.models.OperationStatus
+OPE_STATUS_SENT;Sent;True;portfolio.models.OperationStatus
+OPE_STATUS_ACK;Acknowledged;True;portfolio.models.OperationStatus
+SECTYP_CASH;Cash;True;security.models.SecurityType
+SECTYP_CURRENCY;Currency;True;security.models.SecurityType
+SECTYP_STOCK;Stock;True;security.models.SecurityType
+SECTYP_BOND;Bond;True;security.models.SecurityType
+SECTYP_FUND;Fund;True;security.models.SecurityType
+SECTYP_INDEX;Index;True;security.models.SecurityType
+SECTYP_FUTURE;Future;True;security.models.SecurityType
+SECTYP_OPTION;Option;True;security.models.SecurityType
+SECTYP_SECURITY;Standard security;True;security.models.SecurityType
+SECTYP_WARRANT;Warrant;True;security.models.SecurityType
+SECTYP_CFD;CFD;True;security.models.SecurityType
+SECTYP_MM;Money market;True;security.models.SecurityType
+SECTYP_STRUC_PROD;Structured Product;True;security.models.SecurityType
+SECTYP_REAL_ESTATE;Real Estate;True;security.models.SecurityType
+SECTYP_ETF_CERTIFICATE;ETF or Certificate;True;security.models.SecurityType
+1623;security.models.Security;True;providers.models.VP_PositionType
+1512;portfolio.models.Account;True;providers.models.VP_PositionType
+2652;security.models.Security;True;providers.models.VP_PositionType
+1586;security.models.Security;True;providers.models.VP_PositionType
+1587;security.models.Security;True;providers.models.VP_PositionType
+2660;security.models.Security;True;providers.models.VP_PositionType
+1629;security.models.Security;True;providers.models.VP_PositionType
+1529;portfolio.models.Account;True;providers.models.VP_PositionType
+1588;security.models.Security;True;providers.models.VP_PositionType
+1585;security.models.Security;True;providers.models.VP_PositionType
+2659;security.models.Security;True;providers.models.VP_PositionType
+1623;SECTYP_STOCK;True;providers.models.VP_PositionTypeMap
+2652;SECTYP_FUND;True;providers.models.VP_PositionTypeMap
+1586;SECTYP_STOCK;True;providers.models.VP_PositionTypeMap
+1587;SECTYP_BOND;True;providers.models.VP_PositionTypeMap
+2660;SECTYP_ETF_CERTIFICATE;True;providers.models.VP_PositionTypeMap
+1629;SECTYP_FUND;True;providers.models.VP_PositionTypeMap
+1588;SECTYP_BOND;True;providers.models.VP_PositionTypeMap
+1585;SECTYP_STOCK;True;providers.models.VP_PositionTypeMap
+2659;SECTYP_ETF_CERTIFICATE;True;providers.models.VP_PositionTypeMap
