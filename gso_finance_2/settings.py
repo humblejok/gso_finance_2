@@ -151,10 +151,6 @@ STATICFILES_DIRS = (
 
 RESOURCES_DIR = 'D:/DEV/Sources/gso_finance_2/resources/other'
 
-PROVIDERS_DIR = 'd:/WORK/Finance/Sequoia/working_folder'
-PROVIDERS_COMPLETED_DIR_NAME = 'completed'
-
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
