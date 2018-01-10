@@ -17,13 +17,7 @@ class ExternalSecurity(models.Model):
     currency = models.ForeignKey(Currency, related_name='external_security_currency_rel', blank=True, null=True)
     provider = models.ForeignKey(Company, related_name='external_security_providing_company', blank=True, null=True)
     provider_identifier = models.CharField(max_length=128, blank=True, null=True)
-    source_id = models.IntegerField(null=True, blank=True)
     provider_data = HStoreField(null=True, blank=True)
-    
-    
-class ExternalSecurityPrice(models.Model):
-    security = models.ForeignKey(ExternalSecurity, related_name='external_security_pricing')
-    pricing_history = HStoreField(null=True, blank=True)
     
 class PortfolioHolding(models.Model):
     external_security = models.ForeignKey(ExternalSecurity, related_name='external_holding')

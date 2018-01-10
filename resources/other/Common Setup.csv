@@ -537,23 +537,3 @@ SECTYP_MM;Money market;True;security.models.SecurityType
 SECTYP_STRUC_PROD;Structured Product;True;security.models.SecurityType
 SECTYP_REAL_ESTATE;Real Estate;True;security.models.SecurityType
 SECTYP_ETF_CERTIFICATE;ETF or Certificate;True;security.models.SecurityType
-1623;security.models.Security;True;providers.models.VP_PositionType
-1512;portfolio.models.Account;True;providers.models.VP_PositionType
-2652;security.models.Security;True;providers.models.VP_PositionType
-1586;security.models.Security;True;providers.models.VP_PositionType
-1587;security.models.Security;True;providers.models.VP_PositionType
-2660;security.models.Security;True;providers.models.VP_PositionType
-1629;security.models.Security;True;providers.models.VP_PositionType
-1529;portfolio.models.Account;True;providers.models.VP_PositionType
-1588;security.models.Security;True;providers.models.VP_PositionType
-1585;security.models.Security;True;providers.models.VP_PositionType
-2659;security.models.Security;True;providers.models.VP_PositionType
-1623;SECTYP_STOCK;True;providers.models.VP_PositionTypeMap
-2652;SECTYP_FUND;True;providers.models.VP_PositionTypeMap
-1586;SECTYP_STOCK;True;providers.models.VP_PositionTypeMap
-1587;SECTYP_BOND;True;providers.models.VP_PositionTypeMap
-2660;SECTYP_ETF_CERTIFICATE;True;providers.models.VP_PositionTypeMap
-1629;SECTYP_FUND;True;providers.models.VP_PositionTypeMap
-1588;SECTYP_BOND;True;providers.models.VP_PositionTypeMap
-1585;SECTYP_STOCK;True;providers.models.VP_PositionTypeMap
-2659;SECTYP_ETF_CERTIFICATE;True;providers.models.VP_PositionTypeMap
