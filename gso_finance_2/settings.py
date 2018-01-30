@@ -60,11 +60,9 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
 }
 
 ROOT_URLCONF = 'gso_finance_2.urls'
@@ -175,6 +173,14 @@ LOGGING = {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
+        },
+        'gso_finance_2': {
+            'handlers': ['console'],
+            'level': 'DEBUG'
+        },
+        'pika': {
+            'handlers': ['console'],
+            'level': 'INFO'
         },
         'common': {
             'handlers': ['console'],

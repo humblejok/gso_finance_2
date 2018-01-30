@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from common.models import Currency, Company, Country, VisibilityLevel,\
     AddressType, PhoneType, MailType, Person
 from common.serializers import CurrencySerializer, CompanySerializer,\
@@ -60,6 +60,15 @@ class QuickMailTypeViewSet(viewsets.ModelViewSet):
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all().order_by('default_name')
     serializer_class = CompanySerializer
+    
+class ProviderSearch(generics.ListAPIView):
+    serializer_class = CompanySerializer
+   
+    def get_queryset(self):
+        provider_code = self.kwargs['provider_code']
+        queryset = Company.objects.filter(is_provider=True, provider_code=provider_code)
+        
+        return queryset
     
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all().order_by('default_name')

@@ -9,5 +9,5 @@ from providers.models import ExternalSecurity
 class ExternalSecuritySerializer(serializers.ModelSerializer):
     class Meta:
         model = ExternalSecurity
-        fields = ('id', 'name', 'type', 'currency', 'provider', 'provider_identifier', 'provider_data')
-        depth = 1
+        fields = ('id', 'name', 'type', 'currency', 'provider', 'provider_identifier', 'associated')
+        depth = 3
