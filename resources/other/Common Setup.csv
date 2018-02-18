@@ -495,25 +495,25 @@ ACC_GUARANTEE;Guarantee;True;portfolio.models.AccountType
 ACC_CURRENT_BANK_TECHNICAL;Technical current account (Bank);True;portfolio.models.AccountType
 ACC_CURRENT_FINANCE_TECHNICAL;Technical current account (Finance);True;portfolio.models.AccountType
 OPE_TYPE_INTERNAL_TRANSFER;Transfer;True;portfolio.models.FinancialOperationType
-OPE_TYPE_BUY;Buy;True;portfolio.models.InvestmentOperationType
-OPE_TYPE_SELL;Sell;True;portfolio.models.InvestmentOperationType
-OPE_TYPE_BUY_FOP;Free of purchase buy;True;portfolio.models.InvestmentOperationType
-OPE_TYPE_SELL_FOP;Free of purchase sell;True;portfolio.models.InvestmentOperationType
-OPE_TYPE_SPOT_BUY;Buy spot;True;portfolio.models.ForexOperationType
-OPE_TYPE_SPOT_SELL;Sell spot;True;portfolio.models.ForexOperationType
-OPE_TYPE_SUB;Subscribe;True;portfolio.models.InvestmentOperationType
-OPE_TYPE_RED;Redeem;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_BUY;Buy;True;portfolio.models.FinancialOperationType
+OPE_TYPE_SELL;Sell;True;portfolio.models.FinancialOperationType
+OPE_TYPE_BUY_FOP;Free of purchase buy;True;portfolio.models.FinancialOperationType
+OPE_TYPE_SELL_FOP;Free of purchase sell;True;portfolio.models.FinancialOperationType
+OPE_TYPE_SPOT_BUY;Buy spot;True;portfolio.models.FinancialOperationType
+OPE_TYPE_SPOT_SELL;Sell spot;True;portfolio.models.FinancialOperationType
+OPE_TYPE_SUB;Subscribe;True;portfolio.models.FinancialOperationType
+OPE_TYPE_RED;Redeem;True;portfolio.models.FinancialOperationType
 OPE_TYPE_CASH_WITHDRAWAL;Cashier withdrawal;True;portfolio.models.FinancialOperationType
 OPE_TYPE_CASH_CONTRIBUTION;Cashier contribution;True;portfolio.models.FinancialOperationType
 OPE_TYPE_WITHDRAWAL;Withdrawal;True;portfolio.models.FinancialOperationType
 OPE_TYPE_CONTRIBUTION;Contribution;True;portfolio.models.FinancialOperationType
-OPE_TYPE_SWITCH;Switch;True;portfolio.models.InvestmentOperationType
-OPE_TYPE_COMMISSION;Commission;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_SWITCH;Switch;True;portfolio.models.FinancialOperationType
+OPE_TYPE_COMMISSION;Commission;True;portfolio.models.FinancialOperationType
 OPE_TYPE_FEES;Fees;True;portfolio.models.FinancialOperationType
 OPE_TYPE_TAX;Common tax;True;portfolio.models.FinancialOperationType
-OPE_TYPE_ACCRUED_PAYMENT;Accrued interests repayment;True;portfolio.models.InvestmentOperationType
-OPE_TYPE_COUPON;Coupon;True;portfolio.models.InvestmentOperationType
-OPE_TYPE_DIVIDEND;Dividend;True;portfolio.models.InvestmentOperationType
+OPE_TYPE_ACCRUED_PAYMENT;Accrued interests repayment;True;portfolio.models.FinancialOperationType
+OPE_TYPE_COUPON;Coupon;True;portfolio.models.FinancialOperationType
+OPE_TYPE_DIVIDEND;Dividend;True;portfolio.models.FinancialOperationType
 OPE_TYPE_PNL;Profits & losses;True;portfolio.models.FinancialOperationType
 OPE_TYPE_INTEREST;Interest;True;portfolio.models.FinancialOperationType
 OPE_STATUS_PENDING;Pending;True;portfolio.models.OperationStatus

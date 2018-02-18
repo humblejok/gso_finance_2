@@ -7,7 +7,7 @@ from gso_finance_2.utility import my_class_import, address_v1_mapping,\
     email_v1_mapping, phone_v1_mapping
 from json import loads
 
-def populate_environment():
+def populate_environment(only_model=None):
     setup_reader = csv.reader(open(os.path.join(RESOURCES_DIR,'Common Setup.csv')), delimiter=';')
     header = None
     models_dict = {}
@@ -16,15 +16,16 @@ def populate_environment():
             header = row
             continue
         current_model = row[header.index('model')]
-        if current_model not in models_dict:
-            print("New model found:" + current_model)
-            models_dict[current_model] = my_class_import(current_model)
-            models_dict[current_model].objects.all().delete()
-        new_instance = models_dict[current_model]()
-        new_instance.identifier = row[header.index('identifier')]
-        new_instance.default_name = row[header.index('default_name')]
-        new_instance.quick_access = row[header.index('quick_access')].lower()=='true'
-        new_instance.save()
+        if only_model==None or only_model==current_model:
+            if current_model not in models_dict:
+                print("New model found:" + current_model)
+                models_dict[current_model] = my_class_import(current_model)
+                models_dict[current_model].objects.all().delete()
+            new_instance = models_dict[current_model]()
+            new_instance.identifier = row[header.index('identifier')]
+            new_instance.default_name = row[header.index('default_name')]
+            new_instance.quick_access = row[header.index('quick_access')].lower()=='true'
+            new_instance.save()
         
 
 ##############################################################

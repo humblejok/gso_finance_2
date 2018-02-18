@@ -10,11 +10,11 @@ def index(request):
     return render(request, 'index.html', {})
 
 class CurrencyViewSet(viewsets.ModelViewSet):
-    queryset = Currency.objects.all().order_by('identifier')
+    queryset = Currency.objects.all().order_by('default_name')
     serializer_class = CurrencySerializer
     
 class QuickCurrencyViewSet(viewsets.ModelViewSet):
-    queryset = Currency.objects.filter(quick_access=True).order_by('identifier')
+    queryset = Currency.objects.filter(quick_access=True).order_by('default_name')
     serializer_class = CurrencySerializer
     
 class CountryViewSet(viewsets.ModelViewSet):

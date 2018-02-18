@@ -14,6 +14,17 @@ def my_class_import(name):
     module = __import__('.'.join(components[:(len(components)-1)]), fromlist=components[-1])
     return getattr(module,components[-1])
 
+# FROM https://github.com/ploopkazoo/python-base64url/blob/master/base64url.py
+def base64urlencode(arg):
+    stripped = arg.split("=")[0]
+    filtered = stripped.replace("+", "-").replace("/", "_")
+    return filtered
+
+def base64urldecode(arg):
+    filtered = arg.replace("-", "+").replace("_", "/")
+    padded = filtered + "=" * ((len(filtered) * -1) % 4)
+    return padded
+
 def full_setup():
     models = my_class_import('common.models')
     Security = my_class_import('security.models.Security')

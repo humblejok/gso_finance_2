@@ -8,42 +8,42 @@ from common.models import Currency, Company, Country, VisibilityLevel,\
     AddressType, PhoneType, MailType, CompanyMemberRole, CompanySubsidiaryRole,\
     Address, Email, Phone, Person, CompanyMember, CompanySubsidiary
 
-class CurrencySerializer(serializers.HyperlinkedModelSerializer):
+class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
         model = Currency
         fields = ('id', 'identifier', 'default_name', 'quick_access')
         
-class CountrySerializer(serializers.HyperlinkedModelSerializer):
+class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
         fields = ('id', 'identifier', 'default_name', 'quick_access')
         
-class VisibilityLevelSerializer(serializers.HyperlinkedModelSerializer):
+class VisibilityLevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = VisibilityLevel
         fields = ('id', 'identifier', 'default_name', 'quick_access')
         
-class AddressTypeSerializer(serializers.HyperlinkedModelSerializer):
+class AddressTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = AddressType
         fields = ('id', 'identifier', 'default_name', 'quick_access')
 
-class PhoneTypeSerializer(serializers.HyperlinkedModelSerializer):
+class PhoneTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PhoneType
         fields = ('id', 'identifier', 'default_name', 'quick_access')
         
-class MailTypeSerializer(serializers.HyperlinkedModelSerializer):
+class MailTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = MailType
         fields = ('id', 'identifier', 'default_name', 'quick_access')
         
-class CompanyMemberRoleTypeSerializer(serializers.HyperlinkedModelSerializer):
+class CompanyMemberRoleTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanyMemberRole
         fields = ('id', 'identifier', 'default_name', 'quick_access')
         
-class CompanySubsidiaryRoleTypeSerializer(serializers.HyperlinkedModelSerializer):
+class CompanySubsidiaryRoleTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanySubsidiaryRole
         fields = ('id', 'identifier', 'default_name', 'quick_access')

@@ -8,6 +8,7 @@ import os
 
 from datetime import datetime as dt
 from json import loads
+from gso_finance_2.tracks_utility import set_track_content
 
 ##############################################################
 #                  ENVIRONMENT MODELS                        #
@@ -44,7 +45,7 @@ class Security(models.Model):
     additional_description = JSONField(null=True, blank=True)
     
     @staticmethod
-    def import_from_csv(clean=False):
+    def import_from_csv(clean=False, skip_save=False, tracks=False):
         if clean:
             Security.objects.all().delete()
         import_reader = csv.reader(open(os.path.join(RESOURCES_DIR,'securities.csv'), encoding='utf-8'), delimiter=';')
@@ -76,7 +77,8 @@ class Security(models.Model):
                     setattr(new_security, column, SecurityType.objects.get(identifier=row[index]))
                 else:
                     setattr(new_security, column, row[index].encode('utf-8') if row[index]!='' else None)
-            new_security.save()
+            if not skip_save:
+                new_security.save()
             for column in ['currency', 'management_company', 'bank', 'provider']:
                 index = header.index(column)
                 if column=='active':
@@ -87,6 +89,12 @@ class Security(models.Model):
                     setattr(new_security, column, Company.objects.get(default_name=row[index]))
                 elif column=='provider' and row[index]!='':
                     setattr(new_security, column, Company.objects.get(default_name=row[index]))                    
-
-            new_security.save()    
-
+            if not skip_save:
+                new_security.save()
+            if tracks:
+                key = new_security.additional_description['aliases']['FINALE']['value']
+                with open(os.path.join(RESOURCES_DIR, key + '.track')) as track_data:
+                    data = loads(track_data.read())
+                print(new_security.provider_identifier)
+                set_track_content(new_security.provider.provider_code, new_security.provider_identifier, 'price', data, False)
+                          

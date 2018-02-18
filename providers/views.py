@@ -1,12 +1,17 @@
 from rest_framework import viewsets, generics
 from providers.models import ExternalSecurity
-from providers.serializers import ExternalSecuritySerializer
+from providers.serializers import ExternalSecuritySerializer,\
+    CompleteExternalSecuritySerializer
 from django.http.response import Http404, HttpResponseBadRequest, JsonResponse
 from gso_finance_2.tracks_utility import get_track_content
 
 class ExternalSecurityViewSet(viewsets.ModelViewSet):
     queryset = ExternalSecurity.objects.all()
-    serializer_class = ExternalSecuritySerializer
+    
+    def get_serializer_class(self):
+        if self.action in ['list', 'retrieve']:
+            return CompleteExternalSecuritySerializer
+        return ExternalSecuritySerializer
     
 class ExternalSecuritySearch(generics.ListAPIView):
     
@@ -21,7 +26,7 @@ class ExternalSecuritySearch(generics.ListAPIView):
     
 class ExternalSecurityUnmapped(generics.ListAPIView):
 
-    serializer_class = ExternalSecuritySerializer
+    serializer_class = CompleteExternalSecuritySerializer
     
     def get_queryset(self):
         queryset = ExternalSecurity.objects.filter(associated__isnull=True).order_by('name')
