@@ -11,10 +11,8 @@ from datetime import datetime as dt
 from django.db.models import Q
 import logging
 from _decimal import Decimal
-from security.serializers import SecuritySerializer
 from gso_finance_2.utility import my_class_import
-from _hashlib import new
-from gso_finance_2.tracks_utility import get_track_content
+from portfolio.computations import security_accounts
 
 
 LOGGER = logging.getLogger(__name__)
@@ -287,7 +285,9 @@ class Portfolio(models.Model):
                 MoneyAccountChain.build_chain(account)
             else:
                 print(account.id)
-                SecurityAccountChain.build_chain(account)
+                security_accounts.build_chain(account)
+                portfolio = account.portfolio_accounts_rel.all()[0]
+                security_accounts.compute_valuation(portfolio, account)
 
     def import_v1_transactions(self):
         accounts_ids = [account.id for account in self.accounts.all()]
@@ -355,62 +355,6 @@ class ConsolidationPortfolio(Portfolio):
     reference_portfolio = models.ForeignKey(Portfolio, related_name='conso_portfolio_reference_rel', null=False)
     included_portfolio = models.ManyToManyField(Portfolio, related_name='conso_included_portfolio_rel', blank=True)
 
-class SecurityAccountChain(models.Model):
-    account = models.ForeignKey(Account, related_name='account_sec_chain')
-    application_date = models.DateField()
-    positions = JSONField(null=True, blank=True)
-    increase = models.DecimalField(max_digits=26, decimal_places=12)
-    decrease = models.DecimalField(max_digits=26, decimal_places=12)
-    increase_fop = models.DecimalField(max_digits=26, decimal_places=12)
-    decrease_fop = models.DecimalField(max_digits=26, decimal_places=12)
-    
-    @staticmethod
-    def build_chain(account):
-        all_operations = Operation.objects.filter(Q(target__id=account.id)).distinct().order_by('value_date', 'id')
-        current_positions = {}
-        previous_chain_block = None
-        for operation in all_operations:
-            print('Operation:' + operation.name)
-            if not operation.security.id in current_positions:
-                current_positions[operation.security.id] = SecuritySerializer(operation.security).data
-                current_positions[operation.security.id]['quantity'] = 0.0
-                current_positions[operation.security.id]['buy_price'] = 0.0
-            previous_amount = current_positions[operation.security.id]['quantity'] * current_positions[operation.security.id]['buy_price']
-            new_price = operation.price if current_positions[operation.security.id]['buy_price']==0.0 else current_positions[operation.security.id]['buy_price']
-            if 'BUY' in operation.operation_type.identifier:
-                current_positions[operation.security.id]['quantity'] = current_positions[operation.security.id]['quantity'] + operation.quantity
-            else:
-                current_positions[operation.security.id]['quantity'] = current_positions[operation.security.id]['quantity'] - operation.quantity
-            if current_positions[operation.security.id]['quantity']==0.0:
-                del current_positions[operation.security.id]
-            else:
-                if 'BUY' in operation.operation_type.identifier or previous_amount<0.0:
-                    new_price = (previous_amount + (operation.price * operation.quantity))/current_positions[operation.security.id]['quantity']
-                current_positions[operation.security.id]['buy_price'] = new_price
-            if previous_chain_block!=None and previous_chain_block.application_date==operation.value_date:
-                new_chain = previous_chain_block
-            else:
-                new_chain = SecurityAccountChain()
-                new_chain.increase = Decimal(0.0)
-                new_chain.decrease = Decimal(0.0)
-                new_chain.increase_fop = Decimal(0.0)
-                new_chain.decrease_fop = Decimal(0.0)
-                new_chain.account = account
-                new_chain.operation = operation.value_date
-            if 'BUY' in operation.operation_type.identifier:
-                if 'FOP' in operation.operation_type.identifier:
-                    new_chain.increase_fop = new_chain.increase_fop + Decimal(operation.amount)
-                else:
-                    new_chain.increase = new_chain.increase + Decimal(operation.amount)
-            else:
-                if 'FOP' in operation.operation_type.identifier:
-                    new_chain.decrease_fop = new_chain.increase_fop + Decimal(operation.amount)
-                else:
-                    new_chain.decrease = new_chain.increase + Decimal(operation.amount)
-                
-            new_chain.positions = [current_positions[key] for key in current_positions]
-            new_chain.save()
-            
 class MoneyAccountChain(models.Model):
     account = models.ForeignKey(Account, related_name='account_chain')
     operation = models.ForeignKey(Operation, related_name='account_operation_chain')

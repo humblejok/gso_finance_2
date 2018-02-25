@@ -37,7 +37,7 @@ class FStoryClient(object):
             self.response = []
         return self.response
 
-def get_track_content(source_key, entity_id, track_type, ascending = True, divisor = 1.0, substract = 0.0):
+def get_track_content(source_key, entity_id, track_type, ascending = True, divisor = 1.0, substract = 0.0, expand_today=False, nofill=False, nafill=None):
     if SOURCES[source_key]['escape']:
         try:
             container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
@@ -47,15 +47,18 @@ def get_track_content(source_key, entity_id, track_type, ascending = True, divis
         print("OUT->" + container_id)
     else:
         container_id = 'entity_' + str(entity_id)
+    f_client = FStoryClient(source_key)
     if divisor==1.0 and substract==0.0 and ascending:
-        f_client = FStoryClient(source_key)
         track_id = 'track_' + str(track_type)
-        raw_values = f_client.request({'command': 'ordered', 'collection_name': container_id, 'element_id': track_id})
+        query = {'command': 'ordered', 'collection_name': container_id, 'element_id': track_id, 'nofill': nofill, 'expand_today': expand_today}
+        if nafill!=None:
+            query['nafill'] = nafill
+        raw_values = f_client.request(query)
         LOGGER.info('Loaded track content of ' + container_id + ' - ' + track_id + ' with ' + str(len(raw_values)) + ' elements.')
         return raw_values
     else:
         track_id = 'track_' + str(track_type)
-        raw_values = f_client.request({'command': 'ordered', 'collection_name': container_id, 'element_id': track_id})
+        raw_values = f_client.request({'command': 'ordered', 'collection_name': container_id, 'element_id': track_id, 'nofill': True})
         LOGGER.info('Track content loaded from ' + container_id + '.' + track_id + ' with ' + str(len(raw_values)) + ' elements.')
         data = [{'date':value['date'], 'value': (value[u'value']/divisor) - substract } for value in raw_values]
         # TODO: Implement ascending(true/false)
@@ -88,4 +91,54 @@ def set_track_content(source_key, entity_id, track_type, values, clean):
     f_client.request({'command': 'set' if clean else 'update', 'collection_name': container_id, 'element_id': track_id, 'data': clean_values})
     LOGGER.info('Track content stored as ' + container_id + '.' + track_id + ' with ' + str(len(values)) + (' updated' if not clean else '') + ' elements.')
     new_values = get_track_content(source_key, entity_id, track_type)
+    return new_values
+
+def compute_track_content(source_key, entity_id, track_type, engine_name, target_type):
+    if SOURCES[source_key]['escape']:
+        try:
+            container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
+            print("BINARY")
+        except:
+            container_id = 'entity_' + base64.b64encode(entity_id.encode('utf8'), '+-'.encode('utf8')).decode('utf8')
+        print("OUT->" + container_id)
+    else:
+        container_id = 'entity_' + str(entity_id)
+    track_id = 'track_' + str(track_type)
+    f_client = FStoryClient(source_key)
+    f_client.request({'command': 'compute', 'collection_name': container_id, 'element_id': track_id, 'arguments':[engine_name, container_id, 'track_' + str(target_type)]})
+    return get_track_content(source_key, entity_id, target_type)
+    
+def get_multi_content(source_key, entity_id, data_type, expand_today=True, nofill=False, nafill=None):
+    if SOURCES[source_key]['escape']:
+        try:
+            container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
+            print("BINARY")
+        except:
+            container_id = 'entity_' + base64.b64encode(entity_id.encode('utf8'), '+-'.encode('utf8')).decode('utf8')
+        print("OUT->" + container_id)
+    else:
+        container_id = 'entity_' + str(entity_id)
+    f_client = FStoryClient(source_key)
+    query = {'command': 'ordered', 'collection_name': container_id, 'element_id': data_type, 'expand_today': expand_today, 'nofill': nofill}
+    if nafill!=None:
+        query['nafill'] = nafill
+    raw_values = f_client.request(query)
+    LOGGER.info('Loaded track content of ' + container_id + ' - ' + data_type + ' with ' + str(len(raw_values)) + ' elements.')
+    return raw_values
+    
+def set_multi_content(source_key, entity_id, data_type, values, clean):
+    LOGGER.info('Storing track content')
+    if SOURCES[source_key]['escape']:
+        try:
+            container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
+            print("BINARY")
+        except:
+            container_id = 'entity_' + base64.b64encode(entity_id.encode('utf8'), '+-'.encode('utf8')).decode('utf8')
+        print("OUT->" + container_id)
+    else:
+        container_id = 'entity_' + str(entity_id)
+    f_client = FStoryClient(source_key)
+    f_client.request({'command': 'set' if clean else 'update', 'collection_name': container_id, 'element_id': data_type, 'data': values})
+    LOGGER.info('Track content stored as ' + container_id + '.' + data_type + ' with ' + str(len(values)) + (' updated' if not clean else '') + ' elements.')
+    new_values = get_multi_content(source_key, entity_id, data_type)
     return new_values

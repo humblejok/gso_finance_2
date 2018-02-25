@@ -8,7 +8,7 @@ from common.views import CurrencyViewSet, CompanyViewSet, QuickCurrencyViewSet,\
     PhoneTypeViewSet, QuickPhoneTypeViewSet, MailTypeViewSet,\
     QuickMailTypeViewSet, PersonViewSet, ProviderSearch
 from portfolio.views import PortfolioViewSet, AccountViewSet, AccountOperations,\
-    PortfolioHoldings, AccountTypeViewSet, QuickAccountTypeViewSet,\
+    AccountTypeViewSet, QuickAccountTypeViewSet,\
     QuickFinancialOperationTypeViewSet, FinancialOperationTypeViewSet,\
     OperationStatusViewSet, QuickOperationStatusViewSet
 from providers.views import ExternalSecurityViewSet, ExternalSecuritySearch,\
@@ -60,18 +60,18 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(router.urls)),
     url(r'^index.html', views.index, name='index'),
-    
+
     url(r'^external_securities_search/(?P<provider_code>.+)/(?P<provider_identifier>.+)/$', ExternalSecuritySearch.as_view()),
     url(r'^external_securities_unmapped/$', ExternalSecurityUnmapped.as_view()),
     url(r'^external_securities_history/(?P<external_security_id>[0-9]+)/$', external_securities_history),
-    
+
     url(r'^securities_history/(?P<security_id>[0-9]+)/$', securities_history),
     url(r'^securities_search/(?P<search_filter>.+)/$', SecuritiesSearch.as_view()),
-    
+
     url(r'^account_operations/(?P<account_id>[0-9]+)/$', AccountOperations.as_view()),
-    url(r'^portfolio_holdings/(?P<portfolio_id>[0-9]+)/$', PortfolioHoldings.as_view()),
-    
+    #url(r'^portfolio_holdings/(?P<portfolio_id>[0-9]+)/$', PortfolioHoldings.as_view()),
+
     url(r'^providers_search/(?P<provider_code>.+)/$', ProviderSearch.as_view()),
-    
-   
+
+
 ]

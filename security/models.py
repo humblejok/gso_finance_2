@@ -44,6 +44,14 @@ class Security(models.Model):
     additional_information = HStoreField(null=True, blank=True)
     additional_description = JSONField(null=True, blank=True)
     
+    def get_price_divisor(self):
+        if self.additional_information!=None and 'price_divisor' in self.additional_information:
+            return self.additional_information['price_divisor']
+        if self.type.identifier=='SECTYP_BOND':
+            return 100.0
+        return 1.0
+        
+    
     @staticmethod
     def import_from_csv(clean=False, skip_save=False, tracks=False):
         if clean:

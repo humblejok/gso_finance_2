@@ -6,10 +6,9 @@ Created on 2 janv. 2018
 from rest_framework import serializers
 from portfolio.models import Portfolio, Account, Operation,\
     FinancialOperationType, OperationStatus, MoneyAccountChain,\
-    SecurityAccountChain, AccountType
+    AccountType
 import logging
 from common.models import Currency
-from locale import currency
     
 LOGGER = logging.getLogger(__name__)
 
@@ -101,10 +100,4 @@ class MoneyAccountChainSerializer(serializers.ModelSerializer):
     class Meta:
         model = MoneyAccountChain
         fields = ('id', 'account', 'operation', 'valid_until', 'operation_amount', 'account_amount')
-        depth = 3
-        
-class SecurityAccountChainSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SecurityAccountChain
-        fields = ('id', 'account', 'operation', 'valid_until', 'positions')
         depth = 3
