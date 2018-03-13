@@ -42,9 +42,9 @@ def build_chain(account):
         amount = amount + operation_amount
         history.append({'date': key_date, 'value': amount})
         if operation.operation_type.identifier in ['OPE_TYPE_FEES','OPE_TYPE_ACCRUED_PAYMENT','OPE_TYPE_COUPON', 'OPE_TYPE_DIVIDEND', 'OPE_TYPE_COMMISSION', 'OPE_TYPE_TAX', 'OPE_TYPE_PNL']:
-            mvt_pnl[key_date] = mvt_pnl[key_date] + amount
-        else:
-            mvt_no_pnl[key_date] = mvt_no_pnl[key_date] + amount
+            mvt_pnl[key_date] = mvt_pnl[key_date] + operation_amount
+        elif operation.operation_type.identifier not in ['OPE_TYPE_BUY', 'OPE_TYPE_SELL', 'OPE_TYPE_BUY_FOP', 'OPE_TYPE_SELL_FOP']:
+            mvt_no_pnl[key_date] = mvt_no_pnl[key_date] + operation_amount
             
     set_track_content('finance', account.id, 'cash', history, True)
     set_track_content('finance', account.id, 'mvt_pnl', [{'date': key, 'value': mvt_pnl[key]} for key in mvt_pnl], True)
