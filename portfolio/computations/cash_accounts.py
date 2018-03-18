@@ -4,7 +4,8 @@ Created on 25 févr. 2018
 @author: sdejo
 '''
 from django.db.models import Q
-from gso_finance_2.tracks_utility import set_track_content, get_track_content
+from gso_finance_2.tracks_utility import set_track_content, get_track_content,\
+    to_pandas
 from gso_finance_2.utility import my_class_import
 from security import forex_utility
 
@@ -118,4 +119,8 @@ def compute_valuation(portfolio, account):
     mgmt_amount = pd.DataFrame(mvt_no_pnl['mgmt']).rename(columns={'mgmt': 'value'})
     mgmt_amount['date'] = mgmt_amount.index.strftime('%Y-%m-%d')
     set_track_content('finance', account.id, 'mvt_nop_pnl_mgmt', mgmt_amount.to_dict('records'), True)
+    
+def update_valuation(portfolio, account):
+    None
+    
     

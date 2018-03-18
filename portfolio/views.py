@@ -5,6 +5,8 @@ from portfolio.serializers import AccountSerializer,  OperationSerializer, Money
     CompletePortfolioSerializer, PortfolioSerializer, AccountTypeSerializer,\
     FinancialOperationTypeSerializer, OperationStatusSerializer
 from django.db.models import Q
+from django.http.response import Http404, JsonResponse
+from gso_finance_2.tracks_utility import get_track_content
 
 class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
@@ -55,3 +57,12 @@ class OperationStatusViewSet(viewsets.ModelViewSet):
 class QuickOperationStatusViewSet(viewsets.ModelViewSet):
     queryset = OperationStatus.objects.filter(quick_access=True).order_by('identifier')
     serializer_class = OperationStatusSerializer
+    
+    
+def portfolios_history(request, portfolio_id, data_type):
+    try:
+        working_portfolio = Portfolio.objects.get(id=portfolio_id)
+    except:
+        raise Http404("Portfolio with id [" + portfolio_id + "] is not available.")
+    track_data = get_track_content('finance', working_portfolio.id, data_type)
+    return JsonResponse(track_data,safe=False)

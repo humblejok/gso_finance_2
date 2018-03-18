@@ -5,13 +5,14 @@ Created on 25 févr. 2018
 '''
 from django.db.models import Q
 from gso_finance_2.tracks_utility import set_multi_content, set_track_content,\
-    get_multi_content, get_track_content
+    get_multi_content, get_track_content, to_pandas, from_pandas
 from gso_finance_2.utility import my_class_import
 
 import pandas as pd
 import copy
 from security.models import Security
 from security import forex_utility
+from datetime import datetime as dt
 
 def build_chain(account):
     Operation = my_class_import('portfolio.models.Operation')
@@ -86,21 +87,22 @@ def compute_valuation(portfolio, account):
     
     for security_id in positions:
         security = Security.objects.get(id=security_id)
-        track = get_track_content(security.provider.provider_code, security.provider_identifier, 'price', expand_today=True)
-        prices = pd.DataFrame(track)
-        prices = prices.set_index('date')
-        prices.index = pd.to_datetime(prices.index)
+        prices = get_track_content(security.provider.provider_code, security.provider_identifier, 'price', expand_today=True)
+        prices = to_pandas(prices)
         prices = prices.rename(columns={'value': security_id})
         prices = prices / security.get_price_divisor()
         tracks.append(prices)
     prices = pd.concat(tracks, axis='columns').reindex(positions.index).bfill().ffill()
     holdings = positions * prices
     holdings = holdings.fillna(0.0)
+    holdings['date'] = holdings.index.strftime('%Y-%m-%d')
+    valued_holdings = from_pandas(holdings)
+    set_multi_content('finance', account.id, 'valued_holdings', valued_holdings, True)
+    holdings = holdings.drop('date', axis=1)
     holdings['account'] = holdings.sum(axis='columns')
     if security.currency.identifier!=portfolio.currency.identifier:
         spot_portfolio = pd.DataFrame(forex_utility.find_spot_track(security.currency.identifier, portfolio.currency.identifier))
-        spot_portfolio = spot_portfolio.set_index('date')
-        spot_portfolio.index = pd.to_datetime(spot_portfolio.index)
+        spot_portfolio = to_pandas(spot_portfolio)
         spot_portfolio = spot_portfolio.reindex(holdings.index)
         holdings['portfolio'] = holdings['account'] * spot_portfolio['value']
         fop_mvts['portfolio'] = fop_mvts['account'] * spot_portfolio['value']
@@ -109,14 +111,14 @@ def compute_valuation(portfolio, account):
         fop_mvts['portfolio'] = fop_mvts['account']
     if security.currency.identifier!=portfolio.management_company.base_currency.identifier:
         spot_mgmt = pd.DataFrame(forex_utility.find_spot_track(security.currency.identifier, portfolio.management_company.base_currency.identifier))
-        spot_mgmt = spot_mgmt.set_index('date')
-        spot_mgmt.index = pd.to_datetime(spot_mgmt.index)
+        spot_mgmt = to_pandas(spot_mgmt)
         spot_mgmt = spot_mgmt.reindex(holdings.index)
         holdings['mgmt'] = holdings['account'] * spot_mgmt['value']
         fop_mvts['mgmt'] = fop_mvts['account'] * spot_mgmt['value']
     else:
         holdings['mgmt'] = holdings['account']
         fop_mvts['mgmt'] = fop_mvts['account']
+        
     account_amount = pd.DataFrame(holdings['account']).rename(columns={'account': 'value'})
     account_amount['date'] = account_amount.index.strftime('%Y-%m-%d')
     set_track_content('finance', account.id, 'account', account_amount.to_dict('records'), True)
@@ -136,3 +138,46 @@ def compute_valuation(portfolio, account):
     mgmt_fop = pd.DataFrame(fop_mvts['mgmt']).rename(columns={'mgmt': 'value'})
     mgmt_fop['date'] = mgmt_fop.index.strftime('%Y-%m-%d')
     set_track_content('finance', account.id, 'fop_mgmt', mgmt_fop.to_dict('records'), True)
+    
+def update_valuation(portfolio, account):
+    start_date = portfolio.inception_date.strftime('%Y-%m-%d')
+    today = dt.today().strftime('%Y-%m-%d')
+    dates_range = pd.date_range(start=start_date, end=today, freq='D')
+    
+    all_positions = get_multi_content('finance', account.id, 'valued_holdings', expand_today=True)
+    all_positions = to_pandas(all_positions, multi=True)
+    all_positions = all_positions.reindex(dates_range).fillna(0.0)
+    
+    amount_local = get_track_content('finance', account.id, 'account', expand_today=True)
+    amount_local = to_pandas(amount_local)
+    amount_local = amount_local.reindex(dates_range).fillna(0.0)
+    
+    account_weights = get_track_content('finance', account.id, 'weight', expand_today=True)
+    account_weights = to_pandas(account_weights)
+    account_weights = account_weights.reindex(dates_range).fillna(0.0)      
+                    
+    all_positions_local = all_positions.div(amount_local['value'], axis=0).fillna(0.0)
+    all_positions_portfolio = all_positions_local.mul(account_weights['value'], axis=0).fillna(0.0)
+
+    all_positions_local['date'] = all_positions_local.index.strftime('%Y-%m-%d')
+    all_positions_local = from_pandas(all_positions_local, True)
+    set_multi_content('finance', account.id, 'holdings_weights_local', all_positions_local, True)
+
+    all_positions_portfolio['date'] = all_positions_portfolio.index.strftime('%Y-%m-%d')
+    all_positions_portfolio = from_pandas(all_positions_portfolio, True)
+    set_multi_content('finance', account.id, 'holdings_weights_portfolio', all_positions_portfolio, True)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

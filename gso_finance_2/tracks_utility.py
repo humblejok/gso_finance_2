@@ -9,6 +9,7 @@ from json import dumps
 import logging
 import base64
 import requests
+import pandas as pd
 
 SOURCES = {'novastone': {'url': 'http://jiren:5003/query', 'escape': False},
            'finance': {'url': 'http://jiren:5002/query', 'escape': False},
@@ -37,14 +38,27 @@ class FStoryClient(object):
             self.response = []
         return self.response
 
+def from_pandas(data, multi=False):
+    if multi:
+        return { record['date'] : {token: record[token] for token in record if token!='date'} for record in data.to_dict('records') }
+    else:
+        data['date'] = data.index.strftime('%Y-%m-%d')
+        return data.to_dict('records')
+
+def to_pandas(data, multi=False):
+    df = pd.DataFrame(data)
+    df = df.set_index('date')
+    df.index = pd.to_datetime(df.index)
+    if multi:
+        df = df['value'].apply(pd.Series).fillna(0.0)
+    return df
+
 def get_track_content(source_key, entity_id, track_type, ascending = True, divisor = 1.0, substract = 0.0, expand_today=False, nofill=False, nafill=None):
     if SOURCES[source_key]['escape']:
         try:
             container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
-            print("BINARY")
         except:
             container_id = 'entity_' + base64.b64encode(entity_id.encode('utf8'), '+-'.encode('utf8')).decode('utf8')
-        print("OUT->" + container_id)
     else:
         container_id = 'entity_' + str(entity_id)
     f_client = FStoryClient(source_key)
@@ -78,10 +92,8 @@ def set_track_content(source_key, entity_id, track_type, values, clean):
     if SOURCES[source_key]['escape']:
         try:
             container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
-            print("BINARY")
         except:
             container_id = 'entity_' + base64.b64encode(entity_id.encode('utf8'), '+-'.encode('utf8')).decode('utf8')
-        print("OUT->" + container_id)
     else:
         container_id = 'entity_' + str(entity_id)
     track_id = 'track_' + str(track_type)
@@ -90,17 +102,13 @@ def set_track_content(source_key, entity_id, track_type, values, clean):
     f_client = FStoryClient(source_key)
     f_client.request({'command': 'set' if clean else 'update', 'collection_name': container_id, 'element_id': track_id, 'data': clean_values})
     LOGGER.info('Track content stored as ' + container_id + '.' + track_id + ' with ' + str(len(values)) + (' updated' if not clean else '') + ' elements.')
-    new_values = get_track_content(source_key, entity_id, track_type)
-    return new_values
 
 def compute_track_content(source_key, entity_id, track_type, engine_name, target_type):
     if SOURCES[source_key]['escape']:
         try:
             container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
-            print("BINARY")
         except:
             container_id = 'entity_' + base64.b64encode(entity_id.encode('utf8'), '+-'.encode('utf8')).decode('utf8')
-        print("OUT->" + container_id)
     else:
         container_id = 'entity_' + str(entity_id)
     track_id = 'track_' + str(track_type)
@@ -112,10 +120,8 @@ def get_multi_content(source_key, entity_id, data_type, expand_today=True, nofil
     if SOURCES[source_key]['escape']:
         try:
             container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
-            print("BINARY")
         except:
             container_id = 'entity_' + base64.b64encode(entity_id.encode('utf8'), '+-'.encode('utf8')).decode('utf8')
-        print("OUT->" + container_id)
     else:
         container_id = 'entity_' + str(entity_id)
     f_client = FStoryClient(source_key)
@@ -131,10 +137,8 @@ def set_multi_content(source_key, entity_id, data_type, values, clean):
     if SOURCES[source_key]['escape']:
         try:
             container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
-            print("BINARY")
         except:
             container_id = 'entity_' + base64.b64encode(entity_id.encode('utf8'), '+-'.encode('utf8')).decode('utf8')
-        print("OUT->" + container_id)
     else:
         container_id = 'entity_' + str(entity_id)
     f_client = FStoryClient(source_key)

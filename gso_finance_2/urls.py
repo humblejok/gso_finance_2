@@ -10,7 +10,7 @@ from common.views import CurrencyViewSet, CompanyViewSet, QuickCurrencyViewSet,\
 from portfolio.views import PortfolioViewSet, AccountViewSet, AccountOperations,\
     AccountTypeViewSet, QuickAccountTypeViewSet,\
     QuickFinancialOperationTypeViewSet, FinancialOperationTypeViewSet,\
-    OperationStatusViewSet, QuickOperationStatusViewSet
+    OperationStatusViewSet, QuickOperationStatusViewSet, portfolios_history
 from providers.views import ExternalSecurityViewSet, ExternalSecuritySearch,\
     ExternalSecurityUnmapped, external_securities_history
 from security.views import SecurityViewSet, securities_history,\
@@ -72,6 +72,8 @@ urlpatterns = [
     #url(r'^portfolio_holdings/(?P<portfolio_id>[0-9]+)/$', PortfolioHoldings.as_view()),
 
     url(r'^providers_search/(?P<provider_code>.+)/$', ProviderSearch.as_view()),
+    
+    url(r'^portfolios_history/(?P<portfolio_id>[0-9]+)/(?P<data_type>.+)/$', portfolios_history),
 
 
 ]

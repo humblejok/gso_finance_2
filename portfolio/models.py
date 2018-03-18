@@ -194,7 +194,13 @@ class Portfolio(models.Model):
 
     current_aum_local = models.FloatField(default=0.0)
     current_aum_mgmt = models.FloatField(default=0.0)
-
+    
+    previous_day = models.FloatField(default=0.0)
+    week_to_date = models.FloatField(default=0.0)
+    month_to_date = models.FloatField(default=0.0)
+    quarter_to_date = models.FloatField(default=0.0)
+    year_to_date = models.FloatField(default=0.0)
+    
     accounts = models.ManyToManyField(Account, blank=True, related_name='portfolio_accounts_rel')
 
     additional_information = HStoreField(null=True, blank=True)

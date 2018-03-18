@@ -50,6 +50,9 @@ class PortfolioSerializer(serializers.ModelSerializer):
         for field_key in ['currency', 'management_company', 'relationship_manager', 'bank', 'provider', 'account']:
             if field_key in self.initial_data and isinstance(self.initial_data[field_key], dict):
                 self.initial_data[field_key] = self.initial_data[field_key]['id']
+        for field_key in ['closing_date', 'inception_date', 'last_computation', 'last_update']:
+            if field_key in self.initial_data and self.initial_data[field_key]!=None and len(self.initial_data[field_key])>10:
+                self.initial_data[field_key] = self.initial_data[field_key][0:10]
             
         return serializers.ModelSerializer.is_valid(self, raise_exception=raise_exception)
     
