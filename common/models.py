@@ -280,6 +280,7 @@ class User(models.Model):
             print("Creating:" + row[1])
             new_user = User()
             new_user.save()
+            '''
             for column in ['username', 'hashpwd', 'salt']:
                 all_data = loads(row[header.index(column)], encoding='utf-8')
                 for data in all_data:
@@ -287,3 +288,4 @@ class User(models.Model):
                     working_class = my_class_import(data['model'])
                     getattr(new_user, column).add(working_class.instanciate_from_dict(data))
             new_user.save()
+            '''

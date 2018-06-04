@@ -33,6 +33,14 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='User',
+            fields=[
+                ('username', models.CharField(max_length=256)),
+                ('hashpwd', models.CharField(max_length=256)),
+                ('salt', models.IntegerField()),
+            ],
+        ),
+        migrations.CreateModel(
             name='Company',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
