@@ -31,5 +31,7 @@ def full_setup():
     Portfolio = my_class_import('portfolio.models.Portfolio')
     models.populate_environment()
     models.Company.import_from_csv(True)
+    models.User.import_from_csv(True)
     Security.import_from_csv(True)
     Portfolio.import_from_csv(True)
+    

@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from rest_framework import viewsets, generics
 from common.models import Currency, Company, Country, VisibilityLevel,\
-    AddressType, PhoneType, MailType, Person
+    AddressType, PhoneType, MailType, Person, User
 from common.serializers import CurrencySerializer, CompanySerializer,\
     CountrySerializer, VisibilityLevelSerializer, AddressTypeSerializer,\
-    PhoneTypeSerializer, MailTypeSerializer, PersonSerializer
+    PhoneTypeSerializer, MailTypeSerializer, PersonSerializer, UserSerializer
 
 def index(request):
     return render(request, 'index.html', {})
@@ -73,3 +73,7 @@ class ProviderSearch(generics.ListAPIView):
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all().order_by('default_name')
     serializer_class = PersonSerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by('username')
+    serializer_class = UserSerializer
