@@ -6,7 +6,7 @@ from common.views import CurrencyViewSet, CompanyViewSet, QuickCurrencyViewSet,\
     CountryViewSet, QuickCountryViewSet, VisibilityLevelViewSet,\
     QuickVisibilityLevelViewSet, AddressTypeViewSet, QuickAddressTypeViewSet,\
     PhoneTypeViewSet, QuickPhoneTypeViewSet, MailTypeViewSet,\
-    QuickMailTypeViewSet, PersonViewSet, ProviderSearch
+    QuickMailTypeViewSet, PersonViewSet, ProviderSearch, UserViewSet
 from portfolio.views import PortfolioViewSet, AccountViewSet, AccountOperations,\
     AccountTypeViewSet, QuickAccountTypeViewSet,\
     QuickFinancialOperationTypeViewSet, FinancialOperationTypeViewSet,\
@@ -52,6 +52,7 @@ router.register(r'persons', PersonViewSet)
 router.register(r'portfolios', PortfolioViewSet)
 router.register(r'accounts', AccountViewSet)
 router.register(r'companies', CompanyViewSet)
+router.register(r'users', UserViewSet)
 
 router.register(r'securities', SecurityViewSet)
 router.register(r'external_securities', ExternalSecurityViewSet)

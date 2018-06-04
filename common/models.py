@@ -262,7 +262,7 @@ class CompanySubsidiary(models.Model):
 class User(models.Model):
     username = models.CharField(max_length=256)
     hashpwd = models.CharField(max_length=256)
-    salt = models.IntegerField(max_length=256)
+    salt = models.IntegerField()
 
     @staticmethod
     def import_from_csv(clean=False):
