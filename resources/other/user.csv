@@ -1,3 +1,0 @@
-model;username;hashpwd;salt
-
-common.models.User;gba;hashthis;0

@@ -6,7 +6,7 @@ Created on 2 janv. 2018
 from rest_framework import serializers
 from common.models import Currency, Company, Country, VisibilityLevel,\
     AddressType, PhoneType, MailType, CompanyMemberRole, CompanySubsidiaryRole,\
-    Address, Email, Phone, Person, CompanyMember, CompanySubsidiary, User
+    Address, Email, Phone, Person, CompanyMember, CompanySubsidiary
 
 class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
@@ -90,9 +90,3 @@ class CompanySubsidiarySerializer(serializers.ModelSerializer):
         model = CompanySubsidiary
         fields = ('id', 'company', 'role')
         depth = 2
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('username', 'hashpwd', 'salt')
-        depth = 1

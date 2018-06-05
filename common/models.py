@@ -259,33 +259,3 @@ class CompanySubsidiary(models.Model):
         new_instance.save()
         return new_instance
     
-class User(models.Model):
-    username = models.CharField(max_length=256)
-    hashpwd = models.CharField(max_length=256)
-    salt = models.IntegerField()
-
-    @staticmethod
-    def import_from_csv(clean=False):
-        if clean:
-            User.objects.all().delete()
-        import_reader = csv.reader(open(os.path.join(RESOURCES_DIR,'user.csv'), encoding='utf-8'), delimiter=';')
-        header = None
-        print("User - First pass")
-        for row in import_reader:
-            if len(row)==0:
-                continue
-            if header==None:
-                header = row
-                continue
-            print("Creating:" + row[1])
-            new_user = User()
-            new_user.save()
-            '''
-            for column in ['username', 'hashpwd', 'salt']:
-                all_data = loads(row[header.index(column)], encoding='utf-8')
-                for data in all_data:
-                    print(data)
-                    working_class = my_class_import(data['model'])
-                    getattr(new_user, column).add(working_class.instanciate_from_dict(data))
-            new_user.save()
-            '''
