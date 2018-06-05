@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets, generics
+from django.contrib.auth import authenticate
 from common.models import Currency, Company, Country, VisibilityLevel,\
     AddressType, PhoneType, MailType, Person
 from common.serializers import CurrencySerializer, CompanySerializer,\
@@ -69,7 +70,14 @@ class ProviderSearch(generics.ListAPIView):
         queryset = Company.objects.filter(is_provider=True, provider_code=provider_code)
         
         return queryset
-    
+
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all().order_by('default_name')
     serializer_class = PersonSerializer
+
+class AuthenticateUser():
+    user = authenticate(username='john', password='secret')
+    if user is not None:
+        print('y')
+    else:
+        print('n')

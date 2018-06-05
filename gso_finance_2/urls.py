@@ -7,7 +7,7 @@ from common.views import CurrencyViewSet, CompanyViewSet, QuickCurrencyViewSet,\
     CountryViewSet, QuickCountryViewSet, VisibilityLevelViewSet,\
     QuickVisibilityLevelViewSet, AddressTypeViewSet, QuickAddressTypeViewSet,\
     PhoneTypeViewSet, QuickPhoneTypeViewSet, MailTypeViewSet,\
-    QuickMailTypeViewSet, PersonViewSet, ProviderSearch
+    QuickMailTypeViewSet, PersonViewSet, ProviderSearch, AuthenticateUser
 from portfolio.views import PortfolioViewSet, AccountViewSet, AccountOperations,\
     AccountTypeViewSet, QuickAccountTypeViewSet,\
     QuickFinancialOperationTypeViewSet, FinancialOperationTypeViewSet,\
@@ -57,10 +57,14 @@ router.register(r'companies', CompanyViewSet)
 router.register(r'securities', SecurityViewSet)
 router.register(r'external_securities', ExternalSecurityViewSet)
 
+router.register(r'authenticate', AuthenticateUser)
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(router.urls)),
     url(r'^index.html', views.index, name='index'),
+    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^logout/$', auth_views.logout, name='logout'),
 
     url(r'^external_securities_search/(?P<provider_code>.+)/(?P<provider_identifier>.+)/$', ExternalSecuritySearch.as_view()),
     url(r'^external_securities_unmapped/$', ExternalSecurityUnmapped.as_view()),
@@ -74,8 +78,5 @@ urlpatterns = [
 
     url(r'^providers_search/(?P<provider_code>.+)/$', ProviderSearch.as_view()),
     
-    url(r'^portfolios_history/(?P<portfolio_id>[0-9]+)/(?P<data_type>.+)/$', portfolios_history),
-
-    url(r'^login/$', auth_views.login, name='login'),
-    url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'^portfolios_history/(?P<portfolio_id>[0-9]+)/(?P<data_type>.+)/$', portfolios_history),    
 ]
