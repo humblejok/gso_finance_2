@@ -1,5 +1,6 @@
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from common import views
 from rest_framework import routers
 from common.views import CurrencyViewSet, CompanyViewSet, QuickCurrencyViewSet,\
@@ -75,5 +76,7 @@ urlpatterns = [
     
     url(r'^portfolios_history/(?P<portfolio_id>[0-9]+)/(?P<data_type>.+)/$', portfolios_history),
 
-
+    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'^admin/', admin.site.urls),
 ]
