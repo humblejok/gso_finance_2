@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from authentication import views as auth
 from common import views
 from rest_framework import routers
 from common.views import CurrencyViewSet, CompanyViewSet, QuickCurrencyViewSet,\
@@ -61,6 +62,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(router.urls)),
     url(r'^index.html', views.index, name='index'),
+    url(r'^authenticate/', auth.user_auth, name='user_auth'),
 
     url(r'^external_securities_search/(?P<provider_code>.+)/(?P<provider_identifier>.+)/$', ExternalSecuritySearch.as_view()),
     url(r'^external_securities_unmapped/$', ExternalSecurityUnmapped.as_view()),
