@@ -58,7 +58,7 @@ router.register(r'companies', CompanyViewSet)
 router.register(r'securities', SecurityViewSet)
 router.register(r'external_securities', ExternalSecurityViewSet)
 
-router.register(r'authenticate', ListUsers)
+router.register(r'authenticate', ListUsers, 'authenticate')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
