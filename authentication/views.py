@@ -1,15 +1,21 @@
-from django.contrib.auth import authenticate, login
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
+from django.contrib.auth.models import User
 
-def user_auth(request):
-    print('request')
-    '''
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        print('foo')
-    else:
-        print('bar')
-    '''
-    return
+class ListUsers(APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAdminUser,)
+
+    def get(self, request, format=None):
+        """
+        Return a list of all users.
+        """
+        usernames = [user.username for user in User.objects.all()]
+        return Response(usernames)
