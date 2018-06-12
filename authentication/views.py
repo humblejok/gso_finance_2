@@ -11,15 +11,10 @@ from django.utils.decorators import method_decorator
 class UserLogin(View):
     response = HttpResponse()
 
-    def get(self, request):
-        print(request)
-        return self.response
-
     def post(self, request):
         print(request)
-        #username = request.POST['user']['username']
-        #password = request.POST['user']['password']
-        user = authenticate(request, username='alice', password='cooperStalker')
+        user = request.POST.get('user')
+        user = authenticate(request, username=user.username, password=user.password)
         if user is not None:
             #login(request, user)
             # Redirect to a success page.
@@ -29,20 +24,3 @@ class UserLogin(View):
             # Return an 'invalid login' error message.
             print('n')
             return self.response
-
-'''
-form = self.form_class(request.POST)
-if form.is_valid():
-    user = form.save(commit=False)
-    username = form.cleaned_data['username']
-    password = form.cleaned_data['password']
-    user.set_password(password)
-    user.save()
-    user = authenticate(username=username, password=password)
-
-    if user is not None:
-        if user.is_active:
-            self.login(request, user)
-            return self.redirect('index')
-    return render(request, self.template_name, {'form': form})
-'''
