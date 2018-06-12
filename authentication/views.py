@@ -9,7 +9,7 @@ class UserLogin(View):
 
     def get(self, request):
         print(request.POST)
-        return response
+        return self.response
 
     def post(self, request):
         print(request.POST)
@@ -20,11 +20,11 @@ class UserLogin(View):
             login(request, user)
             # Redirect to a success page.
             print('y')
-            return response
+            return self.response
         else:
             # Return an 'invalid login' error message.
             print('n')
-            return response
+            return self.response
 
 '''
 form = self.form_class(request.POST)
