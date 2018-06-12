@@ -14,7 +14,8 @@ class UserLogin(View):
     def post(self, request):
         print(request)
         user = request.POST.get('user')
-        user = authenticate(request, username=user.username, password=user.password)
+        print(user)
+        user = authenticate(request, username=user, password=user)
         if user is not None:
             #login(request, user)
             # Redirect to a success page.
