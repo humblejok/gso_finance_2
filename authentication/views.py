@@ -16,5 +16,5 @@ class UserLogin(View):
         if user is not None:
             #login(request, user)
             value = True
-        response = HttpResponse(value, status=200, dataType='boolean')
+        response = HttpResponse(status=200)
         return response
