@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.shortcuts import redirect
 import json
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -17,4 +18,4 @@ class UserLogin(View):
             #login(request, user)
             value = True
         response = HttpResponse(status=200)
-        return response
+        return redirect('http://localhost:4200/')
