@@ -12,6 +12,7 @@ class UserLogin(View):
         #return render(request, self.template_name, {'form': form})
 
     def post(self, request):
+        print(request.POST)
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
