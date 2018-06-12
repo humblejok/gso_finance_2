@@ -16,7 +16,7 @@ class UserLogin(View):
         print(request)
         user = json.loads(request.body.decode('utf-8'))
         print(user)
-        user = authenticate(request, username=user, password=user)
+        user = authenticate(request, username=user['username'], password=user['password'])
         if user is not None:
             #login(request, user)
             # Redirect to a success page.
