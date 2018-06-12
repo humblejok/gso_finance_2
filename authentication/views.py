@@ -12,16 +12,16 @@ class UserLogin(View):
     response = HttpResponse()
 
     def get(self, request):
-        print(request.POST)
+        print(request)
         return self.response
 
     def post(self, request):
-        print(request.POST)
-        username = request.POST['user']['username']
-        password = request.POST['user']['password']
-        user = authenticate(request, username=username, password=password)
+        print(request)
+        #username = request.POST['user']['username']
+        #password = request.POST['user']['password']
+        user = authenticate(request, username='username', password='password')
         if user is not None:
-            login(request, user)
+            #login(request, user)
             # Redirect to a success page.
             print('y')
             return self.response
