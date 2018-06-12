@@ -6,10 +6,6 @@ from django.contrib.auth.models import User
 
 class UserLogin(View):
 
-    def get(self, request):
-        print('g')
-        #form = self.form_class(None)
-        #return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         print(request.POST)
