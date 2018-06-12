@@ -8,14 +8,12 @@ import json
 
 @method_decorator(csrf_exempt, name='dispatch')
 class UserLogin(View):
-    response = HttpResponse()
 
     def post(self, request):
         user = json.loads(request.body.decode('utf-8'))
         user = authenticate(request, username=user['username'], password=user['password'])
         if user is not None:
             login(request, user)
-            self.response('success')
+            return HttpResponse('success')
         else:
-            self.response('failure')
-        return self.response
+            return HttpResponse('failure')
