@@ -10,11 +10,11 @@ import json
 class UserLogin(View):
 
     def post(self, request):
+        value = False
         user = json.loads(request.body.decode('utf-8'))
         user = authenticate(request, username=user['username'], password=user['password'])
         if user is not None:
-            login(request, user)
-            request.session['logged'] = 'success'
-        else:
-            request.session['logged'] = 'failure'
-        return HttpResponse(status=200)
+            #login(request, user)
+            value = True
+        response = HttpResponse(value, status=200)
+        return response
