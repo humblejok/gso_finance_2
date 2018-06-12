@@ -1,7 +1,9 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from authentication.views import ListUsers
+from authentication import views as userAuth
+from rest_framework.urlpatterns import format_suffix_pattern()
+
 from common import views
 from rest_framework import routers
 from common.views import CurrencyViewSet, CompanyViewSet, QuickCurrencyViewSet,\
@@ -58,12 +60,11 @@ router.register(r'companies', CompanyViewSet)
 router.register(r'securities', SecurityViewSet)
 router.register(r'external_securities', ExternalSecurityViewSet)
 
-router.register(r'authenticate', ListUsers, 'authenticate')
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(router.urls)),
     url(r'^index.html', views.index, name='index'),
+    url(r'^userlist/', userAuth.ListUsers.as_view()),
 
     url(r'^external_securities_search/(?P<provider_code>.+)/(?P<provider_identifier>.+)/$', ExternalSecuritySearch.as_view()),
     url(r'^external_securities_unmapped/$', ExternalSecurityUnmapped.as_view()),
@@ -79,3 +80,5 @@ urlpatterns = [
     
     url(r'^portfolios_history/(?P<portfolio_id>[0-9]+)/(?P<data_type>.+)/$', portfolios_history),    
 ]
+
+urlpatterns = format_suffix_pattern(urlpatterns)
