@@ -11,11 +11,15 @@ import json
 class UserLogin(View):
 
     def post(self, request):
-        value = False
-        user = json.loads(request.body.decode('utf-8'))
-        user = authenticate(request, username=user['username'], password=user['password'])
-        if user is not None:
-            #login(request, user)
-            value = True
+        if request.user.is_authenticated():
+            print('User Is Authenticated')
+        else:
+            user = json.loads(request.body.decode('utf-8'))
+            user = authenticate(request, username=user['username'], password=user['password'])
+            if user is not None:
+                login(request, user)
+                print('User Logged In')
+            else:
+                print('Invalid Credentials')
         response = HttpResponse(status=200)
-        return redirect('http://localhost:4200/')
+        return response
