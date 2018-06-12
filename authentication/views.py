@@ -19,5 +19,5 @@ class UserLogin(View):
         else:
             self.response['feedback'] = 'failure'
         #request.body = json.loads(self.response['feedback'])
-        print(self.response)
+        print(self.response.body)
         return self.response
