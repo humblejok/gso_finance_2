@@ -2,12 +2,14 @@ from rest_framework.views import View
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-
+from django.http import HttpResponse
 
 class UserLogin(View):
+    response = HttpResponse()
 
     def get(self, request):
         print(request.POST)
+        return response
 
     def post(self, request):
         print(request.POST)
@@ -18,9 +20,11 @@ class UserLogin(View):
             login(request, user)
             # Redirect to a success page.
             print('y')
+            return response
         else:
             # Return an 'invalid login' error message.
             print('n')
+            return response
 
 '''
 form = self.form_class(request.POST)
