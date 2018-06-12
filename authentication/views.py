@@ -1,7 +1,8 @@
-from rest_framework.views import View, UserForm
+from rest_framework.views import View
 from rest_framework.response import Response
 from rest_framework import authentication, permissions, status
 from django.contrib.auth.models import User
+from authentication.form import UserForm
 
 class UserFormView(View):
     form_class = UserForm
