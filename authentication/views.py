@@ -13,7 +13,7 @@ class UserLogin(View):
 
     def post(self, request):
         print(request)
-        user = request.POST.get('username')
+        user = request.POST['username']
         print(user)
         user = authenticate(request, username=user, password=user)
         if user is not None:
