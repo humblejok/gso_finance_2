@@ -14,7 +14,8 @@ class UserLogin(View):
 
     def post(self, request):
         print(request)
-        user = json.loads(request.body)
+        rawreply = connection.getresponse().read()
+        user = json.loads(rawreply.decode())
         print(user)
         user = authenticate(request, username=user, password=user)
         if user is not None:
