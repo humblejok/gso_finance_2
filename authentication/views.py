@@ -19,7 +19,7 @@ class UserLogin(View):
         print(request)
         #username = request.POST['user']['username']
         #password = request.POST['user']['password']
-        user = authenticate(request, username='username', password='password')
+        user = authenticate(request, username='alice', password='cooperStalker')
         if user is not None:
             #login(request, user)
             # Redirect to a success page.
