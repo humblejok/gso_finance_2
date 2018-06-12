@@ -6,6 +6,7 @@ from django.http import HttpResponse
 
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+import json
 
 @method_decorator(csrf_exempt, name='dispatch')
 class UserLogin(View):
@@ -13,7 +14,7 @@ class UserLogin(View):
 
     def post(self, request):
         print(request)
-        user = request.username
+        user = json.loads(request.body)
         print(user)
         user = authenticate(request, username=user, password=user)
         if user is not None:
