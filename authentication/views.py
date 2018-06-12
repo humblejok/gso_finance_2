@@ -15,7 +15,7 @@ class UserLogin(View):
         user = authenticate(request, username=user['username'], password=user['password'])
         if user is not None:
             login(request, user)
-            self.response['feedback'] = 'success'
+            self.response('success')
         else:
-            self.response['feedback'] = 'failure'
+            self.response('failure')
         return self.response
