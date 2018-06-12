@@ -2,6 +2,7 @@ from rest_framework.views import View
 from rest_framework.response import Response
 from rest_framework import authentication, permissions, status
 from django.contrib.auth.models import User
+from django.shortcuts import render
 from authentication.form import UserForm
 
 class UserFormView(View):
@@ -10,7 +11,7 @@ class UserFormView(View):
 
     def get(self, request):
         form = self.form_class(None)
-        return self.render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -31,4 +32,4 @@ class UserFormView(View):
                     self.login(request, user)
                     return self.redirect('index')
 
-        return self.render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'form': form})
