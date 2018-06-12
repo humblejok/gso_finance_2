@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from authentication import views as userAuth
-from rest_framework.urlpatterns import format_suffix_pattern()
+from rest_framework.urlpatterns import format_suffix_pattern
 
 from common import views
 from rest_framework import routers
