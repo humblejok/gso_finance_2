@@ -17,8 +17,8 @@ class UserLogin(View):
 
     def post(self, request):
         print(request.POST)
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST['user']['username']
+        password = request.POST['user']['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
