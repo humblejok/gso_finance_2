@@ -20,5 +20,4 @@ class UserLogin(View):
                     print('User Logged In')
             else:
                 print('Invalid Credentials')
-        response = HttpResponse(status=200)
-        return response
+        return HttpResponse(status=200)

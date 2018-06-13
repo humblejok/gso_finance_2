@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets, generics
+from django.contrib.auth.decorators import login_required
 
 from common.models import Currency, Company, Country, VisibilityLevel,\
     AddressType, PhoneType, MailType, Person
@@ -71,6 +72,7 @@ class ProviderSearch(generics.ListAPIView):
         
         return queryset
 
+@login_required
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all().order_by('default_name')
     serializer_class = PersonSerializer
