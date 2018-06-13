@@ -10,7 +10,7 @@ import json
 class UserLogin(View):
 
     def post(self, request):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             print('User Is Authenticated')
         else:
             user = json.loads(request.body.decode('utf-8'))
