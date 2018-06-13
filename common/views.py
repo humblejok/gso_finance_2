@@ -58,8 +58,7 @@ class MailTypeViewSet(viewsets.ModelViewSet):
 class QuickMailTypeViewSet(viewsets.ModelViewSet):
     queryset = MailType.objects.filter(quick_access=True).order_by('identifier')
     serializer_class = MailTypeSerializer
-
-@login_required    
+  
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all().order_by('default_name')
     serializer_class = CompanySerializer
