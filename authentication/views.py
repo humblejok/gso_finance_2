@@ -2,7 +2,7 @@ from rest_framework.views import View
 from django.http import HttpResponse
 
 from rest_framework.views import APIView
-from rest_framework import Response, UserSerializer
+from rest_framework import response, UserSerializer
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
