@@ -16,8 +16,8 @@ class UserLogin(View):
             user = json.loads(request.body.decode('utf-8'))
             user = authenticate(request, username=user['username'], password=user['password'])
             if user is not None:
-                login(request, user)
-                print('User Logged In')
+                if login(request, user):
+                    print('User Logged In')
             else:
                 print('Invalid Credentials')
         response = HttpResponse(status=200)
