@@ -14,15 +14,12 @@ class UserLogin(View):
             print('User Is Authenticated')
         else:
             user = json.loads(request.body.decode('utf-8'))
-            if authenticate(request, username=user['username'], password=user['password']):
-                auth_user = authenticate(request, username=user['username'], password=user['password'])
-                if auth_user is not None:
-                    if login(request, auth_user):
-                        print('User Logged In')
-                    else:
-                        print('Failure: login')
+            auth_user = authenticate(request, username=user['username'], password=user['password'])
+            if auth_user is not None:
+                if login(request, auth_user):
+                    print('User Logged In')
                 else:
-                    print('Invalid Credentials')
+                    print('Failure: login')
             else:
-                print('Failure: Authenticate')
+                print('Invalid Credentials')
         return HttpResponse(status=200)
