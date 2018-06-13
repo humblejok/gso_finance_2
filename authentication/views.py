@@ -16,9 +16,6 @@ class UserLogin(View):
             user = json.loads(request.body.decode('utf-8'))
             auth_user = authenticate(request, username=user['username'], password=user['password'])
             if auth_user is not None:
-                auth_user.is_active = True
-                auth_user.save()
-                auth_user.backend = 'django.contrib.auth.backends.ModelBackend'
                 if login(request, auth_user):
                     print('User Logged In')
                 else:
