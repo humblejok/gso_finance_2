@@ -14,9 +14,10 @@ class UserLogin(View):
             print('User Is Authenticated')
         else:
             user = json.loads(request.body.decode('utf-8'))
-            if user = authenticate(request, username=user['username'], password=user['password']):
-                if user is not None:
-                    if login(request, user):
+            if authenticate(request, username=user['username'], password=user['password']):
+                auth_user = authenticate(request, username=user['username'], password=user['password'])
+                if auth_user is not None:
+                    if login(request, auth_user):
                         print('User Logged In')
                     else:
                         print('Failure: login')
