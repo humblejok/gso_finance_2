@@ -16,6 +16,8 @@ class UserLogin(View):
             user = json.loads(request.body.decode('utf-8'))
             auth_user = authenticate(request, username=user['username'], password=user['password'])
             if auth_user is not None:
+                print(request)
+                print(auth_user)
                 if login(request, auth_user):
                     print('User Logged In')
                 else:
