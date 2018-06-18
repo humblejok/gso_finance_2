@@ -2,7 +2,7 @@ from rest_framework.views import View
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import json
 
@@ -34,7 +34,6 @@ class UserLogin(View):
         return HttpResponse(status=200)
 
 
-@csrf_protect
 class UserLoginTest(View):
 
     def get(self, request):
