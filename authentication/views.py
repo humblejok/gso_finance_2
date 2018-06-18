@@ -9,6 +9,11 @@ import json
 @method_decorator(csrf_exempt, name='dispatch')
 class UserLogin(View):
 
+    def get(self, request):
+        print('get request -> logout')
+        logout(request)
+        return HttpResponse(status=200)
+
     def post(self, request):
         if request.user.is_authenticated:
             print('User Is Authenticated')
