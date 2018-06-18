@@ -31,3 +31,8 @@ class UserLogin(View):
             else:
                 print('Invalid Credentials')
         return HttpResponse(status=200)
+
+
+class UserLoginTest(View):
+    def get(self, request):
+        print('UserLoginTest View')

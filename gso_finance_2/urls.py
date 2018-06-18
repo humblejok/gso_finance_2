@@ -63,6 +63,7 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^index.html', views.index, name='index'),
     url(r'^login/', userAuth.UserLogin.as_view(), name='login'),
+    url(r'^login/test', userAuth.UserLoginTest.as_view(), name='logtest'),
 
     url(r'^external_securities_search/(?P<provider_code>.+)/(?P<provider_identifier>.+)/$', ExternalSecuritySearch.as_view()),
     url(r'^external_securities_unmapped/$', ExternalSecurityUnmapped.as_view()),
