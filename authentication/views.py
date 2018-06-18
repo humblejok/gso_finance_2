@@ -7,7 +7,6 @@ from django.utils.decorators import method_decorator
 import json
 
 
-@ensure_csrf_cookie
 @method_decorator(csrf_exempt, name='dispatch')
 class UserLogin(View):
 
@@ -35,6 +34,7 @@ class UserLogin(View):
         return HttpResponse(status=200)
 
 
+@ensure_csrf_cookie
 class UserLoginTest(View):
 
     def get(self, request):
