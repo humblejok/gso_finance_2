@@ -25,7 +25,7 @@ SECRET_KEY = '1-5awwa(vby89vmf_xra6+@5_)oml==&2yrf(!60+i(b92&nbz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['jiren']
 
 
 # Application definition
