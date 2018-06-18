@@ -34,8 +34,8 @@ class UserLogin(View):
         return HttpResponse(status=200)
 
 
-class UserLoginTest(View):
+class csrfPostTest(View):
 
-    def get(self, request):
-        print('UserLoginTest View')
+    def post(self, request):
+        print('CsrfPostTest View')
         return HttpResponse(status=200)
