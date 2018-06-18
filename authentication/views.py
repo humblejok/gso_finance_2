@@ -34,5 +34,7 @@ class UserLogin(View):
 
 
 class UserLoginTest(View):
+
     def get(self, request):
         print('UserLoginTest View')
+        return HttpResponse(status=200)
