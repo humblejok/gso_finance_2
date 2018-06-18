@@ -23,7 +23,7 @@ class UserLogin(View):
             if auth_user is not None:
                 print(request)
                 print(auth_user)
-                lres = login(request, auth_user):
+                lres = login(request, auth_user)
                 if lres:
                     print('User Logged In')
                 else:
