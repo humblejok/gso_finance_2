@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from django.contrib.auth import views as auth_views
 from authentication import views as userAuth
 from common import views
 from rest_framework import routers
@@ -62,7 +63,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(router.urls)),
     url(r'^index.html', views.index, name='index'),
-    url(r'^login/', userAuth.UserLogin.as_view(), name='login'),
+    #url(r'^login/', userAuth.UserLogin.as_view(), name='login'),
+    url(r'^login/', auth_views.login, name='login'),
     url(r'^test/', userAuth.UserLoginTest.as_view(), name='logtest'),
 
     url(r'^external_securities_search/(?P<provider_code>.+)/(?P<provider_identifier>.+)/$', ExternalSecuritySearch.as_view()),
