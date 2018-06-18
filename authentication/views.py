@@ -34,7 +34,7 @@ class UserLogin(View):
         return HttpResponse(status=200)
 
 
-@method_decorator(ensure_csrf_cookie, name='ensure')
+@method_decorator(ensure_csrf_cookie, name='get')
 class UserLoginTest(View):
 
     def get(self, request):
