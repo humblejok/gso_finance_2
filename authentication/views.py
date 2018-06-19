@@ -20,18 +20,13 @@ class UserLogin(View):
             print('User Is Authenticated')
         else:
             user = json.loads(request.body.decode('utf-8'))
-            auth_user = authenticate(request, username=user['username'], password=user['password'])
-            if auth_user is not None:
-                print(request)
-                print(auth_user)
-                lres = login(request, auth_user)
-                if lres:
-                    print('User Logged In')
-                else:
-                    print('Failure: login')
-            else:
-                print('Invalid Credentials')
-        return HttpResponse(status=200)
+            auth_user = authenticate(
+                request, username=user['username'], password=user['password'])
+            if auth_user is not None
+            login(request, user)
+            serializer = self.serializer_class(user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        raise AuthenticationFailed
 
 
 class csrfPostTest(View):
