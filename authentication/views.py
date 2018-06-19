@@ -1,9 +1,12 @@
 from rest_framework.views import View
 from django.http import HttpResponse
+from rest_framework import status
+from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.core.exceptions import AuthenticationFailed
 import json
 
 
@@ -22,11 +25,11 @@ class UserLogin(View):
             user = json.loads(request.body.decode('utf-8'))
             auth_user = authenticate(
                 request, username=user['username'], password=user['password'])
-            if auth_user is not None
-            login(request, user)
-            serializer = self.serializer_class(user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        raise AuthenticationFailed
+            if auth_user is not None:
+                login(request, user)
+                serializer = self.serializer_class(user)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            raise AuthenticationFailed
 
 
 class csrfPostTest(View):

@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from rest_framework import viewsets, generics
-from django.contrib.auth.decorators import login_required
 
 from common.models import Currency, Company, Country, VisibilityLevel,\
     AddressType, PhoneType, MailType, Person
