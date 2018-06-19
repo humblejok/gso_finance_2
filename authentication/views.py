@@ -6,7 +6,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from django.core.exceptions import AuthenticationFailed
 import json
 
 
@@ -29,7 +28,7 @@ class UserLogin(View):
                 login(request, user)
                 serializer = self.serializer_class(user)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            raise AuthenticationFailed
+            return HttpResponse(status=200)
 
 
 class csrfPostTest(View):
