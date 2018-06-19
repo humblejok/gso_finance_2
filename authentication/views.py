@@ -27,7 +27,8 @@ class UserLogin(View):
             if auth_user is not None:
                 login(request, auth_user)
                 #serializer = login.serializer_class(auth_user)
-                return Response(auth_user, status=status.HTTP_200_OK)
+                #return Response(auth_user, status=status.HTTP_200_OK)
+                return HttpResponse(status=200)
             return HttpResponse(status=200)
 
 
