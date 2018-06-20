@@ -20,6 +20,7 @@ class UserLogin(View):
 
     def post(self, request):
         user = json.loads(request.body.decode('utf-8'))
+        print(user)
         auth_user = authenticate(
             request, username=user['username'], password=user['password'])
         if auth_user is not None:
