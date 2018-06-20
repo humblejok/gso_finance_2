@@ -68,7 +68,7 @@ urlpatterns = [
     url(r'^test/', userAuth.csrfPostTest.as_view(), name='logtest'),
 
     url(r'^api/token/', TokenObtainPairView.as_view()),
-    url(r'^api/token/refresh/', TokenRefreshView.as_view()),
+    url(r'^api/refresh/', TokenRefreshView.as_view()),
 
     url(r'^external_securities_search/(?P<provider_code>.+)/(?P<provider_identifier>.+)/$', ExternalSecuritySearch.as_view()),
     url(r'^external_securities_unmapped/$', ExternalSecurityUnmapped.as_view()),
