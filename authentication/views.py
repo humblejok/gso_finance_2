@@ -24,8 +24,8 @@ class UserLogin(View):
             request, username=user['username'], password=user['password'])
         if auth_user is not None:
             login(request, auth_user)
-            tok = self.getToken(user['username'], user['password'])
-            print(tok['access'])
+            r_tok = self.getToken(user['username'], user['password'])
+            print(tok.text['access'])
             return HttpResponse(status=200)
         return HttpResponse(status=200)
 
