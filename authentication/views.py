@@ -24,7 +24,8 @@ class UserLogin(View):
             request, username=user['username'], password=user['password'])
         if auth_user is not None:
             login(request, auth_user)
-            self.getToken(user['username'], user['password'])
+            tok = self.getToken(user['username'], user['password'])
+            print(tok['access'])
             return HttpResponse(status=200)
         return HttpResponse(status=200)
 
@@ -33,7 +34,7 @@ class UserLogin(View):
         data['username'] = _username
         data['password'] = _password
         r = requests.post('http://jiren:8001/api/token/', data = data)
-        print(r.text)
+        return r
 
 
 class csrfPostTest(View):
