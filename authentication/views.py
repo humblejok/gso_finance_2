@@ -26,7 +26,9 @@ class UserLogin(View):
             login(request, auth_user)
             r_tok = self.getToken(user['username'], user['password'])
             print(r_tok.json()['access'])
-            return HttpResponse(status=200)
+            data = r_tok.json()['access']
+            return Response(data)
+            #return HttpResponse(status=200)
         return HttpResponse(status=200)
 
     def getToken(self, _username, _password):
