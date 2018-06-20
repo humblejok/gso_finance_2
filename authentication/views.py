@@ -1,5 +1,5 @@
 from rest_framework.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
@@ -16,7 +16,7 @@ class UserLogin(View):
     def get(self, request):
         print('get request -> logout')
         logout(request)
-        return HttpResponse(status=200)
+        return HttpResponse
 
     def post(self, request):
         user = json.loads(request.body.decode('utf-8'))
@@ -26,8 +26,8 @@ class UserLogin(View):
             login(request, auth_user)
             r_tok = self.getToken(user['username'], user['password'])
             print(r_tok.json()['access'])
-            return request
-        return HttpResponse(status=200)
+            return JsonResponse({'success': True})
+        return HttpResponse
 
     def getToken(self, _username, _password):
         data = {}
@@ -41,4 +41,4 @@ class csrfPostTest(View):
 
     def post(self, request):
         print('CsrfPostTest View')
-        return HttpResponse(status=200)
+        return HttpResponse
