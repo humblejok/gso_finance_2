@@ -27,7 +27,7 @@ class UserLogin(View):
             r_tok = self.getToken(user['username'], user['password'])
             print(r_tok.json()['access'])
             data = r_tok.json()['access']
-            return Response(data)
+            return Response(data, template_name=None)
             #return HttpResponse(status=200)
         return HttpResponse(status=200)
 
