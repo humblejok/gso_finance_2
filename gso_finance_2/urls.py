@@ -2,6 +2,9 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from authentication import views as userAuth
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from django.urls import path
+
 from common import views
 from rest_framework import routers
 from common.views import CurrencyViewSet, CompanyViewSet, QuickCurrencyViewSet,\
@@ -64,6 +67,9 @@ urlpatterns = [
     url(r'^index.html', views.index, name='index'),
     url(r'^login/', userAuth.UserLogin.as_view(), name='login'),
     url(r'^test/', userAuth.csrfPostTest.as_view(), name='logtest'),
+
+    path('api/token/', TokenObtainPairView.as_view()),
+    path('api/token/refresh/', TokenRefreshView.as_view()),
 
     url(r'^external_securities_search/(?P<provider_code>.+)/(?P<provider_identifier>.+)/$', ExternalSecuritySearch.as_view()),
     url(r'^external_securities_unmapped/$', ExternalSecurityUnmapped.as_view()),
