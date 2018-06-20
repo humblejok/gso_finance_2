@@ -20,22 +20,19 @@ class UserLogin(View):
 
     def post(self, request):
         user = json.loads(request.body.decode('utf-8'))
-        print(user)
         auth_user = authenticate(
             request, username=user['username'], password=user['password'])
         if auth_user is not None:
             login(request, auth_user)
-            print("!")
             self.getToken(user['username'], user['password'])
-            return HttpResponse(status=403)
-        return HttpResponse(status=404)
+            return HttpResponse(status=200)
+        return HttpResponse(status=200)
 
     def getToken(self, _username, _password):
-        print("?")
-        body = {}
-        body['username'] = _username
-        body['password'] = _password
-        r = requests.post('http://jiren:8001/api/token', body=body)
+        data = {}
+        data['username'] = _username
+        data['password'] = _password
+        r = requests.post('http://jiren:8001/api/token/', data = data)
         print(r.text)
 
 
