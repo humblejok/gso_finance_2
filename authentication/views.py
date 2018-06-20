@@ -24,11 +24,13 @@ class UserLogin(View):
             request, username=user['username'], password=user['password'])
         if auth_user is not None:
             login(request, auth_user)
+            print("!")
             self.getToken(user['username'], user['password'])
             return HttpResponse(status=200)
         return HttpResponse(status=200)
 
     def getToken(self, _username, _password):
+        print("?")
         body = {}
         body['username'] = _username
         body['password'] = _password
