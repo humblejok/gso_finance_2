@@ -3,7 +3,6 @@ from django.contrib import admin
 
 from authentication import views as userAuth
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from django.urls import path
 
 from common import views
 from rest_framework import routers
