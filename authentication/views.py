@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import json
+import requests
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -18,18 +19,21 @@ class UserLogin(View):
         return HttpResponse(status=200)
 
     def post(self, request):
-        if request.user.is_authenticated:
-            print('User Is Authenticated')
-        else:
-            user = json.loads(request.body.decode('utf-8'))
-            auth_user = authenticate(
-                request, username=user['username'], password=user['password'])
-            if auth_user is not None:
-                login(request, auth_user)
-                #serializer = login.serializer_class(auth_user)
-                #return Response(auth_user, status=status.HTTP_200_OK)
-                return HttpResponse(status=200)
+        user = json.loads(request.body.decode('utf-8'))
+        auth_user = authenticate(
+            request, username=user['username'], password=user['password'])
+        if auth_user is not None:
+            login(request, auth_user)
+            self.getToken(user['username'], user['password'])
             return HttpResponse(status=200)
+        return HttpResponse(status=200)
+
+    def getToken(self, _username, _password):
+        body = {}
+        body['username'] = _username
+        body['password'] = _password
+        r = requests.post('http://jiren:8001/api/token', body=body)
+        print(r.text)
 
 
 class csrfPostTest(View):
