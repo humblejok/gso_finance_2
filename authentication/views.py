@@ -37,7 +37,7 @@ class UserLogin(View):
         r = requests.post('http://jiren:8001/api/token/', headers=headers, data=data)
         return r
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class csrfPostTest(View):
 
     def post(self, request):
