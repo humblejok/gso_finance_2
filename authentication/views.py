@@ -44,8 +44,8 @@ class csrfPostTest(View):
         print('CsrfGetTest View')
         response = HttpResponse(status=200)
         response['Set-Cookie'] = 'my-cookie=om-nom-nom'
-        response['Access-Control-Allow-Origin'] = 'http://jiren:4200/login'
-        response['X-Frame-Options'] = 'ALLOW-FROM http://jiren:4200/login'
+        response['Access-Control-Allow-Origin'] = 'http://jiren:4200'
+        response['X-Frame-Options'] = 'ALLOW-FROM http://jiren:4200'
         return response
 
     def post(self, request):
