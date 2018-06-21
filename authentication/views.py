@@ -25,13 +25,16 @@ class UserLogin(View):
         if auth_user is not None:
             login(request, auth_user)
             r_tok = self.getToken(user['username'], user['password'])
-            return JsonResponse({'access': r_tok.json()['access'], 'refresh': r_tok.json()['refresh']})
+            return JsonResponse({
+                'access': r_tok.json()['access'],
+                'refresh': r_tok.json()['refresh']
+            },
+            headers={})
         return HttpResponse
 
     def getToken(self, _username, _password):
-        headers = {'Set-Cookie': 'session=12345'}
         data = {'username': _username, 'password': _password}
-        r = requests.post('http://jiren:8001/api/token/', headers = headers, data = data)
+        r = requests.post('http://jiren:8001/api/token/', data=data)
         return r
 
 
