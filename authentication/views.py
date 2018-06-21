@@ -16,7 +16,7 @@ class UserLogin(View):
     def get(self, request):
         print('get request -> logout')
         logout(request)
-        return HttpResponse
+        return HttpResponse(status=200)
 
     def post(self, request):
         user = json.loads(request.body.decode('utf-8'))
