@@ -42,7 +42,9 @@ class csrfPostTest(View):
 
     def get(self, request):
         print('CsrfGetTest View')
-        return HttpResponse(status=200)
+        response = HttpResponse(status=200)
+        response['Set-Cookie'] = 'my-cookie=om-nom-nom'
+        return response
 
     def post(self, request):
         print('CsrfPostTest View')
