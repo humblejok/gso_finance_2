@@ -40,6 +40,10 @@ class UserLogin(View):
 @method_decorator(csrf_exempt, name='dispatch')
 class csrfPostTest(View):
 
+    def get(self, request):
+        print('CsrfGetTest View')
+        return HttpResponse
+
     def post(self, request):
         print('CsrfPostTest View')
         return HttpResponse
