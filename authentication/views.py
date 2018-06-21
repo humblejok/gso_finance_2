@@ -42,8 +42,8 @@ class csrfPostTest(View):
 
     def get(self, request):
         print('CsrfGetTest View')
-        return HttpResponse
+        return HttpResponse(status=200)
 
     def post(self, request):
         print('CsrfPostTest View')
-        return HttpResponse
+        return HttpResponse(status=200)
