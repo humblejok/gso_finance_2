@@ -18,7 +18,7 @@ class UserLogin(View):
         auth_user = authenticate(
             request, username=user['username'], password=user['password'])
         if auth_user is not None:
-            #login(request, auth_user)
+            login(request, auth_user)
             # requesting token for specific user
             r_tok = self.getToken(user['username'], user['password'])
             # returning json response to the front-end containing jwtok and it's refresh value
@@ -26,7 +26,7 @@ class UserLogin(View):
                 'access': r_tok.json()['access'],
                 'refresh': r_tok.json()['refresh']
             })
-        return HttpResponse
+        return HttpResponse(status=200)
 
     def getToken(self, _username, _password):
         '''
