@@ -32,9 +32,8 @@ class UserLogin(View):
         return HttpResponse
 
     def getToken(self, _username, _password):
-        headers = {'Set-Cookie': 'my-cookie=om-nom-nom'}
         data = {'username': _username, 'password': _password}
-        r = requests.post('http://jiren:8001/api/token/', headers=headers, data=data)
+        r = requests.post('http://jiren:8001/api/token/', data=data)
         return r
 
 @method_decorator(csrf_exempt, name='dispatch')
