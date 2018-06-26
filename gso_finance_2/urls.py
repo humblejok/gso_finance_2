@@ -65,7 +65,6 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^index.html', views.index, name='index'),
     url(r'^login/', userAuth.UserLogin.as_view(), name='login'),
-    url(r'^test/', userAuth.csrfPostTest.as_view(), name='logtest'),
 
     url(r'^api/token/', TokenObtainPairView.as_view()),
     url(r'^api/refresh/', TokenRefreshView.as_view()),
