@@ -4,8 +4,10 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from random import randint
 import json
 import requests
+import hashlib
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -21,11 +23,25 @@ class UserLogin(View):
             login(request, auth_user)
             # requesting token for specific user
             r_tok = self.getToken(user['username'], user['password'])
+            # creating session ID depending on user status
+            if auth_user.is_superuser:
+                salt = 42
+                print('user is superuser')
+            else:
+                i = randint(0, 1)
+                print('i = ' + i)
+                if(i == 0):
+                    salt = randint(0, 41)
+                else:
+                    salt = randint(43, 99)
+            print('salt = ' + salt)
+            session_id = self.hashingFunc(r_tok.json()['refresh'] + salt)
+            print()
             # returning json response to the front-end containing jwtok and it's refresh value
             return JsonResponse({
                 'access': r_tok.json()['access'],
                 'refresh': r_tok.json()['refresh'],
-                'session_id': 'ToDo'
+                'session_id': session_id
             })
         return HttpResponse(status=200)
 
@@ -36,3 +52,7 @@ class UserLogin(View):
         data = {'username': _username, 'password': _password}
         r = requests.post('http://jiren:8001/api/token/', data=data)
         return r
+
+    def hashingFunc(_value, _salt):
+        h = hashlib.sha1((_value + str(_salt)).encode('utf-8'))
+        return h.hexdigest()
