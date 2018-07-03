@@ -26,15 +26,12 @@ class UserLogin(View):
             # creating session ID depending on user status
             if auth_user.is_superuser:
                 salt = 42
-                print('user is superuser')
             else:
                 i = randint(0, 1)
-                print('i = ' + str(i))
                 if(i == 0):
                     salt = randint(0, 41)
                 else:
                     salt = randint(43, 99)
-            print('salt = ' + str(salt))
             session_id = self.hashingFunc(r_tok.json()['refresh'], salt)
             # returning json response to the front-end containing jwtok and it's refresh value
             return JsonResponse({
