@@ -24,7 +24,8 @@ class UserLogin(View):
             # returning json response to the front-end containing jwtok and it's refresh value
             return JsonResponse({
                 'access': r_tok.json()['access'],
-                'refresh': r_tok.json()['refresh']
+                'refresh': r_tok.json()['refresh'],
+                'session_id': 'ToDo'
             })
         return HttpResponse(status=200)
 
