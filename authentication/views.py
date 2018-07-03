@@ -29,14 +29,13 @@ class UserLogin(View):
                 print('user is superuser')
             else:
                 i = randint(0, 1)
-                print('i = ' + i)
+                print('i = ' + str(i))
                 if(i == 0):
                     salt = randint(0, 41)
                 else:
                     salt = randint(43, 99)
-            print('salt = ' + salt)
-            session_id = self.hashingFunc(r_tok.json()['refresh'] + salt)
-            print()
+            print('salt = ' + str(salt))
+            session_id = self.hashingFunc(r_tok.json()['refresh'], salt)
             # returning json response to the front-end containing jwtok and it's refresh value
             return JsonResponse({
                 'access': r_tok.json()['access'],
@@ -53,6 +52,6 @@ class UserLogin(View):
         r = requests.post('http://jiren:8001/api/token/', data=data)
         return r
 
-    def hashingFunc(_value, _salt):
+    def hashingFunc(self, _value, _salt):
         h = hashlib.sha1((_value + str(_salt)).encode('utf-8'))
         return h.hexdigest()
