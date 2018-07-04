@@ -50,5 +50,5 @@ class UserLogin(View):
         return r
 
     def hashingFunc(self, _value, _salt):
-        h = hashlib.sha1((_value + str(_salt)).encode('utf-8'))
+        h = hashlib.sha256((_value + str(_salt)).encode('utf-8'))
         return h.hexdigest()
