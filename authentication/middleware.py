@@ -13,4 +13,5 @@ class DataObfuscationMiddleware:
         pass
 
     def process_template_response(self, request, response):
-        print(response)
+        if response != None:
+            print(response)
