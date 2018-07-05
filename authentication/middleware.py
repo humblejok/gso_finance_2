@@ -13,6 +13,6 @@ class DataObfuscationMiddleware:
         pass
 
     def process_template_response(self, request, response):
-        if response.type == 'json':
+        if response.content_type == 'application/json':
             print(response)
         return response
