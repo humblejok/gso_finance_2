@@ -1,5 +1,4 @@
 from django.conf import settings
-from pprint import pprint
 
 class DataObfuscationMiddleware:
 
@@ -18,14 +17,8 @@ class DataObfuscationMiddleware:
         if hasattr(response, 'content_type'):
             for index, item in enumerate(response.data):
                 if item == 'access':
+                    response.data[item] = 'infinite loop !'
                     print(response.data[item])
-                '''
-                print('-----------------------')
-                print(index)
-                print(item)
-                print(type(item))  # Here we have item is a dict object
-                print('-----------------------')
-                '''
         else:
-            pprint('bar')
+            print('bar')
         return response
