@@ -1,4 +1,5 @@
 from django.conf import settings
+from pprint import pprint
 
 class DataObfuscationMiddleware:
 
@@ -13,6 +14,5 @@ class DataObfuscationMiddleware:
         pass
 
     def process_template_response(self, request, response):
-        if response.content_type == 'application/json':
-            print(response)
+        pprint(response)
         return response
