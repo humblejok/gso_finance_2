@@ -14,6 +14,5 @@ class DataObfuscationMiddleware:
 
     def process_template_response(self, request, response):
         if response != None:
-            if hasattr(response, 'body'):
-                print(response.body)
+            print(response[0])
         return response
