@@ -7,5 +7,13 @@ class DataObfuscationMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        print('foo')
         return response
+
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        assert hasattr(request, 'user')
+
+        if not request.user.is_authenticated():
+            if True:
+                print('foo')
+            else:
+                print('bar')
