@@ -17,11 +17,15 @@ class DataObfuscationMiddleware:
         #pprint(dir(response))
         if hasattr(response, 'content_type'):
             for index, item in enumerate(response.data):
+                if item == 'access':
+                    print(item.value)
+                '''
                 print('-----------------------')
                 print(index)
                 print(item)
                 print(type(item))  # Here we have item is a dict object
                 print('-----------------------')
+                '''
         else:
             pprint('bar')
         return response
