@@ -16,7 +16,7 @@ class DataObfuscationMiddleware:
     def process_template_response(self, request, response):
         #pprint(dir(response))
         if hasattr(response, 'content_type'):
-            pprint('foo')
+            pprint(response.content_type)
         else:
             pprint('bar')
         return response
