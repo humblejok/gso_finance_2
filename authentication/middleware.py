@@ -16,7 +16,12 @@ class DataObfuscationMiddleware:
     def process_template_response(self, request, response):
         #pprint(dir(response))
         if hasattr(response, 'content_type'):
-            pprint(response.data)
+            for index, item in enumerate(response.data):
+                print('-----------------------')
+                print(index)
+                print(item)
+                print(type(item))  # Here we have item is a dict object
+                print('-----------------------')
         else:
             pprint('bar')
         return response
