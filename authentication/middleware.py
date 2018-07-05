@@ -14,5 +14,5 @@ class DataObfuscationMiddleware:
         pass
 
     def process_template_response(self, request, response):
-        pprint(response)
+        pprint(dir(response))
         return response
