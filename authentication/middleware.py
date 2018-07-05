@@ -18,7 +18,7 @@ class DataObfuscationMiddleware:
         if hasattr(response, 'content_type'):
             for index, item in enumerate(response.data):
                 if item == 'access':
-                    print(item.value)
+                    print(response.data[item])
                 '''
                 print('-----------------------')
                 print(index)
