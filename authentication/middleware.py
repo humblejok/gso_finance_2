@@ -17,7 +17,7 @@ class DataObfuscationMiddleware:
         if hasattr(response, 'content_type'):
             for index, item in enumerate(response.data):
                 if item == 'access':
-                    response.data[item] = 'infinite loop !'
+                    #response.data[item] = 'infinite loop !'
                     print(response.data[item])
         else:
             print('bar')
