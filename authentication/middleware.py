@@ -13,7 +13,7 @@ class DataObfuscationMiddleware:
         pass
 
     def process_template_response(self, request, response):
-        print(dir(response))
+        print(dir(response.data))
         #OCIPH = ObfuscationCipher()
         if hasattr(response, 'content_type'):
             for item in enumerate(response.data):
