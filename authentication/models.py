@@ -11,7 +11,7 @@ class ObfuscationCipher:
         file = open('debug.txt','w')
         data=str(data)
 
-        file.write('data length: ' + str(len(data)))
+        file.write('data length: ' + str(len(data)) + '\n')
         #file.write(str(data))
 
         self.byte_data = [0]*len(data)
@@ -19,7 +19,7 @@ class ObfuscationCipher:
         for i in range (0, len(data)):
             self.byte_data[i] = '{0:08b}'.format(ord(data[i]))
 
-        file.write('byte_data length: ' + str(len(self.byte_data)))
+        file.write('byte_data length: ' + str(len(self.byte_data)) + '\n')
         #file.write(str(self.byte_data))
 
         i = 0
