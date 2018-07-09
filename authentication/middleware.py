@@ -10,9 +10,6 @@ class DataObfuscationMiddleware:
         response = self.get_response(request)
         return response
 
-    def process_view(self, request, view_func, view_args, view_kwargs):
-        pass
-
     def process_template_response(self, request, response):
         if hasattr(response, 'content_type'):
             OCIPH = ObfuscationCipher()
@@ -23,13 +20,14 @@ class DataObfuscationMiddleware:
 
                 searchOrdDict = re.search( r'OrderedDict', str(item))
                 if searchOrdDict:
-                    print("collection : ", searchOrdDict.group())
+                    self.getChildItem(item)
                 else:
-                    #item_value = response.data[item]
-                    print('other type')
+                    print(response.data[item])
+
                 if item == 'access':
                     response.data[item] = OCIPH.cipher_controller(response.data[item])
         return response
 
-    def getChildItem(self):
-        pass
+    def getChildItem(self, collection):
+        print('getChildItem')
+        return
