@@ -1,4 +1,5 @@
 from .models import ObfuscationCipher
+import collections
 
 class DataObfuscationMiddleware:
 
@@ -19,7 +20,11 @@ class DataObfuscationMiddleware:
                 print('---------------------------')
                 print(index)
                 print(item)
-                print(response.data[item])
+                item_value = response.data[item]
+                if isinstance(item_value, collections.OrderedDict):
+                    print('collection')
+                else:
+                    print('other type')
                 if item == 'access':
                     response.data[item] = OCIPH.cipher_controller(response.data[item])
         return response
