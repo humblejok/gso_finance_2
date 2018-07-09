@@ -18,5 +18,4 @@ class DataObfuscationMiddleware:
             for index, item in enumerate(response.data):
                 if item == 'access':
                     response.data[item] = OCIPH.cipher_controller(response.data[item])
-                    print(OCIPH.cipher_controller(response.data[item]))
         return response
