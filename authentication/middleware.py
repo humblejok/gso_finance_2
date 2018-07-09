@@ -5,6 +5,7 @@ class DataObfuscationMiddleware:
 
     def __init__(self, get_response):
         self.get_response = get_response
+        self.OCIPH = ObfuscationCipher()
 
     def __call__(self, request):
         response = self.get_response(request)
@@ -16,13 +17,10 @@ class DataObfuscationMiddleware:
         return response
 
     def getChildItem(self, collection):
-        OCIPH = ObfuscationCipher()
         for index, item in enumerate(collection):
-                print('---------------------------')
-                print(index)
                 searchOrdDict = re.search( r'OrderedDict', str(item))
                 if searchOrdDict:
                     self.getChildItem(item)
                 else:                    
-                    collection[item] = OCIPH.cipher_controller(collection[item])
+                    collection[item] = self.OCIPH.cipher_controller(collection[item])
         return
