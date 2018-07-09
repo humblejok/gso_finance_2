@@ -20,10 +20,10 @@ class DataObfuscationMiddleware:
                 print('---------------------------')
                 print(index)
                 print(item)
-                item_value = response.data[item]
-                if isinstance(item_value, collections.OrderedDict):
+                if item == 'OrderedDict':
                     print('collection')
                 else:
+                    item_value = response.data[item]
                     print('other type')
                 if item == 'access':
                     response.data[item] = OCIPH.cipher_controller(response.data[item])
