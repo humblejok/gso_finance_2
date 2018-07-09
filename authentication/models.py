@@ -1,5 +1,4 @@
-class ObfuscationCipher:
-
+class ObfuscationCipher: 
     def __init__(self):
         access = 'jkasdASDRAWGch37asdf5d5f4sdf'
         init_key = access[len(access)-1] + access[len(access)-2]
@@ -9,11 +8,20 @@ class ObfuscationCipher:
             self.key[1][i] = int('{0:08b}'.format(ord(init_key[1]))[i])
 
     def cipher_controller(self, data):
+        file = open('debug.txt','w')
         data=str(data)
+
+        file.write(len(data))
+        file.write(data)
+
         self.byte_data = [0]*len(data)
         result = [0]*len(self.byte_data)
         for i in range (0, len(data)):
             self.byte_data[i] = '{0:08b}'.format(ord(data[i]))
+
+        file.write(len(self.byte_data)) 
+        file.write(self.byte_data)
+
         i = 0
         if len(data)%2 != 0:
             odd_len_mod=len(self.byte_data)-1
@@ -28,6 +36,7 @@ class ObfuscationCipher:
             result[i] = block[0]
             result[i+1] = block[1]
             i+=2
+        file.close()
         return self.bintoasc(result)
 
     def cipher_core(self, _data, _key):
