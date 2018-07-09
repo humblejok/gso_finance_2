@@ -29,7 +29,7 @@ class ObfuscationCipher:
             result[i+1] = block[1]
             i+=2
         print(result)
-        return result
+        return self.bintoasc(result)
 
     def cipher_core(self, _data, _key):
         keybuff = _key
