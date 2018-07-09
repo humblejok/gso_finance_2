@@ -11,16 +11,16 @@ class ObfuscationCipher:
         file = open('debug.txt','w')
         data=str(data)
 
-        file.write('data lenght: ' + str(len(data)))
-        file.write(data)
+        file.write('data length: ' + str(len(data)))
+        #file.write(str(data))
 
         self.byte_data = [0]*len(data)
         result = [0]*len(self.byte_data)
         for i in range (0, len(data)):
             self.byte_data[i] = '{0:08b}'.format(ord(data[i]))
 
-        file.write('byte_data lenght: ' + str(len(self.byte_data)))
-        file.write(self.byte_data)
+        file.write('byte_data length: ' + str(len(self.byte_data)))
+        #file.write(str(self.byte_data))
 
         i = 0
         if len(data)%2 != 0:
