@@ -27,8 +27,7 @@ class DataObfuscationMiddleware:
                     #self.getChildItem(item)
                     for elem in enumerate(collection):
                         print(elem)
-                else:
-                    return
+                #else:                    
                     #print(collection[item])
                     #collection[item] = OCIPH.cipher_controller(collection[item])
 
