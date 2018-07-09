@@ -1,5 +1,5 @@
 from .models import ObfuscationCipher
-import re
+import re, pprint
 
 class DataObfuscationMiddleware:
 
@@ -26,7 +26,7 @@ class DataObfuscationMiddleware:
                 if searchOrdDict:
                     #self.getChildItem(item)
                     for elem in enumerate(collection):
-                        print(elem)
+                        pprint(elem)
                 else:
                     return
                     #print(collection[item])
