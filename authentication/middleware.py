@@ -28,6 +28,7 @@ class DataObfuscationMiddleware:
                     for elem in enumerate(collection):
                         print(elem)
                 else:
+                    return
                     #print(collection[item])
                     #collection[item] = OCIPH.cipher_controller(collection[item])
 
