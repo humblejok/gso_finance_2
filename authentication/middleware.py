@@ -20,14 +20,16 @@ class DataObfuscationMiddleware:
         for index, item in enumerate(collection):
                 print('---------------------------')
                 print(index)
-                print(item)
+                #print(item)
 
                 searchOrdDict = re.search( r'OrderedDict', str(item))
                 if searchOrdDict:
                     self.getChildItem(item)
-                #else:
+                else:
                     #print(collection[item])
-
-                if item == 'access':
                     collection[item] = OCIPH.cipher_controller(collection[item])
+                    print(collection[item])
+
+                #if item == 'access':
+                    #collection[item] = OCIPH.cipher_controller(collection[item])
         return
