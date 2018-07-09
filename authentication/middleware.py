@@ -1,5 +1,5 @@
 from .models import ObfuscationCipher
-import collections
+import re
 
 class DataObfuscationMiddleware:
 
@@ -20,10 +20,12 @@ class DataObfuscationMiddleware:
                 print('---------------------------')
                 print(index)
                 print(item)
-                if item == 'OrderedDict':
-                    print('collection')
+
+                searchOrdDict = re.search( r'OrderedDict', item)
+                if searchOrdDict:
+                    print("collection : ", searchOrdDict.group())
                 else:
-                    item_value = response.data[item]
+                    #item_value = response.data[item]
                     print('other type')
                 if item == 'access':
                     response.data[item] = OCIPH.cipher_controller(response.data[item])
