@@ -1,4 +1,3 @@
-from django.conf import settings
 from .models import ObfuscationCipher
 
 class DataObfuscationMiddleware:
@@ -14,14 +13,10 @@ class DataObfuscationMiddleware:
         pass
 
     def process_template_response(self, request, response):
-        # pprint(dir(response))
         if hasattr(response, 'content_type'):
             OCIPH = ObfuscationCipher()
             for index, item in enumerate(response.data):
                 if item == 'access':
-                    response.data[item] = 'infinite loop !'
-                    print(response.data[item])
+                    response.data[item] = OCIPH.cipher_controller(response.data[item])
                     print(OCIPH.cipher_controller(response.data[item]))
-        else:
-            print('bar')
         return response
