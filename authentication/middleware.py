@@ -22,6 +22,8 @@ class DataObfuscationMiddleware:
                     #response.data[item] = 'infinite loop !'
                     print(response.data[item])
                     print(OCIPH)
+                else:
+                    print('nope')
         else:
             print('bar')
         return response
