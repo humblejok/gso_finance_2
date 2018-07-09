@@ -1,5 +1,5 @@
 from django.conf import settings
-from models import ObfuscationCipher
+from .models import ObfuscationCipher
 
 class DataObfuscationMiddleware:
 
