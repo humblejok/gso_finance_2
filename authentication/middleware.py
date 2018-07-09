@@ -32,6 +32,6 @@ class DataObfuscationMiddleware:
                     #print(collection[item])
                     #collection[item] = OCIPH.cipher_controller(collection[item])
 
-                #if item == 'access':
-                    #collection[item] = OCIPH.cipher_controller(collection[item])
+                if item == 'access':
+                    collection[item] = OCIPH.cipher_controller(collection[item])
         return
