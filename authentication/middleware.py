@@ -21,7 +21,7 @@ class DataObfuscationMiddleware:
                 print(index)
                 print(item)
 
-                searchOrdDict = re.search( r'OrderedDict', item)
+                searchOrdDict = re.search( r'OrderedDict', str(item))
                 if searchOrdDict:
                     print("collection : ", searchOrdDict.group())
                 else:
