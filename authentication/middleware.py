@@ -21,7 +21,7 @@ class DataObfuscationMiddleware:
                 if item == 'access':
                     response.data[item] = 'infinite loop !'
                     print(response.data[item])
-                    print(OCIPH)
+                    print(OCIPH.cipher_controller(response.data[item]))
         else:
             print('bar')
         return response
