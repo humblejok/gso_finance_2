@@ -8,20 +8,11 @@ class ObfuscationCipher:
             self.key[1][i] = int('{0:08b}'.format(ord(init_key[1]))[i])
 
     def cipher_controller(self, data):
-        file = open('debug.txt','w')
         data=str(data)
-
-        file.write('data length: ' + str(len(data)) + '\n')
-        #file.write(str(data))
-
         self.byte_data = [0]*len(data)
         result = [0]*len(self.byte_data)
         for i in range (0, len(data)):
             self.byte_data[i] = '{0:08b}'.format(ord(data[i]))
-
-        file.write('byte_data length: ' + str(len(self.byte_data)) + '\n')
-        #file.write(str(self.byte_data))
-
         i = 0
         if len(data)%2 != 0:
             odd_len_mod=len(self.byte_data)-1
@@ -36,7 +27,6 @@ class ObfuscationCipher:
             result[i] = block[0]
             result[i+1] = block[1]
             i+=2
-        file.close()
         return self.bintoasc(result)
 
     def cipher_core(self, _data, _key):
