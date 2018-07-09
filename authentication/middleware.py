@@ -16,7 +16,7 @@ class DataObfuscationMiddleware:
         if hasattr(response, 'content_type'):
             OCIPH = ObfuscationCipher()
             for index, item in enumerate(response.data):
-                print(str(index) + ' -> ' + item + ' [length: ' + str(len(item)) + ']')
+                print(str(index) + ' -> ' + item[0] + ' [length: ' + str(len(item)) + ']')
                 if item == 'access':
                     response.data[item] = OCIPH.cipher_controller(response.data[item])
         return response
