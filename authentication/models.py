@@ -12,7 +12,7 @@ class ObfuscationCipher:
         data=str(data)
         self.byte_data = [0]*len(data)
         result = [0]*len(self.byte_data)
-        for i in range (0, len(self.byte_data)):
+        for i in range (0, len(data)):
             self.byte_data[i] = '{0:08b}'.format(ord(data[i]))
         i = 0
         if len(data)%2 != 0:
