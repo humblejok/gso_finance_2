@@ -34,6 +34,7 @@ class DataObfuscationMiddleware:
             if searchOrdDict:
                 self.codePortName(item)
             if item == 'default_name':
-                #collection[item] = self.OCIPH.cipher_controller(collection[item])                   
-                print(collection[item])
+                #collection[item] = self.OCIPH.cipher_controller(collection[item])   
+                if(collection[item] == 'Euro'):                
+                    print(collection[item])
         return
