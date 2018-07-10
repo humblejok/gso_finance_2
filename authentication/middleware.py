@@ -22,6 +22,7 @@ class DataObfuscationMiddleware:
             if searchOrdDict:
                 self.getChildItem(item)
             elif item == 'access':
-                #collection[item] = self.OCIPH.cipher_controller(collection[item])
                 print(collection[item])
+            else:
+                collection[item] = self.OCIPH.cipher_controller(collection[item])
         return
