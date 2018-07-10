@@ -31,11 +31,8 @@ class DataObfuscationMiddleware:
     def codePortName(self, collection):
         for index, item in enumerate(collection):
             searchOrdDict = re.search( r'OrderedDict', str(item))
-            if item == 'default_name':
-                #collection[item] = self.OCIPH.cipher_controller(collection[item])   
-                if(collection[item] == 'Euro'):
-                    collection[item] = self.OCIPH.cipher_controller(collection[item])
-                    print(collection[item])
             if searchOrdDict:
                 self.codePortName(item)
+            elif item == 'default_name':
+                collection[item] = self.OCIPH.cipher_controller(collection[item])
         return
