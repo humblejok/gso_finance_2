@@ -21,6 +21,7 @@ class DataObfuscationMiddleware:
             searchOrdDict = re.search( r'OrderedDict', str(item))
             if searchOrdDict:
                 self.getChildItem(item)
-            elif item == 'default_name':
-                collection[item] = self.OCIPH.cipher_controller(collection[item])
+            elif item == 'access':
+                #collection[item] = self.OCIPH.cipher_controller(collection[item])
+                print(collection[item])
         return
