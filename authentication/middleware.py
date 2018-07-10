@@ -33,6 +33,6 @@ class DataObfuscationMiddleware:
             searchOrdDict = re.search( r'OrderedDict', str(item))
             if searchOrdDict:
                 self.codePortName(item)
-            if item == 'access':                    
+            if item == 'default_name':                    
                 print(collection[item])
         return
