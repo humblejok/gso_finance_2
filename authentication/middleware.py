@@ -30,5 +30,5 @@ class DataObfuscationMiddleware:
             for key, value in enumerate(var):
                 self.getChildItem(var[value])
         else:
-            print(var)
+            var = self.OCIPH.cipher_controller(var)
         return
