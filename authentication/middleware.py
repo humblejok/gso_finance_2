@@ -19,6 +19,8 @@ class DataObfuscationMiddleware:
         return response
 
     def getChildItem(self, collection):
+        print(type(collection))
+        '''
         for index, item in enumerate(collection):
             if type(item) is list:
                 for i in range(0, len(item)):
@@ -31,6 +33,7 @@ class DataObfuscationMiddleware:
                 print(collection[item])
             else:
                 print('watwat')
+        '''
         return
         '''
         for index, item in enumerate(collection):
