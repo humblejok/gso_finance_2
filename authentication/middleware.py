@@ -24,14 +24,14 @@ class DataObfuscationMiddleware:
             for index, item in enumerate(var):
                 self.getChildItem(item)
         elif type(var) is list:
-            for i in range(0, len(item)):
-                self.getChildItem(item[i])
+            for i in range(0, len(var)):
+                self.getChildItem(var[i])
         elif type(var) is dict or type(var) is collections.OrderedDict:
             for key, value in enumerate(var):
                 self.getChildItem(var[value])
         elif var != 'access' and var != 'refresh':
             #collection[item] = self.OCIPH.cipher_controller(collection[item])
-            print(var[item])
+            print(var)
         else:
             print('watwat')
         return
