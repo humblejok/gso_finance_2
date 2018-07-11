@@ -18,11 +18,13 @@ class DataObfuscationMiddleware:
 
     def getChildItem(self, collection):
         for index, item in enumerate(collection):
-            if item=='currency':
-                print(type(item))
-                print(item)
+            #if item=='currency':
+            #    print(type(item))
+            #    print(item)
             if type(item) is collections.OrderedDict:
                 self.getChildItem(item)
+            elif type(collection[item]) is collections.OrderedDict:
+                print(item)
             #elif item != 'access' and item != 'refresh':
             #elif item=='quick_access':
             #else:
