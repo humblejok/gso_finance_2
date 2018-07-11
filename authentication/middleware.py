@@ -22,14 +22,14 @@ class DataObfuscationMiddleware:
             #    print(type(item))
             #    print(item)
             if type(collection) is collections.OrderedDict:
-                if type(item) is collections.OrderedDict:
-                    print(1)
-                    self.getChildItem(item)
-                elif type(collection[item]) is collections.OrderedDict:
+                if type(collection[item]) is collections.OrderedDict:
                     print(2)
                     self.getChildItem(item)
                 else:
                     print(3)
+            elif type(item) is collections.OrderedDict:
+                    print(1)
+                    self.getChildItem(item):
             else:
                 print(4)
             #elif item != 'access' and item != 'refresh':
