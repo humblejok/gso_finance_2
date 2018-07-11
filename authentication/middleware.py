@@ -26,7 +26,7 @@ class DataObfuscationMiddleware:
                         pass
                         #item[i_item] = self.OCIPH.cipher_controller(item[i_item])
             elif item != 'access' and item != 'refresh':
-                pass
+                print(type(collection[item]))
                 #collection[item] = self.OCIPH.cipher_controller(collection[item])
             else:
                 print('watwat')
