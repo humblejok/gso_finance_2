@@ -18,14 +18,15 @@ class DataObfuscationMiddleware:
 
     def getChildItem(self, collection):
         for index, item in enumerate(collection):
-            searchOrdDict = re.search( r'OrderedDict', str(item))
-            if index==0 and searchOrdDict:
-                print(item['currency'])
             #searchOrdDict = re.search( r'OrderedDict', str(item))
-            #childOrdDict = re.search( r'OrderedDict', str(collection[item]))
-            #if searchOrdDict or childOrdDict:
-                 #print(item)
-            #    self.getChildItem(item)
+            #if index==0 and searchOrdDict:
+            #    print(item['currency'])
+            searchOrdDict = re.search( r'OrderedDict', str(item))
+            if searchOrdDict:
+                self.getChildItem(item)
             #elif item != 'access' and item != 'refresh':
-            #    collection[item] = self.OCIPH.cipher_controller(collection[item])                
+            elif item=='quick_access':
+            #    collection[item] = self.OCIPH.cipher_controller(collection[item])
+                print(item)
+                print(collection[item])
         return
