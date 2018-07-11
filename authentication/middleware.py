@@ -21,10 +21,10 @@ class DataObfuscationMiddleware:
     def getChildItem(self, var):
         if type(var) is list:
             for i in range(0, len(var)):
-                getChildItem(var[i])
+                self.getChildItem(var[i])
         elif type(var) is dict or type(var) is collections.OrderedDict:
             for key, value in enumerate(var):
-                child(var[value])
+                self.getChildItem(var[value])
         else:
             print(type(var))
         return
