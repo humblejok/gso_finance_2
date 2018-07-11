@@ -21,7 +21,7 @@ class DataObfuscationMiddleware:
             print(item)
             if type(item) is collections.OrderedDict:
                 for i_index, i_item in enumerate(item):
-                    if type(item[i_item]) is collection.OrderedDict:
+                    if type(item[i_item]) is collections.OrderedDict:
                         self.getChildItem(item[i_item])
                 
             #elif type(item) is collections.OrderedDict:
