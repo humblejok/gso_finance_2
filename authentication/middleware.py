@@ -27,7 +27,7 @@ class DataObfuscationMiddleware:
             for key, value in enumerate(var):
                 self.getChildItem(var[value])
         else:
-            print(type(var))
+            print(var)
         return
         '''
         for index, item in enumerate(collection):
