@@ -15,19 +15,22 @@ class DataObfuscationMiddleware:
 
     def process_template_response(self, request, response):
         if hasattr(response, 'data'):
-            for index, item in enumerate(response.data):
-                self.getChildItem(item)
+            self.getChildItem(response.data)
         return response
 
-    def getChildItem(self, var):
-        if type(var) is list:
-            for i in range(0, len(var)):
-                self.getChildItem(var[i])
-        elif type(var) is dict or type(var) is collections.OrderedDict:
-            for key, value in enumerate(var):
-                self.getChildItem(var[value])
-        else:
-            print(var)
+    def getChildItem(self, collection):
+        for index, item in enumerate(collection):
+            if type(item) is list:
+                for i in range(0, len(item)):
+                    self.getChildItem(item[i])
+            elif type(item) is dict or type(item) is collections.OrderedDict:
+                for key, value in enumerate(item):
+                    self.getChildItem(item[value])
+            elif item != 'access' and item != 'refresh':
+                #collection[item] = self.OCIPH.cipher_controller(collection[item])
+                print(collection[item])
+            else:
+                print('watwat')
         return
         '''
         for index, item in enumerate(collection):
