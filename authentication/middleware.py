@@ -18,7 +18,8 @@ class DataObfuscationMiddleware:
 
     def getChildItem(self, collection):
         for index, item in enumerate(collection):
-            if index==0:
+            searchOrdDict = re.search( r'OrderedDict', str(item))
+            if index==0 and searchOrdDict:
                 print(item[0])
             #searchOrdDict = re.search( r'OrderedDict', str(item))
             #childOrdDict = re.search( r'OrderedDict', str(collection[item]))
