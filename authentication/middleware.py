@@ -20,7 +20,7 @@ class DataObfuscationMiddleware:
         return response
 
     def getChildItem(self, var):
-        if type(var) is rest_framework.utils.serializer_helpers.ReturnList:
+        if type(var) is ReturnList:
             for index, item in enumerate(var):
                 self.getChildItem(item)
         elif type(var) is list:
