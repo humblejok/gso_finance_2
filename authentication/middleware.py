@@ -1,5 +1,5 @@
 from .models import ObfuscationCipher
-import re
+import re, collections
 
 class DataObfuscationMiddleware:
 
@@ -18,7 +18,7 @@ class DataObfuscationMiddleware:
 
     def getChildItem(self, collection):
         for index, item in enumerate(collection):
-            print(type(item))
+            print(type(item) is collections.OrderedDict)
             #searchOrdDict = re.search( r'OrderedDict', str(item))
             #if index==0 and searchOrdDict:
             #    print(item['currency'])
