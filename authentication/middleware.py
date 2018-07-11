@@ -23,7 +23,7 @@ class DataObfuscationMiddleware:
                     if type(item[i_item]) is collections.OrderedDict:
                         self.getChildItem(item[i_item])
                     else:
-                        print(item)
+                        print(i_item)
             else:
                 print(item)
                 
