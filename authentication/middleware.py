@@ -21,8 +21,9 @@ class DataObfuscationMiddleware:
             if type(item) is collections.OrderedDict:
                 self.getChildItem(item)
             #elif item != 'access' and item != 'refresh':
-            elif item=='quick_access':
+            #elif item=='quick_access':
+            else:
             #    collection[item] = self.OCIPH.cipher_controller(collection[item])
                 print(item)
-                print(collection[item])
+                #print(collection[item])
         return
