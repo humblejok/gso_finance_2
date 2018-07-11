@@ -1,5 +1,7 @@
 from .models import ObfuscationCipher
-import re, collections
+import re
+import collections
+
 
 class DataObfuscationMiddleware:
 
@@ -16,7 +18,17 @@ class DataObfuscationMiddleware:
             self.getChildItem(response.data)
         return response
 
-    def getChildItem(self, collection):
+    def getChildItem(self, var):
+        if type(var) is list:
+            for i in range(0, len(var)):
+                getChildItem(var[i])
+        elif type(var) is dict or type(var) is collections.OrderedDict:
+            for key, value in enumerate(var):
+                child(var[value])
+        else:
+            print(type(var))
+        return
+        '''
         for index, item in enumerate(collection):
             if type(item) is collections.OrderedDict:
                 for i_index, i_item in enumerate(item):
@@ -31,3 +43,4 @@ class DataObfuscationMiddleware:
             else:
                 print('watwat')
         return
+        '''
