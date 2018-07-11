@@ -20,9 +20,8 @@ class DataObfuscationMiddleware:
         for index, item in enumerate(collection):
             print(type(item))
             #    print(item)
-            #if type(collection) is collections.OrderedDict:
-            #    if collection[item] == 'quick_access':
-            #        print('fack yeah')
+            if type(item) is collections.OrderedDict:
+                print(collection[item])
             #    if type(collection[item]) is collections.OrderedDict:
             #        self.getChildItem(item)
             #elif type(item) is collections.OrderedDict:
