@@ -1,4 +1,4 @@
-from rest_framework.utils import serializer_helpers.ReturnList
+from rest_framework.utils.serializer_helpers import ReturnList
 from .models import ObfuscationCipher
 import re
 import collections
