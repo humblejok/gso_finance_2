@@ -20,7 +20,7 @@ class DataObfuscationMiddleware:
         for index, item in enumerate(collection):
             searchOrdDict = re.search( r'OrderedDict', str(item))
             if index==0 and searchOrdDict:
-                print(item[0])
+                print(item['currency'])
             #searchOrdDict = re.search( r'OrderedDict', str(item))
             #childOrdDict = re.search( r'OrderedDict', str(collection[item]))
             #if searchOrdDict or childOrdDict:
