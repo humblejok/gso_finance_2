@@ -20,6 +20,7 @@ class DataObfuscationMiddleware:
         for index, item in enumerate(collection):
             if item=='currency':
                 print(type(item))
+                print(item)
             if type(item) is collections.OrderedDict:
                 self.getChildItem(item)
             #elif item != 'access' and item != 'refresh':
