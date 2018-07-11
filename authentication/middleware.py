@@ -15,19 +15,19 @@ class DataObfuscationMiddleware:
 
     def process_template_response(self, request, response):
         if hasattr(response, 'data'):
-            self.getChildItem(response.data)
+            for index, item in enumerate(response.data):
+                self.getChildItem(item)
         return response
 
-    def getChildItem(self, collection):
-        for index, item in enumerate(collection):
-            if type(item) is list:
-                for i in range(0, len(item)):
-                    self.getChildItem(item[i])
-            elif type(item) is dict or type(item) is collections.OrderedDict:
-                for key, value in enumerate(item):
-                    self.getChildItem(item[value])
-            else:
-                print(type(item))
+    def getChildItem(self, var):
+        if type(var) is list:
+            for i in range(0, len(var)):
+                self.getChildItem(var[i])
+        elif type(var) is dict or type(var) is collections.OrderedDict:
+            for key, value in enumerate(var):
+                self.getChildItem(var[value])
+        else:
+            print(type(var))
         return
         '''
         for index, item in enumerate(collection):
@@ -37,10 +37,10 @@ class DataObfuscationMiddleware:
                         self.getChildItem(item[i_item])
                     else:
                         pass
-                        #item[i_item] = self.OCIPH.cipher_controller(item[i_item])
+                        # item[i_item] = self.OCIPH.cipher_controller(item[i_item])
             elif item != 'access' and item != 'refresh':
                 print(type(collection[item]))
-                #collection[item] = self.OCIPH.cipher_controller(collection[item])
+                # collection[item] = self.OCIPH.cipher_controller(collection[item])
             else:
                 print('watwat')
         return
