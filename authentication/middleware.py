@@ -29,7 +29,7 @@ class DataObfuscationMiddleware:
                     print(3)
             elif type(item) is collections.OrderedDict:
                     print(1)
-                    self.getChildItem(item):
+                    self.getChildItem(item)
             else:
                 print(4)
             #elif item != 'access' and item != 'refresh':
