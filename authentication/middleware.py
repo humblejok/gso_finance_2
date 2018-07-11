@@ -18,6 +18,8 @@ class DataObfuscationMiddleware:
 
     def getChildItem(self, collection):
         for index, item in enumerate(collection):
+            if item == 'quick_access':
+                print('fack yeah')
             #if item=='currency':
             #    print(type(item))
             #    print(item)
