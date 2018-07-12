@@ -145,6 +145,13 @@ USE_TZ = False
 # URL prefix for static files.
 STATIC_URL = '/statics/'
 
+LOGIN_URL = '/login/'
+
+CRYPT_EXEMPT_URLS = (
+    r'^api/token/$',
+    r'^api/refresh/$'
+)
+
 # Additional locations of static files
 STATICFILES_DIRS = (
     'D:/DEV/Sources/gso_finance_2/resources/statics/',

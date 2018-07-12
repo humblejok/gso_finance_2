@@ -1,8 +1,12 @@
 from rest_framework.utils.serializer_helpers import ReturnList
+from django.conf import settings
 from .models import ObfuscationCipher
 import re
 import collections
 
+EXEMPT_URLS = [re.compile(settings.LOGIN_URL.lstrip('/'))]
+if hasattr(settings, 'CRYPT_EXEMPT_URL'):
+    EXEMPT_URLS += [re.compile(url) for url in settings.CRYPT_EXEMPT_URL]
 
 class DataObfuscationMiddleware:
 
@@ -15,12 +19,12 @@ class DataObfuscationMiddleware:
         return response
 
     def process_template_response(self, request, response):
-        if hasattr(response, 'data'):
+        path = request.path_info.lstrip('/')
+        if not any(url.match(path) for url in EXEMPT_URLS):
+            return response
+        elif hasattr(response, 'data'):
             #self.getChildItem(response.data)
-            for key, value in enumerate(response.data):
-                print(value)
-                if value!='access' or value!='refresh':
-                    response.data[value] = self.OCIPH.cipher_controller(response.data[value])
+            response.data = self.OCIPH.cipher_controller(response.data)
         return response
 
     def getChildItem(self, var):
