@@ -20,18 +20,13 @@ class DataObfuscationMiddleware:
 
     def process_template_response(self, request, response):
         path = request.path_info.lstrip('/')
-        print(path)
-        print(EXEMPT_URLS)
-        for i in range(0, len(EXEMPT_URLS)):
-            print(EXEMPT_URLS[i])
-        print(any(url.match(path) for url in EXEMPT_URLS))
         if any(url.match(path) for url in EXEMPT_URLS):
             return response
         elif hasattr(response, 'data'):
-            #self.getChildItem(response.data)
             response.data = self.OCIPH.cipher_controller(response.data)
         return response
 
+    '''
     def getChildItem(self, var):
         if type(var) is ReturnList:
             for index, item in enumerate(var):
@@ -45,3 +40,4 @@ class DataObfuscationMiddleware:
         else:
             print(self.OCIPH.cipher_controller(var))
         return
+    '''
