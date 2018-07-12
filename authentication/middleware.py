@@ -5,8 +5,8 @@ import re
 import collections
 
 EXEMPT_URLS = [re.compile(settings.LOGIN_URL.lstrip('/'))]
-if hasattr(settings, 'CRYPT_EXEMPT_URL'):
-    EXEMPT_URLS += [re.compile(url) for url in settings.CRYPT_EXEMPT_URL]
+if hasattr(settings, 'CRYPT_EXEMPT_URLS'):
+    EXEMPT_URLS += [re.compile(url) for url in settings.CRYPT_EXEMPT_URLS]
 
 class DataObfuscationMiddleware:
 
