@@ -18,6 +18,7 @@ class DataObfuscationMiddleware:
         if hasattr(response, 'data'):
             #self.getChildItem(response.data)
             for key, value in enumerate(response.data):
+                print(value)
                 if value!='access' or value!='refresh':
                     response.data[value] = self.OCIPH.cipher_controller(response.data[value])
         return response
