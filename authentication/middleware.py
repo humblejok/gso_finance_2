@@ -18,7 +18,6 @@ class DataObfuscationMiddleware:
         if hasattr(response, 'data'):
             #self.getChildItem(response.data)
             response.data = self.OCIPH.cipher_controller(response.data)
-            print(response.data)
         return response
 
     def getChildItem(self, var):
