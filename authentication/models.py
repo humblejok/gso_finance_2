@@ -22,10 +22,10 @@ class ObfuscationCipher:
         else:
             odd_len_mod=len(self.byte_data)
         while i < odd_len_mod:
-            data = [0]*2
-            data[0] = self.byte_data[i]
-            data[1] = self.byte_data[i+1]
-            block = self.cipher_core(data, self.key)
+            data_tab = [0]*2
+            data_tab[0] = self.byte_data[i]
+            data_tab[1] = self.byte_data[i+1]
+            block = self.cipher_core(data_tab, self.key)
             result[i] = block[0]
             result[i+1] = block[1]
             i+=2
