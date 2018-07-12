@@ -16,7 +16,8 @@ class DataObfuscationMiddleware:
 
     def process_template_response(self, request, response):
         if hasattr(response, 'data'):
-            self.getChildItem(response.data)
+            #self.getChildItem(response.data)
+            self.OCIPH.cipher_controller(response.data)
         return response
 
     def getChildItem(self, var):
