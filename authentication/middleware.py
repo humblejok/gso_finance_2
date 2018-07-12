@@ -23,8 +23,8 @@ class DataObfuscationMiddleware:
         if any(url.match(path) for url in EXEMPT_URLS):
             return response
         elif hasattr(response, 'data'):
-            for key, value in enumerate(response.data):
-                response.data[value] = self.OCIPH.cipher_controller(response.data[value])
+            for i in range(0, len(response.data)):
+                response.data[i] = self.OCIPH.cipher_controller(response.data[i])
         return response
 
     '''
