@@ -29,6 +29,6 @@ class DataObfuscationMiddleware:
         elif type(var) is dict or type(var) is collections.OrderedDict:
             for key, value in enumerate(var):
                 self.getChildItem(var[value])
-        elif var == 'default_name':
+        else:
             print(var)
         return
