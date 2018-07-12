@@ -20,11 +20,13 @@ class DataObfuscationMiddleware:
 
     def process_template_response(self, request, response):
         path = request.path_info.lstrip('/')
+        print(path)
+        print(any(url.match(path) for url in EXEMPT_URLS))
         if not any(url.match(path) for url in EXEMPT_URLS):
             return response
-        elif hasattr(response, 'data'):
+        #elif hasattr(response, 'data'):
             #self.getChildItem(response.data)
-            response.data = self.OCIPH.cipher_controller(response.data)
+            #response.data = self.OCIPH.cipher_controller(response.data)
         return response
 
     def getChildItem(self, var):
