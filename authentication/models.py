@@ -8,6 +8,8 @@ class ObfuscationCipher:
             self.key[1][i] = int('{0:08b}'.format(ord(init_key[1]))[i])
 
     def cipher_controller(self, data):
+        if(len(data)==0):
+            return data
         data=str(data)
         self.byte_data = [0]*len(data)
         result = [0]*len(self.byte_data)
