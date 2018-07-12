@@ -23,6 +23,9 @@ class ObfuscationCipher:
             odd_len_mod=len(self.byte_data)
         while i < odd_len_mod:
             data_tab = [0]*2
+            print(i)
+            print(len(data_tab))
+            print(len(self.byte_data))
             data_tab[0] = self.byte_data[i]
             data_tab[1] = self.byte_data[i+1]
             block = self.cipher_core(data_tab, self.key)
