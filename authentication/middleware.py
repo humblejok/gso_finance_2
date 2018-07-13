@@ -23,11 +23,12 @@ class DataObfuscationMiddleware:
         if any(url.match(path) for url in EXEMPT_URLS):
             return response
         elif hasattr(response, 'data'):
-            for i in range(0, len(response.data)):
-                response.data[i] = self.OCIPH.cipher_controller(response.data[i])
+            self.getChildItem(response.data)
+            #for i in range(0, len(response.data)):
+                #response.data[i] = self.OCIPH.cipher_controller(response.data[i])
+                
         return response
 
-    '''
     def getChildItem(self, var):
         if type(var) is ReturnList:
             for index, item in enumerate(var):
@@ -39,6 +40,6 @@ class DataObfuscationMiddleware:
             for key, value in enumerate(var):
                 self.getChildItem(var[value])
         else:
-            print(self.OCIPH.cipher_controller(var))
+            print(var)
+            #print(self.OCIPH.cipher_controller(var))
         return
-    '''
