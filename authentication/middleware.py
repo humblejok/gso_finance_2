@@ -24,7 +24,7 @@ class DataObfuscationMiddleware:
             return response
         elif hasattr(response, 'data'):
             for i in range(0, len(response.data)):
-                if hasattr( response.data[i], 'inception_date'):
+                if 'inception_date' in response.data[i]:
                     print(response.data[i]['inception_date'])
                 else:
                     print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH')
