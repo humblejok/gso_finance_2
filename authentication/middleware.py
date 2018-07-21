@@ -23,16 +23,16 @@ class DataObfuscationMiddleware:
         if any(url.match(path) for url in EXEMPT_URLS):
             return response
         elif hasattr(response, 'data'):
-            print(response.data)
-            '''
-            for i in range(0, len(response.data)):
-                if 'inception_date' in response.data[i]:
-                    response.data[i]['inception_date'] = self.OCIPH.cipher_controller(response.data[i]['inception_date'])
-                if 'current_aum_local' in response.data[i]:
-                    response.data[i]['current_aum_local'] = self.OCIPH.cipher_controller(response.data[i]['current_aum_local'])
-                if 'current_aum_mgmt' in response.data[i]:
-                    response.data[i]['current_aum_mgmt'] = self.OCIPH.cipher_controller(response.data[i]['current_aum_mgmt'])
-            '''
+            if 'inception_date' in response.data and 'current_aum_local' in response.data and 'current_aum_mgmt' in response.data:
+                response.data['inception_date'] = self.OCIPH.cipher_controller(response.data['inception_date'])
+                response.data['current_aum_local'] = self.OCIPH.cipher_controller(response.data['current_aum_local'])
+                response.data['current_aum_mgmt'] = self.OCIPH.cipher_controller(response.data['current_aum_mgmt'])
+            else:
+                for i in range(0, len(response.data)):
+                    if 'inception_date' in response.data[i] and 'current_aum_local' in response.data[i] and 'current_aum_mgmt' in response.data[i]:
+                        response.data[i]['inception_date'] = self.OCIPH.cipher_controller(response.data[i]['inception_date'])
+                        response.data[i]['current_aum_local'] = self.OCIPH.cipher_controller(response.data[i]['current_aum_local'])
+                        response.data[i]['current_aum_mgmt'] = self.OCIPH.cipher_controller(response.data[i]['current_aum_mgmt'])
         return response
 '''
     def getChildItem(self, var):
