@@ -23,7 +23,7 @@ class DataObfuscationMiddleware:
         if any(url.match(path) for url in EXEMPT_URLS):
             return response
         elif hasattr(response, 'data'):
-            print(response.data[0])
+            print(response.data)
             '''
             for i in range(0, len(response.data)):
                 if 'inception_date' in response.data[i]:
