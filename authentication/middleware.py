@@ -24,7 +24,10 @@ class DataObfuscationMiddleware:
             return response
         elif hasattr(response, 'data'):
             for i in range(0, len(response.data)):
-                print(response.data[i]['inception_date'])
+                if hasattr( response.data[i], 'inception_date'):
+                    print(response.data[i]['inception_date'])
+                else:
+                    print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH')
                 #if hasattr( response.data[i], 'inception_date'):
                     #print(response.data[i].inception_date)
                     #response.data[i].inception_date = self.OCIPH.cipher_controller(response.data[i].inception_date)
