@@ -24,13 +24,12 @@ class DataObfuscationMiddleware:
             return response
         elif hasattr(response, 'data'):
             for i in range(0, len(response.data)):
-                if 0 in response.data:
-                    if 'inception_date' in response.data[i]:
-                        response.data[i]['inception_date'] = self.OCIPH.cipher_controller(response.data[i]['inception_date'])
-                    if 'current_aum_local' in response.data[i]:
-                        response.data[i]['current_aum_local'] = self.OCIPH.cipher_controller(response.data[i]['current_aum_local'])
-                    if 'current_aum_mgmt' in response.data[i]:
-                        response.data[i]['current_aum_mgmt'] = self.OCIPH.cipher_controller(response.data[i]['current_aum_mgmt'])
+                if 'inception_date' in response.data[i]:
+                    response.data[i]['inception_date'] = self.OCIPH.cipher_controller(response.data[i]['inception_date'])
+                if 'current_aum_local' in response.data[i]:
+                    response.data[i]['current_aum_local'] = self.OCIPH.cipher_controller(response.data[i]['current_aum_local'])
+                if 'current_aum_mgmt' in response.data[i]:
+                    response.data[i]['current_aum_mgmt'] = self.OCIPH.cipher_controller(response.data[i]['current_aum_mgmt'])
         return response
 '''
     def getChildItem(self, var):
