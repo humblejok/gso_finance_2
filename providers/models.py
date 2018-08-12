@@ -7,7 +7,6 @@ import logging
 
 from portfolio.models import Portfolio
 
-
 LOGGER = logging.getLogger(__name__)
 
                
