@@ -16,7 +16,6 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     queryset = Portfolio.objects.all().order_by('name')
     
     def get_serializer_class(self):
-        print("Action=" + self.action)
         if self.action in ['list', 'retrieve']:
             return CompletePortfolioSerializer
         return PortfolioSerializer

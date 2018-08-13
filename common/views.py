@@ -2,9 +2,12 @@ from django.shortcuts import render
 from rest_framework import viewsets, generics
 from common.models import Currency, Company, Country, VisibilityLevel,\
     AddressType, PhoneType, MailType, Person
-from common.serializers import CurrencySerializer, CompanySerializer,\
+from common.serializers import CurrencySerializer, CompleteCompanySerializer,\
     CountrySerializer, VisibilityLevelSerializer, AddressTypeSerializer,\
-    PhoneTypeSerializer, MailTypeSerializer, PersonSerializer
+    PhoneTypeSerializer, MailTypeSerializer, PersonSerializer, CompanySerializer
+import base64
+from gso_finance_2.utility import base64urldecode
+from django.db.models import Q
 
 def index(request):
     return render(request, 'index.html', {})
@@ -59,10 +62,13 @@ class QuickMailTypeViewSet(viewsets.ModelViewSet):
     
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all().order_by('default_name')
-    serializer_class = CompanySerializer
+    def get_serializer_class(self):
+        if self.action in ['list', 'retrieve']:
+            return CompleteCompanySerializer
+        return CompanySerializer
     
 class ProviderSearch(generics.ListAPIView):
-    serializer_class = CompanySerializer
+    serializer_class = CompleteCompanySerializer
    
     def get_queryset(self):
         provider_code = self.kwargs['provider_code']
@@ -73,3 +79,15 @@ class ProviderSearch(generics.ListAPIView):
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all().order_by('default_name')
     serializer_class = PersonSerializer
+    
+class CompaniesSearch(generics.ListAPIView):
+    serializer_class = CompleteCompanySerializer
+    
+    def get_queryset(self):
+        search_filter = self.kwargs['search_filter']
+        search_filter = base64.b64decode(base64urldecode(search_filter))
+        print(search_filter)
+        queryset = Company.objects.filter(Q(default_name__icontains=search_filter)
+                                           | Q(provider_code__icontains=search_filter)).order_by('name')
+        
+        return queryset

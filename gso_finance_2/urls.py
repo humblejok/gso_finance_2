@@ -6,7 +6,7 @@ from common.views import CurrencyViewSet, CompanyViewSet, QuickCurrencyViewSet,\
     CountryViewSet, QuickCountryViewSet, VisibilityLevelViewSet,\
     QuickVisibilityLevelViewSet, AddressTypeViewSet, QuickAddressTypeViewSet,\
     PhoneTypeViewSet, QuickPhoneTypeViewSet, MailTypeViewSet,\
-    QuickMailTypeViewSet, PersonViewSet, ProviderSearch
+    QuickMailTypeViewSet, PersonViewSet, ProviderSearch, CompaniesSearch
 from portfolio.views import PortfolioViewSet, AccountViewSet, AccountOperations,\
     AccountTypeViewSet, QuickAccountTypeViewSet,\
     QuickFinancialOperationTypeViewSet, FinancialOperationTypeViewSet,\
@@ -15,6 +15,7 @@ from providers.views import ExternalSecurityViewSet, ExternalSecuritySearch,\
     ExternalSecurityUnmapped, external_securities_history
 from security.views import SecurityViewSet, securities_history,\
      SecuritiesSearch, SecurityTypeViewSet, QuickSecurityTypeViewSet
+from eamcom.views import retrieve_positions
 
 router = routers.DefaultRouter()
 router.register(r'currencies', CurrencyViewSet)
@@ -67,6 +68,8 @@ urlpatterns = [
 
     url(r'^securities_history/(?P<security_id>[0-9]+)/$', securities_history),
     url(r'^securities_search/(?P<search_filter>.+)/$', SecuritiesSearch.as_view()),
+    
+    url(r'^companies_search/(?P<search_filter>.+)/$', CompaniesSearch.as_view()),
 
     url(r'^account_operations/(?P<account_id>[0-9]+)/$', AccountOperations.as_view()),
     #url(r'^portfolio_holdings/(?P<portfolio_id>[0-9]+)/$', PortfolioHoldings.as_view()),
@@ -74,6 +77,8 @@ urlpatterns = [
     url(r'^providers_search/(?P<provider_code>.+)/$', ProviderSearch.as_view()),
     
     url(r'^portfolios_history/(?P<portfolio_id>[0-9]+)/(?P<data_type>.+)/$', portfolios_history),
+    
+    url(r'^eamcom/retrieve_positions/(?P<provider_identifier>.+)/(?P<portfolio_identifier>.+)/$', retrieve_positions),
 
-
+    
 ]

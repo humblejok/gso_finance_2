@@ -49,12 +49,31 @@ class CompanySubsidiaryRoleTypeSerializer(serializers.ModelSerializer):
         fields = ('id', 'identifier', 'default_name', 'quick_access')
 
         
-class CompanySerializer(serializers.ModelSerializer):
+class CompleteCompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
         fields = ('id', 'default_name', 'creation_date', 'base_currency', 'addresses', 'emails', 'phones', 'members', 'subsidiaries', 'active', 'logo', 'is_provider', 'provider_code')
         depth = 2
-        
+
+class CompanySerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Company
+        fields = ('id', 'default_name', 'creation_date', 'base_currency', 'addresses', 'emails', 'phones', 'members', 'subsidiaries', 'active', 'logo', 'is_provider', 'provider_code')
+    def is_valid(self, raise_exception=False):
+        for field_key in ['base_currency', 'addresses', 'emails', 'phones', 'members', 'subsidiaries']:
+            if field_key in self.initial_data and isinstance(self.initial_data[field_key], dict):
+                self.initial_data[field_key] = self.initial_data[field_key]['id']
+        for field_key in ['creation_date']:
+            if field_key in self.initial_data and self.initial_data[field_key]!=None and len(self.initial_data[field_key])>10:
+                self.initial_data[field_key] = self.initial_data[field_key][0:10]
+            
+        return serializers.ModelSerializer.is_valid(self, raise_exception=raise_exception)
+    
+    def save(self, **kwargs):
+        company = serializers.ModelSerializer.save(self, **kwargs)
+        return company
+
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
