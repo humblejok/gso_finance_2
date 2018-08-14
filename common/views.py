@@ -4,7 +4,8 @@ from common.models import Currency, Company, Country, VisibilityLevel,\
     AddressType, PhoneType, MailType, Person
 from common.serializers import CurrencySerializer, CompleteCompanySerializer,\
     CountrySerializer, VisibilityLevelSerializer, AddressTypeSerializer,\
-    PhoneTypeSerializer, MailTypeSerializer, PersonSerializer, CompanySerializer
+    PhoneTypeSerializer, MailTypeSerializer, CompanySerializer,\
+    CompletePersonSerializer, PersonSerializer
 import base64
 from gso_finance_2.utility import base64urldecode
 from django.db.models import Q
@@ -78,7 +79,10 @@ class ProviderSearch(generics.ListAPIView):
     
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all().order_by('default_name')
-    serializer_class = PersonSerializer
+    def get_serializer_class(self):
+        if self.action in ['list', 'retrieve']:
+            return CompletePersonSerializer
+        return PersonSerializer
     
 class CompaniesSearch(generics.ListAPIView):
     serializer_class = CompleteCompanySerializer

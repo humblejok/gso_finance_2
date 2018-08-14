@@ -10,7 +10,8 @@ from common.views import CurrencyViewSet, CompanyViewSet, QuickCurrencyViewSet,\
 from portfolio.views import PortfolioViewSet, AccountViewSet, AccountOperations,\
     AccountTypeViewSet, QuickAccountTypeViewSet,\
     QuickFinancialOperationTypeViewSet, FinancialOperationTypeViewSet,\
-    OperationStatusViewSet, QuickOperationStatusViewSet, portfolios_history
+    OperationStatusViewSet, QuickOperationStatusViewSet, portfolios_history,\
+    portfolios_setup
 from providers.views import ExternalSecurityViewSet, ExternalSecuritySearch,\
     ExternalSecurityUnmapped, external_securities_history
 from security.views import SecurityViewSet, securities_history,\
@@ -77,6 +78,7 @@ urlpatterns = [
     url(r'^providers_search/(?P<provider_code>.+)/$', ProviderSearch.as_view()),
     
     url(r'^portfolios_history/(?P<portfolio_id>[0-9]+)/(?P<data_type>.+)/$', portfolios_history),
+    url(r'^portfolios_setup$', portfolios_setup),
     
     url(r'^eamcom/retrieve_positions/(?P<provider_identifier>.+)/(?P<portfolio_identifier>.+)/$', retrieve_positions),
 

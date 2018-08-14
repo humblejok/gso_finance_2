@@ -65,3 +65,13 @@ def portfolios_history(request, portfolio_id, data_type):
         raise Http404("Portfolio with id [" + portfolio_id + "] is not available.")
     track_data = get_track_content('finance', working_portfolio.id, data_type)
     return JsonResponse(track_data,safe=False)
+
+def portfolios_setup(request):
+    # TODO: Use configuration file
+    pf_setup = {
+        'additional_information': [
+            {'name': 'PROVIDER_ONLY', 'default_label': 'Provider only', 'default_description': 'Displayed data are not computed by FinanCE but extracted from the provider.', 'type': 'boolean'},
+            {'name': 'FUND_OR_ASSIMILATED', 'default_label': 'Is this portfolio a fund or assimilated?', 'default_description': 'This will enable advanced fees computations but also subscription and redemption in the associated security will be reflected in the portfolio.', 'type': 'boolean'}
+            ]
+        }
+    return JsonResponse(pf_setup, safe=True)

@@ -92,11 +92,29 @@ class PhoneSerializer(serializers.ModelSerializer):
         fields = ('id', 'line_type', 'phone_number')
         depth = 1
     
-class PersonSerializer(serializers.ModelSerializer):
+class CompletePersonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Person
         fields = ('id', 'default_name', 'first_name', 'last_name', 'birth_date', 'addresses', 'emails', 'phones', 'active', 'picture')
         depth = 2
+        
+class PersonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = ('id', 'default_name', 'first_name', 'last_name', 'birth_date', 'addresses', 'emails', 'phones', 'active', 'picture')
+    def is_valid(self, raise_exception=False):
+        for field_key in ['addresses', 'emails', 'phones']:
+            if field_key in self.initial_data and isinstance(self.initial_data[field_key], dict):
+                self.initial_data[field_key] = self.initial_data[field_key]['id']
+        for field_key in ['birth_date']:
+            if field_key in self.initial_data and self.initial_data[field_key]!=None and len(self.initial_data[field_key])>10:
+                self.initial_data[field_key] = self.initial_data[field_key][0:10]
+            
+        return serializers.ModelSerializer.is_valid(self, raise_exception=raise_exception)
+    
+    def save(self, **kwargs):
+        company = serializers.ModelSerializer.save(self, **kwargs)
+        return company
 
 class CompanyMemberSerializer(serializers.ModelSerializer):
     class Meta:
