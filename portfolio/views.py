@@ -70,8 +70,8 @@ def portfolios_setup(request):
     # TODO: Use configuration file
     pf_setup = {
         'additional_information': [
-            {'name': 'PROVIDER_ONLY', 'default_label': 'Provider only', 'default_description': 'Displayed data are not computed by FinanCE but extracted from the provider.', 'type': 'boolean'},
-            {'name': 'FUND_OR_ASSIMILATED', 'default_label': 'Is this portfolio a fund or assimilated?', 'default_description': 'This will enable advanced fees computations but also subscription and redemption in the associated security will be reflected in the portfolio.', 'type': 'boolean'}
+            {'name': 'PROVIDER_ONLY', 'default_value': False, 'default_label': 'Provider only', 'default_description': 'Displayed data are not computed by FinanCE but extracted from the provider.', 'type': 'boolean'},
+            {'name': 'FUND_OR_ASSIMILATED', 'default_value': False, 'default_label': 'Is this portfolio a fund or assimilated?', 'default_description': 'This will enable advanced fees computations but also subscription and redemption in the associated security will be reflected in the portfolio.', 'type': 'boolean'}
             ]
         }
     return JsonResponse(pf_setup, safe=True)

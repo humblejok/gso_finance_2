@@ -29,6 +29,8 @@ class CompletePortfolioSerializer(serializers.ModelSerializer):
 class PortfolioSerializer(serializers.ModelSerializer):
     
     current_accounts = []
+    additional_information = {}
+    additional_description = {}
     
     class Meta:
         model = Portfolio
@@ -53,7 +55,10 @@ class PortfolioSerializer(serializers.ModelSerializer):
         for field_key in ['closing_date', 'inception_date', 'last_computation', 'last_update']:
             if field_key in self.initial_data and self.initial_data[field_key]!=None and len(self.initial_data[field_key])>10:
                 self.initial_data[field_key] = self.initial_data[field_key][0:10]
-            
+        self.additional_information = self.initial_data['additional_information']
+        self.additional_description = self.initial_data['additional_description']
+        self.initial_data['additional_information'] = None
+        self.initial_data['additional_description'] = None
         return serializers.ModelSerializer.is_valid(self, raise_exception=raise_exception)
     
     def save(self, **kwargs):
@@ -70,6 +75,9 @@ class PortfolioSerializer(serializers.ModelSerializer):
             new_account.type = AccountType.objects.get(identifier='ACC_CURRENT')
             new_account.save()
             portfolio.accounts.add(new_account)
+        portfolio.additional_information = self.additional_information
+        portfolio.additional_description = self.additional_description
+        portfolio.save()
         return portfolio
         
 class AccountSerializer(serializers.ModelSerializer):
