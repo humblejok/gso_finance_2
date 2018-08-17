@@ -55,10 +55,10 @@ class PortfolioSerializer(serializers.ModelSerializer):
         for field_key in ['closing_date', 'inception_date', 'last_computation', 'last_update']:
             if field_key in self.initial_data and self.initial_data[field_key]!=None and len(self.initial_data[field_key])>10:
                 self.initial_data[field_key] = self.initial_data[field_key][0:10]
-        self.additional_information = self.initial_data['additional_information']
-        self.additional_description = self.initial_data['additional_description']
-        self.initial_data['additional_information'] = None
-        self.initial_data['additional_description'] = None
+        for field_key in ['additional_information', 'additional_description']:
+            if field_key in self.initial_data and self.initial_data[field_key]!=None:
+                setattr(self, field_key, self.initial_data[field_key])
+                self.initial_data[field_key] = None
         return serializers.ModelSerializer.is_valid(self, raise_exception=raise_exception)
     
     def save(self, **kwargs):

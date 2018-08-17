@@ -1,0 +1,10 @@
+FROM node:carbon
+# Update aptitude with new repo & Install software
+RUN apt-get update
+RUN apt-get install -y git
+RUN mkdir /opt/applications
+WORKDIR /opt/applications
+RUN git clone https://humblejok:Kernel32!@github.com/humblejok/ng-finance /opt/applications
+RUN npm install -g @angular/cli
+RUN npm install
+CMD ["ng", "serve", "--host", "0.0.0.0"]

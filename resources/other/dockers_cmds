@@ -1,0 +1,4 @@
+docker run -p 8001:8001 gso_finance2
+docker build -t gso_finance2 -f .\dockerfile .
+
+docker rm $(docker ps -qa --no-trunc --filter "status=exited")
