@@ -16,7 +16,8 @@ from providers.views import ExternalSecurityViewSet, ExternalSecuritySearch,\
     ExternalSecurityUnmapped, external_securities_history
 from security.views import SecurityViewSet, securities_history,\
      SecuritiesSearch, SecurityTypeViewSet, QuickSecurityTypeViewSet
-from eamcom.views import retrieve_positions
+from eamcom.views import get_positions
+import eamcom
 
 router = routers.DefaultRouter()
 router.register(r'currencies', CurrencyViewSet)
@@ -80,7 +81,7 @@ urlpatterns = [
     url(r'^portfolios_history/(?P<portfolio_id>[0-9]+)/(?P<data_type>.+)/$', portfolios_history),
     url(r'^portfolios_setup$', portfolios_setup),
     
-    url(r'^eamcom/retrieve_positions/(?P<provider_identifier>.+)/(?P<portfolio_identifier>.+)/$', retrieve_positions),
+    url(r'^eamcom/', include('eamcom.urls')),
 
     
 ]

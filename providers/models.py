@@ -1,11 +1,10 @@
 from django.db import models
-from django.contrib.postgres.fields.hstore import HStoreField
 from common.models import Company, Currency
 from security.models import SecurityType, Security
 
 import logging
 
-from portfolio.models import Portfolio
+from portfolio.models import Portfolio, AccountType, Account
 
 LOGGER = logging.getLogger(__name__)
 
@@ -17,18 +16,34 @@ class ExternalSecurity(models.Model):
     provider = models.ForeignKey(Company, related_name='external_security_providing_company', blank=True, null=True)
     provider_identifier = models.CharField(max_length=128, blank=True, null=True)
     associated = models.ForeignKey(Security, null=True, blank=True, related_name='external_security_link')
+    potential_matches = models.ManyToManyField(Security, blank=True, related_name='external_security_potential_link')
     
-class PortfolioHolding(models.Model):
-    external_security = models.ForeignKey(ExternalSecurity, related_name='external_holding')
+class ExternalAccount(models.Model):
+    name = models.CharField(max_length=128)
+    type = models.ForeignKey(AccountType, related_name='external_account_type_rel', blank=True, null=True)
+    currency = models.ForeignKey(Currency, related_name='external_account_currency_rel', blank=True, null=True)
+    provider = models.ForeignKey(Company, related_name='external_account_providing_company', blank=True, null=True)
+    provider_identifier = models.CharField(max_length=128, blank=True, null=True)
+    associated = models.ForeignKey(Account, null=True, blank=True, related_name='external_account_link')
+    potential_matches = models.ManyToManyField(Account, blank=True, related_name='external_account_potential_link')
+    
+class PortfolioSecurityHolding(models.Model):
+    external_security = models.ForeignKey(ExternalSecurity, related_name='external_security_holding')
     external_price = models.FloatField(default=0.0)
     external_quantity = models.FloatField(default=0.0)
-    internal_security = models.ForeignKey(Security, related_name='internal_holding')
-    internal_price = models.FloatField(default=0.0)
-    internal_quantity = models.FloatField(default=0.0)
+    internal_security = models.ForeignKey(Security, related_name='internal_security_holding', null=True, blank=True)
+    internal_price = models.FloatField(default=0.0, null=True, blank=True)
+    internal_quantity = models.FloatField(default=0.0, null=True, blank=True)
+    
+class PortfolioAccountHolding(models.Model):
+    external_account = models.ForeignKey(ExternalAccount, related_name='external_account_holding')
+    external_quantity = models.FloatField(default=0.0)
+    internal_account= models.ForeignKey(Security, related_name='internal_account_holding', null=True, blank=True)
+    internal_quantity = models.FloatField(default=0.0, null=True, blank=True)
 
 class ExternalPortfolioHoldings(models.Model):
-    portfolio = models.ForeignKey(Portfolio, related_name='portfolio_holdings')
+    provider = models.ForeignKey(Company, related_name='portfolio_holdings_provider', null=True, blank=True)
+    portfolio = models.ForeignKey(Portfolio, related_name='portfolio_holdings_portfolio')
     application_date = models.DateField()
-    holdings = models.ManyToManyField(PortfolioHolding, related_name='portfolio_holdings_consolidation')
-    
-    
+    security_holdings = models.ManyToManyField(PortfolioSecurityHolding, related_name='portfolio_holdings_securities')
+    account_holdings = models.ManyToManyField(PortfolioAccountHolding, related_name='portfolio_holdings_accounts')
