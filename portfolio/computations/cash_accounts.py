@@ -46,7 +46,11 @@ def build_chain(account):
             mvt_pnl[key_date] = mvt_pnl[key_date] + operation_amount
         elif operation.operation_type.identifier not in ['OPE_TYPE_BUY', 'OPE_TYPE_SELL', 'OPE_TYPE_BUY_FOP', 'OPE_TYPE_SELL_FOP']:
             mvt_no_pnl[key_date] = mvt_no_pnl[key_date] + operation_amount
-            
+    if not all_operations.exists():
+        key_date = account.inception_date.strftime('%Y-%m-%d')
+        history.append({'date': key_date, 'value': 0.0})
+        mvt_pnl[key_date] = 0.0
+        mvt_no_pnl[key_date] = 0.0
     set_track_content('finance', account.id, 'cash', history, True)
     set_track_content('finance', account.id, 'mvt_pnl', [{'date': key, 'value': mvt_pnl[key]} for key in mvt_pnl], True)
     set_track_content('finance', account.id, 'mvt_no_pnl', [{'date': key, 'value': mvt_no_pnl[key]} for key in mvt_no_pnl], True)

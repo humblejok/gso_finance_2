@@ -5,7 +5,8 @@ Created on 2 janv. 2018
 '''
 from rest_framework import serializers
 from providers.models import ExternalSecurity, ExternalAccount,\
-    PortfolioSecurityHolding, PortfolioAccountHolding, ExternalPortfolioHoldings
+    PortfolioSecurityHolding, PortfolioAccountHolding, ExternalPortfolioHoldings,\
+    ExternalTransaction
 
 class ExternalSecuritySerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,4 +36,11 @@ class ExternalPortfolioHoldingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExternalPortfolioHoldings
         fields = ('id', 'provider', 'application_date', 'security_holdings', 'account_holdings')
+        depth = 3
+        
+class ExternalTransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExternalTransaction
+        fields = ('id', 'portfolio', 'provider', 'provider_identifier', 'internal_operation',
+                  'external_source', 'external_target', 'external_security', 'is_valid', 'is_imported')
         depth = 3

@@ -4,7 +4,7 @@ from security.models import SecurityType, Security
 
 import logging
 
-from portfolio.models import Portfolio, AccountType, Account
+from portfolio.models import Portfolio, AccountType, Account, Operation
 
 LOGGER = logging.getLogger(__name__)
 
@@ -47,3 +47,14 @@ class ExternalPortfolioHoldings(models.Model):
     application_date = models.DateField()
     security_holdings = models.ManyToManyField(PortfolioSecurityHolding, related_name='portfolio_holdings_securities')
     account_holdings = models.ManyToManyField(PortfolioAccountHolding, related_name='portfolio_holdings_accounts')
+    
+class ExternalTransaction(models.Model):
+    portfolio = models.ForeignKey(Portfolio, related_name='external_transaction_portfolio')
+    provider = models.ForeignKey(Company, related_name='external_transaction_provider', null=True, blank=True)
+    provider_identifier = models.CharField(max_length=128, blank=True, null=True)
+    internal_operation = models.ForeignKey(Operation, related_name='external_transaction_operation')
+    external_source = models.ForeignKey(ExternalAccount, related_name='external_transaction_source', null=True, blank=True)
+    external_target = models.ForeignKey(ExternalAccount, related_name='external_transaction_target', null=True, blank=True)
+    external_security = models.ForeignKey(ExternalSecurity, related_name='external_transaction_security', null=True, blank=True)
+    is_valid = models.BooleanField(default=False)
+    is_imported = models.BooleanField(default=False)

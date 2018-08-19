@@ -6,11 +6,12 @@ Created on 18 août 2018
 from json import dumps
 from common.models import Company, Currency
 from providers.models import ExternalSecurity, ExternalAccount,\
-    PortfolioSecurityHolding, PortfolioAccountHolding
+    PortfolioSecurityHolding, PortfolioAccountHolding, ExternalTransaction
 from security.models import SecurityType, Security
 from django.db.models import Q
 import logging
-from portfolio.models import AccountType, Portfolio
+from portfolio.models import AccountType, Portfolio, Operation, OperationStatus,\
+    FinancialOperationType
 
 LOGGER = logging.getLogger(__name__)
 
@@ -19,6 +20,28 @@ me = Company.objects.get(provider_code='EAMCOM')
 
 # TODO: CACHE THIS
 available_provider_codes = Company.objects.filter(is_provider=True).values_list('provider_code', flat=True)
+
+def extract_operation_type(external_type):
+    if external_type=='Contribution':
+        return FinancialOperationType.objects.get(identifier='OPE_TYPE_CONTRIBUTION')
+    if external_type=='Cashier contribution':
+        return FinancialOperationType.objects.get(identifier='OPE_TYPE_CASH_CONTRIBUTION')
+    if external_type=='Withdrawal':
+        return FinancialOperationType.objects.get(identifier='OPE_TYPE_WITHDRAWAL')
+    if external_type=='Cashier withdrawal':
+        return FinancialOperationType.objects.get(identifier='OPE_TYPE_CASH_WITHDRAWAL')
+    return FinancialOperationType.objects.get(identifier='OPE_TYPE_CONTRIBUTION')
+
+def extract_status(external_status):
+    if external_status=='Received':
+        return OperationStatus.objects.get(identifier='OPE_STATUS_SENT')
+    if external_status=='Acknowledged':
+        return OperationStatus.objects.get(identifier='OPE_STATUS_ACK')
+    if external_status=='Executed':
+        return OperationStatus.objects.get(identifier='OPE_STATUS_EXECUTED')
+    if external_status=='Cancelled':
+        return OperationStatus.objects.get(identifier='OPE_STATUS_CANCELLED')
+    return OperationStatus.objects.get(identifier='OPE_STATUS_PENDING')
 
 def extract_security_type(external_type):
     if external_type=='Stock':
@@ -55,8 +78,8 @@ def extract_potential_securities(data):
                             )
     return list(alias_based_results) + list(label_based_results)
 
-def extract_potential_accounts(portfolio, data):
-    return list(portfolio.accounts.filter(identifier=data['identifier']))
+def extract_potential_accounts(portfolio, data, key='identifier'):
+    return list(portfolio.accounts.filter(identifier=data[key]))
 
 def create_security_holdings(portfolio_holding, data):
     done = True
@@ -115,7 +138,7 @@ def import_positions(data):
             extract_potential_securities(entry)
             try:
                 LOGGER.debug('EAMCOM - Searching existing security - [' + entry['label'] + ',' + entry['identifier'] + ']')
-                e_security = ExternalSecurity.objects.get(provider=me, provider_identifier=entry['identifier'])
+                e_security = ExternalSecurity.objects.get(provider=me, provider_identifier=entry['identifier'], currency__identifier=entry['currency'])
                 LOGGER.debug('EAMCOM - Found')
             except ExternalSecurity.DoesNotExist:
                 LOGGER.debug('EAMCOM - Not found, creating external security')
@@ -164,3 +187,153 @@ def import_positions(data):
             else:
                 LOGGER.debug('EAMCOM - No match found...')
     return done
+
+def import_cash_operations(data):
+    done = True
+    results = []
+    for entry in data:
+        try:
+            portfolio = Portfolio.objects.get(identifier=entry['portfolio_id'])
+        except:
+            LOGGER.error('EAMCOM - Could not find portfolio with identifier [' + entry['portfolio_id'] + '] or too many results!')
+            done = False
+            break
+        try:
+            ext_transaction = ExternalTransaction.objects.get(provider=me, portfolio=portfolio, provider_identifier=entry['identifier'])
+        except ExternalTransaction.DoesNotExist:
+            ext_transaction = ExternalTransaction()
+            ext_transaction.portfolio = portfolio
+            ext_transaction.provider = me
+            ext_transaction.provider_identifier = entry['identifier']
+            ext_transaction.internal_operation = Operation()
+            ext_transaction.is_imported = False
+        f_account = None
+        t_account = None
+        e_security = None
+        if entry['from_account_id'] not in [None, '', 'None']:
+            try:
+                LOGGER.debug('EAMCOM - Searching existing from account - [' + entry['from_account_id'] + ']')
+                f_account = ExternalAccount.objects.get(provider=me, provider_identifier=entry['from_account_id'])
+                LOGGER.debug('EAMCOM - Found')
+            except ExternalAccount.DoesNotExist:
+                LOGGER.debug('EAMCOM - Not found')
+        if entry['to_account_id'] not in [None, '', 'None']:
+            try:
+                LOGGER.debug('EAMCOM - Searching existing to account - [' + entry['to_account_id'] + ']')
+                t_account = ExternalAccount.objects.get(provider=me, provider_identifier=entry['to_account_id'])
+                LOGGER.debug('EAMCOM - Found')
+            except ExternalAccount.DoesNotExist:
+                LOGGER.debug('EAMCOM - Not found')
+        ext_transaction.is_valid = (t_account!=None and t_account.associated!=None) or (f_account!=None and f_account.associated!=None)
+        ext_transaction.external_security = e_security
+        ext_transaction.external_source = f_account
+        ext_transaction.external_target = t_account
+        LOGGER.debug('EAMCOM - Filling internal operation fields')
+        ext_transaction.internal_operation.identifier = entry['identifier']
+        ext_transaction.internal_operation.name = entry['label']
+        ext_transaction.internal_operation.description = entry['label']
+        ext_transaction.internal_operation.spot_rate = 1.0
+        ext_transaction.internal_operation.amount = float(entry['amount'])
+        ext_transaction.internal_operation.amount_portfolio = 0.0
+        ext_transaction.internal_operation.amount_management = 0.0
+        ext_transaction.internal_operation.operation_date = entry['operation_date']
+        ext_transaction.internal_operation.value_date = entry['value_date']
+        ext_transaction.internal_operation.status = extract_status(entry['status'])
+        ext_transaction.internal_operation.additional_information = {}
+        ext_transaction.internal_operation.additional_description = {'aliases': {me.provider_code: entry['identifier']}}
+        ext_transaction.internal_operation.operation_type = extract_operation_type(entry['movement_type'])
+        ext_transaction.internal_operation.source = None
+        ext_transaction.internal_operation.target = None
+        ext_transaction.internal_operation.security = None
+        ext_transaction.internal_operation.quantity = None
+        ext_transaction.internal_operation.price = None
+        LOGGER.debug('EAMCOM - Saving')
+        ext_transaction.internal_operation.save()
+        LOGGER.debug('EAMCOM - Reloading saved operation')
+        ext_transaction.internal_operation = Operation.objects.get(id=ext_transaction.internal_operation.id)
+        ext_transaction.save()
+        results.append(ext_transaction)
+    return done, results
+        
+        
+def import_security_operations(data):
+    done = True
+    results = []
+    for entry in data:
+        try:
+            portfolio = Portfolio.objects.get(identifier=entry['portfolio_id'])
+        except:
+            LOGGER.error('EAMCOM - Could not find portfolio with identifier [' + entry['portfolio_id'] + '] or too many results!')
+            done = False
+            break
+        try:
+            ext_transaction = ExternalTransaction.objects.get(provider=me, portfolio=portfolio, provider_identifier=entry['identifier'])
+        except ExternalTransaction.DoesNotExist:
+            ext_transaction = ExternalTransaction()
+            ext_transaction.portfolio = portfolio
+            ext_transaction.provider = me
+            ext_transaction.provider_identifier = entry['identifier']
+            ext_transaction.internal_operation = Operation()
+            ext_transaction.is_imported = False
+        f_account = None
+        t_account = None
+        e_security = None
+        if entry['account_id'] not in [None, '', 'None']:
+            try:
+                LOGGER.debug('EAMCOM - Searching existing from account - [' + entry['account_id'] + ']')
+                f_account = ExternalAccount.objects.get(provider=me, provider_identifier=entry['account_id'])
+                LOGGER.debug('EAMCOM - Found')
+            except ExternalAccount.DoesNotExist:
+                LOGGER.debug('EAMCOM - Not found')
+        if entry['security'] not in [None, '', 'None']:
+            try:
+                LOGGER.debug('EAMCOM - Searching existing security - [' + entry['security'] + ']')
+                e_security = ExternalSecurity.objects.get(provider=me, provider_identifier=entry['security'], currency__identifier=entry['currency'])
+                LOGGER.debug('EAMCOM - Found')
+            except ExternalSecurity.DoesNotExist:
+                LOGGER.debug('EAMCOM - Not found')
+        ext_transaction.is_valid = (e_security!=None and e_security.associated!=None)
+        ext_transaction.external_security = e_security
+        ext_transaction.external_source = f_account
+        ext_transaction.external_target = t_account
+        LOGGER.debug('EAMCOM - Filling internal operation fields')
+        ext_transaction.internal_operation.identifier = entry['identifier']
+        ext_transaction.internal_operation.name = entry['label']
+        ext_transaction.internal_operation.description = entry['label']
+        ext_transaction.internal_operation.spot_rate = float(entry['spot_rate'])
+        price_divisor = 1.0
+        if e_security!=None and e_security.associated!=None:
+            price_divisor = e_security.associated.get_price_divisor()
+        ext_transaction.internal_operation.amount = float(entry['price']) * float(entry['quantity']) / price_divisor
+        ext_transaction.internal_operation.amount_portfolio = 0.0
+        ext_transaction.internal_operation.amount_management = 0.0
+        ext_transaction.internal_operation.operation_date = entry['operation_date']
+        ext_transaction.internal_operation.value_date = entry['value_date']
+        ext_transaction.internal_operation.status = extract_status(entry['status'])
+        ext_transaction.internal_operation.additional_information = {}
+        ext_transaction.internal_operation.additional_description = {'aliases': {me.provider_code: entry['identifier']}}
+        ext_transaction.internal_operation.operation_type = extract_operation_type(entry['movement_type'])
+        ext_transaction.internal_operation.source = None
+        ext_transaction.internal_operation.target = None
+        ext_transaction.internal_operation.security = None
+        ext_transaction.internal_operation.quantity = float(entry['quantity'])
+        ext_transaction.internal_operation.price = float(entry['price'])
+        LOGGER.debug('EAMCOM - Saving')
+        ext_transaction.internal_operation.save()
+        LOGGER.debug('EAMCOM - Reloading saved operation')
+        ext_transaction.internal_operation = Operation.objects.get(id=ext_transaction.internal_operation.id)
+        ext_transaction.save()
+        results.append(ext_transaction)
+    return done, results
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        

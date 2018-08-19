@@ -5,8 +5,9 @@ from portfolio.serializers import AccountSerializer,  OperationSerializer, Money
     CompletePortfolioSerializer, PortfolioSerializer, AccountTypeSerializer,\
     FinancialOperationTypeSerializer, OperationStatusSerializer
 from django.db.models import Q
-from django.http.response import Http404, JsonResponse
+from django.http.response import Http404, JsonResponse, HttpResponse
 from gso_finance_2.tracks_utility import get_track_content
+from portfolio.computations import portfolios as pf_computer
 
 class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
@@ -65,6 +66,14 @@ def portfolios_history(request, portfolio_id, data_type):
         raise Http404("Portfolio with id [" + portfolio_id + "] is not available.")
     track_data = get_track_content('finance', working_portfolio.id, data_type)
     return JsonResponse(track_data,safe=False)
+
+def portfolio_compute(request, portfolio_id):
+    portfolio = Portfolio.objects.get(id=portfolio_id)
+    pf_computer.compute_accounts(portfolio)
+    pf_computer.compute_valuation(portfolio)
+    pf_computer.update_accounts(portfolio)
+    pf_computer.update_portfolio_model(portfolio)
+    return HttpResponse(status=200)
 
 def portfolios_setup(request):
     # TODO: Use configuration file

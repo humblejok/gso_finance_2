@@ -29,7 +29,7 @@ class FStoryClient(object):
         self.source_key = source_key
         
     def request(self, query):
-        _response = requests.post(SOURCES[self.source_key]['url'], data=dumps(query), headers=HEADERS)
+        _response = requests.post(SOURCES[self.source_key.lower()]['url'], data=dumps(query), headers=HEADERS)
         if _response.status_code==200:
             self.response = _response.json()
             if 'data' in self.response:
@@ -54,7 +54,7 @@ def to_pandas(data, multi=False):
     return df
 
 def get_track_content(source_key, entity_id, track_type, ascending = True, divisor = 1.0, substract = 0.0, expand_today=False, nofill=False, nafill=None):
-    if SOURCES[source_key]['escape']:
+    if SOURCES[source_key.lower()]['escape']:
         try:
             container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
         except:
@@ -79,7 +79,7 @@ def get_track_content(source_key, entity_id, track_type, ascending = True, divis
         return data
 
 def clean_track_content(source_key, entity_id, track_type):
-    if SOURCES[source_key]['escape']:
+    if SOURCES[source_key.lower()]['escape']:
         container_id = 'entity_' + base64.b64encode(entity_id.encode('utf8'), '+-'.encode('utf8')).decode('utf8')
     else:
         container_id = 'entity_' + str(entity_id)
@@ -89,7 +89,7 @@ def clean_track_content(source_key, entity_id, track_type):
 
 def set_track_content(source_key, entity_id, track_type, values, clean):
     LOGGER.info('Storing track content')
-    if SOURCES[source_key]['escape']:
+    if SOURCES[source_key.lower()]['escape']:
         try:
             container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
         except:
@@ -104,7 +104,7 @@ def set_track_content(source_key, entity_id, track_type, values, clean):
     LOGGER.info('Track content stored as ' + container_id + '.' + track_id + ' with ' + str(len(values)) + (' updated' if not clean else '') + ' elements.')
 
 def compute_track_content(source_key, entity_id, track_type, engine_name, target_type):
-    if SOURCES[source_key]['escape']:
+    if SOURCES[source_key.lower()]['escape']:
         try:
             container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
         except:
@@ -117,7 +117,7 @@ def compute_track_content(source_key, entity_id, track_type, engine_name, target
     return get_track_content(source_key, entity_id, target_type)
     
 def get_multi_content(source_key, entity_id, data_type, expand_today=True, nofill=False, nafill=None):
-    if SOURCES[source_key]['escape']:
+    if SOURCES[source_key.lower()]['escape']:
         try:
             container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
         except:
@@ -134,7 +134,7 @@ def get_multi_content(source_key, entity_id, data_type, expand_today=True, nofil
     
 def set_multi_content(source_key, entity_id, data_type, values, clean):
     LOGGER.info('Storing track content')
-    if SOURCES[source_key]['escape']:
+    if SOURCES[source_key.lower()]['escape']:
         try:
             container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
         except:

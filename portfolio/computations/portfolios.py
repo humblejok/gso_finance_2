@@ -9,6 +9,7 @@ from datetime import datetime as dt
 from gso_finance_2.tracks_utility import get_track_content, set_track_content,\
     to_pandas
 from portfolio.computations import security_accounts, cash_accounts
+from portfolio.models import MoneyAccountChain
 
 LOGGER = logging.getLogger(__name__)
 
@@ -37,6 +38,7 @@ def compute_accounts(portfolio):
             security_accounts.build_chain(account)
             security_accounts.compute_valuation(portfolio, account)
         else:
+            MoneyAccountChain.build_chain(account)
             cash_accounts.build_chain(account)
             cash_accounts.compute_valuation(portfolio, account)
 

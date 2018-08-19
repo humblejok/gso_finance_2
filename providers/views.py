@@ -1,16 +1,18 @@
 from rest_framework import viewsets, generics
 from providers.models import ExternalSecurity, ExternalAccount,\
-    PortfolioSecurityHolding, PortfolioAccountHolding, ExternalPortfolioHoldings
+    PortfolioSecurityHolding, PortfolioAccountHolding, ExternalPortfolioHoldings,\
+    ExternalTransaction
 from providers.serializers import ExternalSecuritySerializer,\
     ExternalAccountSerializer, PortfolioSecurityHoldingSerializer,\
     PortfolioAccountHoldingSerializer, ExternalPortfolioHoldingsSerializer
 from django.http.response import Http404, HttpResponseBadRequest, JsonResponse,\
     HttpResponse
 from gso_finance_2.tracks_utility import get_track_content
-from portfolio.models import Account
+from portfolio.models import Account, Operation
 from datetime import datetime as dt
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
+from security.models import Security
 
 # TODO: EVERYTHING -> Check usage and migrate to EAMCOM?
 
@@ -96,7 +98,7 @@ def create_account_from(request, account_holding_id, holdings_id):
     account_holding.internal_quantity = account_holding.external_quantity
     account_holding.save()
     
-    return HttpResponse(status_code=201)
+    return HttpResponse(status=201)
         
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -116,5 +118,32 @@ def assign_account_to(request, account_holding_id, account_id):
     account_holding.internal_account = account
     account_holding.internal_quantity = account.current_amount_local
     account_holding.save()
-    return HttpResponse(status_code=204)
-        
+    return HttpResponse(status=204)
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def accept_external_transaction(request, external_transaction_id):
+    try:
+        transaction = ExternalTransaction.objects.get(id=external_transaction_id)
+    except ExternalTransaction.DoesNotExist:
+        return Http404('External transaction could not be found.')
+    wrk_operation = Operation.objects.get(id=transaction.internal_operation.id)
+    wrk_operation.source = Account.objects.get(id=transaction.external_source.associated.id) if transaction.external_source!=None else None
+    wrk_operation.target = Account.objects.get(id=transaction.external_target.associated.id) if transaction.external_target!=None else None
+    wrk_operation.security = Security.objects.get(id=transaction.external_security.associated.id) if transaction.external_security!=None else None
+    wrk_operation.save()
+    transaction.is_imported = True
+    transaction.save()
+    return HttpResponse(status=204)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
