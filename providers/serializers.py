@@ -4,22 +4,35 @@ Created on 2 janv. 2018
 @author: sdejo
 '''
 from rest_framework import serializers
-from providers.models import ExternalSecurity
+from providers.models import ExternalSecurity, ExternalAccount,\
+    PortfolioSecurityHolding, PortfolioAccountHolding, ExternalPortfolioHoldings
 
 class ExternalSecuritySerializer(serializers.ModelSerializer):
     class Meta:
         model = ExternalSecurity
-        fields = ('id', 'name', 'type', 'currency', 'provider', 'provider_identifier', 'associated')
+        fields = ('id', 'name', 'type', 'currency', 'provider', 'provider_identifier', 'associated', 'potential_matches')
+        depth = 3
         
-    def is_valid(self, raise_exception=False):
-        for field_key in ['type', 'currency', 'provider', 'associated']:
-            if isinstance(self.initial_data[field_key], dict):
-                self.initial_data[field_key] = self.initial_data[field_key]['id']
-            
-        return serializers.ModelSerializer.is_valid(self, raise_exception=raise_exception)
-
-class CompleteExternalSecuritySerializer(serializers.ModelSerializer):
+class ExternalAccountSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ExternalSecurity
-        fields = ('id', 'name', 'type', 'currency', 'provider', 'provider_identifier', 'associated')
+        model = ExternalAccount
+        fields = ('id', 'name', 'type', 'currency', 'provider', 'provider_identifier', 'associated', 'potential_matches')
+        depth = 3
+        
+class PortfolioSecurityHoldingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PortfolioSecurityHolding
+        fields = ('id', 'external_security', 'external_price', 'external_quantity', 'internal_security', 'internal_price', 'internal_quantity')
+        depth = 3
+        
+class PortfolioAccountHoldingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PortfolioAccountHolding
+        fields = ('id', 'external_account', 'external_quantity', 'internal_account', 'internal_quantity')
+        depth = 3
+        
+class ExternalPortfolioHoldingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExternalPortfolioHoldings
+        fields = ('id', 'provider', 'application_date', 'security_holdings', 'account_holdings')
         depth = 3

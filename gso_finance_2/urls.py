@@ -13,7 +13,9 @@ from portfolio.views import PortfolioViewSet, AccountViewSet, AccountOperations,
     OperationStatusViewSet, QuickOperationStatusViewSet, portfolios_history,\
     portfolios_setup
 from providers.views import ExternalSecurityViewSet, ExternalSecuritySearch,\
-    ExternalSecurityUnmapped, external_securities_history
+    ExternalSecurityUnmapped, external_securities_history,\
+    ExternalAccountViewSet, PortfolioSecurityHoldingViewSet,\
+    ExternalPortfolioHoldingsViewSet
 from security.views import SecurityViewSet, securities_history,\
      SecuritiesSearch, SecurityTypeViewSet, QuickSecurityTypeViewSet
 from eamcom.views import get_positions
@@ -57,7 +59,11 @@ router.register(r'accounts', AccountViewSet)
 router.register(r'companies', CompanyViewSet)
 
 router.register(r'securities', SecurityViewSet)
+
 router.register(r'external_securities', ExternalSecurityViewSet)
+router.register(r'external_accounts', ExternalAccountViewSet)
+router.register(r'external_portfolio_holdings', ExternalPortfolioHoldingsViewSet)
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -82,6 +88,7 @@ urlpatterns = [
     url(r'^portfolios_setup$', portfolios_setup),
     
     url(r'^eamcom/', include('eamcom.urls')),
+    url(r'^providers/', include('providers.urls')),
 
     
 ]

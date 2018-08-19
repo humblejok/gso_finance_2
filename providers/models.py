@@ -38,7 +38,7 @@ class PortfolioSecurityHolding(models.Model):
 class PortfolioAccountHolding(models.Model):
     external_account = models.ForeignKey(ExternalAccount, related_name='external_account_holding')
     external_quantity = models.FloatField(default=0.0)
-    internal_account= models.ForeignKey(Security, related_name='internal_account_holding', null=True, blank=True)
+    internal_account= models.ForeignKey(Account, related_name='internal_account_holding', null=True, blank=True)
     internal_quantity = models.FloatField(default=0.0, null=True, blank=True)
 
 class ExternalPortfolioHoldings(models.Model):

@@ -13,12 +13,14 @@ from eamcom.utility import import_positions, create_security_holdings,\
 from providers.models import ExternalPortfolioHoldings
 from datetime import datetime as dt
 from common.models import Company
+from providers.serializers import ExternalPortfolioHoldingsSerializer
 
 app_config = apps.get_app_config(EamcomConfig.name)
 
 LOGGER = logging.getLogger(__name__)
 
 me = Company.objects.get(provider_code='EAMCOM')
+
 
 @require_http_methods(["GET"])
 def get_positions(request, portfolio_id):
@@ -52,13 +54,15 @@ def get_positions(request, portfolio_id):
                     holdings = ExternalPortfolioHoldings()
                     holdings.provider = me
                     holdings.portfolio = portfolio
-                    holdings.application_date = dt.today()
+                    holdings.application_date = dt.today().date()
                     holdings.save()
                     securities_status, holdings.security_holdings = create_security_holdings(holdings, content['response_body'])
                     accounts_status, holdings.account_holdings = create_account_holdings(holdings, content['response_body'])
+                    holdings.save()
                     if not accounts_status or not securities_status:
                         LOGGER.error('EAMCOM - An error occurred during holdings import')
-                    return JsonResponse(content['response_body'], safe=False)
+                    serializer = ExternalPortfolioHoldingsSerializer(holdings)
+                    return JsonResponse(serializer.data, safe=False)
                 else:
                     LOGGER.error('EAMCOM - An error occurred while calling EAMCOM, see details below.')
                     LOGGER.error(dumps(content))

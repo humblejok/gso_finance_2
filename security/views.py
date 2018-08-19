@@ -6,6 +6,7 @@ from gso_finance_2.tracks_utility import get_track_content
 from django.db.models import Q
 import base64
 from gso_finance_2.utility import base64urldecode
+from django.views.decorators.http import require_http_methods
 
 class SecurityTypeViewSet(viewsets.ModelViewSet):
     queryset = SecurityType.objects.all().order_by('identifier')
@@ -34,7 +35,7 @@ class SecuritiesSearch(generics.ListAPIView):
         return queryset
 
 
-# TODO: GET ONLY
+@require_http_methods(["GET"])
 def securities_history(request, security_id):
     try:
         working_security = Security.objects.get(id=security_id)

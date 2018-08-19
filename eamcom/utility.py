@@ -97,8 +97,7 @@ def create_account_holdings(portfolio_holding, data):
             new_holding.external_account = e_account
             new_holding.external_quantity = entry['quantity']
             new_holding.internal_account = e_account.associated
-            # TODO: Complete
-            new_holding.internal_quantity = 0.0
+            new_holding.internal_quantity = 0.0 if e_account.associated==None else e_account.associated.current_amount_local
             new_holding.save()
             results.append(new_holding)
     return done, results
@@ -121,12 +120,12 @@ def import_positions(data):
             except ExternalSecurity.DoesNotExist:
                 LOGGER.debug('EAMCOM - Not found, creating external security')
                 e_security = ExternalSecurity()
-                e_security.name = entry['label']
-                e_security.type = extract_security_type(entry['asset_class'])
-                e_security.currency = Currency.objects.get(identifier=entry['currency'])
-                e_security.provider = me
-                e_security.provider_identifier = entry['identifier']
-                e_security.save()
+            e_security.name = entry['label']
+            e_security.type = extract_security_type(entry['asset_class'])
+            e_security.currency = Currency.objects.get(identifier=entry['currency'])
+            e_security.provider = me
+            e_security.provider_identifier = entry['identifier']
+            e_security.save()
             LOGGER.debug('EAMCOM - Updating potential matches')
             e_security.potential_matches.clear()
             potentials = extract_potential_securities(entry)
@@ -147,12 +146,12 @@ def import_positions(data):
             except ExternalAccount.DoesNotExist:
                 LOGGER.debug('EAMCOM - Not found, creating external account')
                 e_account = ExternalAccount()
-                e_account.name = entry['label']
-                e_account.type = extract_account_type(entry['asset_class'])
-                e_account.currency = Currency.objects.get(identifier=entry['currency'])
-                e_account.provider = me
-                e_account.provider_identifier = entry['identifier']
-                e_account.save()
+            e_account.name = entry['label']
+            e_account.type = extract_account_type(entry['asset_class'])
+            e_account.currency = Currency.objects.get(identifier=entry['currency'])
+            e_account.provider = me
+            e_account.provider_identifier = entry['identifier']
+            e_account.save()
             LOGGER.debug('EAMCOM - Updating potential matches')
             e_account.potential_matches.clear()
             potentials = extract_potential_accounts(portfolio, entry)
