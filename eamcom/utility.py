@@ -30,6 +30,14 @@ def extract_operation_type(external_type):
         return FinancialOperationType.objects.get(identifier='OPE_TYPE_WITHDRAWAL')
     if external_type=='Cashier withdrawal':
         return FinancialOperationType.objects.get(identifier='OPE_TYPE_CASH_WITHDRAWAL')
+    if external_type=='Buy':
+        return FinancialOperationType.objects.get(identifier='OPE_TYPE_BUY')
+    if external_type=='Sell':
+        return FinancialOperationType.objects.get(identifier='OPE_TYPE_SELL')
+    if external_type=='Dividend':
+        return FinancialOperationType.objects.get(identifier='OPE_TYPE_DIVIDEND')
+    if external_type=='Coupon':
+        return FinancialOperationType.objects.get(identifier='OPE_TYPE_COUPON')
     return FinancialOperationType.objects.get(identifier='OPE_TYPE_CONTRIBUTION')
 
 def extract_status(external_status):
