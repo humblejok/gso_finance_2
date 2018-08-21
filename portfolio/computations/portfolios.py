@@ -138,7 +138,7 @@ def compute_valuation(portfolio):
     valuation['portfolio_previous'] = shifted_valuation['portfolio']
     valuation['mdietz_up'] = valuation['portfolio'] - valuation['movements_fop'] - shifted_valuation['portfolio'] - valuation['movements_no_pnl']
     valuation['mdietz_down'] = shifted_valuation['portfolio'] + valuation['movements_fop'] + valuation['movements_no_pnl']
-    valuation['performance'] = valuation['mdietz_up'] /  valuation['mdietz_down']
+    valuation['performance'] = (valuation['mdietz_up'] /  valuation['mdietz_down']).fillna(0.0)
     performance = pd.DataFrame(valuation['performance']).rename(columns={'performance': 'value'})
     mtd = performance.groupby([(performance.index.year), (performance.index.month)]).apply(lambda x:x.add(1).cumprod())-1
     ytd = performance.groupby(performance.index.year).apply(lambda x:x.add(1).cumprod()) - 1
