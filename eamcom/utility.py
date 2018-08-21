@@ -11,7 +11,7 @@ from security.models import SecurityType, Security
 from django.db.models import Q
 import logging
 from portfolio.models import AccountType, Portfolio, Operation, OperationStatus,\
-    FinancialOperationType
+    FinancialOperationType, Account
 
 LOGGER = logging.getLogger(__name__)
 
@@ -242,17 +242,22 @@ def import_cash_operations(data):
         ext_transaction.internal_operation.description = entry['label']
         ext_transaction.internal_operation.spot_rate = 1.0
         ext_transaction.internal_operation.amount = float(entry['amount'])
-        ext_transaction.internal_operation.amount_portfolio = 0.0
-        ext_transaction.internal_operation.amount_management = 0.0
+        ext_transaction.internal_operation.amount_portfolio = 0.0 # TODO: Recomp
+        ext_transaction.internal_operation.amount_management = 0.0 # TODO: Recompute
         ext_transaction.internal_operation.operation_date = entry['operation_date']
         ext_transaction.internal_operation.value_date = entry['value_date']
         ext_transaction.internal_operation.status = extract_status(entry['status'])
         ext_transaction.internal_operation.additional_information = {}
         ext_transaction.internal_operation.additional_description = {'aliases': {me.provider_code: entry['identifier']}}
         ext_transaction.internal_operation.operation_type = extract_operation_type(entry['movement_type'])
-        ext_transaction.internal_operation.source = None
-        ext_transaction.internal_operation.target = None
-        ext_transaction.internal_operation.security = None
+        if ext_transaction.is_imported:
+            ext_transaction.internal_operation.source = Account.objects.get(id=ext_transaction.external_source.associated.id) if ext_transaction.external_source!=None else None
+            ext_transaction.internal_operation.target = Account.objects.get(id=ext_transaction.external_target.associated.id) if ext_transaction.external_target!=None else None
+            ext_transaction.internal_operation.security = Security.objects.get(id=ext_transaction.external_security.associated.id) if ext_transaction.external_security!=None else None
+        else:
+            ext_transaction.internal_operation.source = None
+            ext_transaction.internal_operation.target = None
+            ext_transaction.internal_operation.security = None
         ext_transaction.internal_operation.quantity = None
         ext_transaction.internal_operation.price = None
         LOGGER.debug('EAMCOM - Saving')
@@ -321,9 +326,14 @@ def import_security_operations(data):
         ext_transaction.internal_operation.additional_information = {}
         ext_transaction.internal_operation.additional_description = {'aliases': {me.provider_code: entry['identifier']}}
         ext_transaction.internal_operation.operation_type = extract_operation_type(entry['movement_type'])
-        ext_transaction.internal_operation.source = None
-        ext_transaction.internal_operation.target = None
-        ext_transaction.internal_operation.security = None
+        if ext_transaction.is_imported:
+            ext_transaction.internal_operation.source = Account.objects.get(id=ext_transaction.external_source.associated.id) if ext_transaction.external_source!=None else None
+            ext_transaction.internal_operation.target = Account.objects.get(id=ext_transaction.external_target.associated.id) if ext_transaction.external_target!=None else None
+            ext_transaction.internal_operation.security = Security.objects.get(id=ext_transaction.external_security.associated.id) if ext_transaction.external_security!=None else None
+        else:
+            ext_transaction.internal_operation.source = None
+            ext_transaction.internal_operation.target = None
+            ext_transaction.internal_operation.security = None
         ext_transaction.internal_operation.quantity = float(entry['quantity'])
         ext_transaction.internal_operation.price = float(entry['price'])
         LOGGER.debug('EAMCOM - Saving')
