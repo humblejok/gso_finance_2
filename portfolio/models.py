@@ -213,6 +213,30 @@ class Portfolio(models.Model):
     additional_information = HStoreField(null=True, blank=True)
     additional_description = JSONField(null=True, blank=True)
     
+    def get_or_create_security_account(self, currency_code):
+        try:
+            account = self.accounts.get(type__identifier='ACC_SECURITY', currency__identifier=currency_code)
+        except:
+            account = Account()
+            account.name = "Security " + currency_code
+            account.active = True
+            account.additional_description = {}
+            account.additional_information = {}
+            account.bank = Company.objects.get(id=self.bank.id)
+            account.closing_date = self.closing_date
+            account.currency = Currency.objects.get(identifier=currency_code)
+            account.current_amount_local = 0.0
+            account.current_amount_portfolio = 0.0
+            account.identifier = "Security " + currency_code
+            account.inception_date = self.inception_date
+            account.include_valuation = True
+            account.last_computation = dt.now()
+            account.last_update = dt.now()
+            account.type = AccountType.objects.get(identifier='ACC_SECURITY')
+            account.save()
+            self.accounts.add(account)
+        return account
+    
     def import_simple(self, path_to_file, initial_amounts, application_date):
         accounts_ids = [account.id for account in self.accounts.all()]
         Operation.objects.filter(Q(source__id__in=accounts_ids) | Q(target__id__in=accounts_ids)).delete()

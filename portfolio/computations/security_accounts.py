@@ -67,6 +67,8 @@ def build_chain(account):
     
 def compute_valuation(portfolio, account):
     positions = get_multi_content('finance', account.id, 'positions')
+    if len(positions)==0:
+        return
     positions = [{**{'date': token['date']}, **token['value']} for token in positions]
     positions = pd.DataFrame(positions)
     positions = positions.set_index('date')

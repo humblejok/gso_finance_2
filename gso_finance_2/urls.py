@@ -80,7 +80,7 @@ urlpatterns = [
     url(r'^companies_search/(?P<search_filter>.+)/$', CompaniesSearch.as_view()),
 
     url(r'^account_operations/(?P<account_id>[0-9]+)/$', AccountOperations.as_view()),
-    #url(r'^portfolio_holdings/(?P<portfolio_id>[0-9]+)/$', PortfolioHoldings.as_view()),
+#    url(r'^portfolio/holdings/(?P<portfolio_id>[0-9]+)/$', PortfolioHoldings.as_view()),
 
     url(r'^providers_search/(?P<provider_code>.+)/$', ProviderSearch.as_view()),
     url(r'^portfolio/compute/(?P<portfolio_id>[0-9]+)$', portfolio_compute),

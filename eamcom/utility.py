@@ -328,8 +328,8 @@ def import_security_operations(data):
         ext_transaction.internal_operation.operation_type = extract_operation_type(entry['movement_type'])
         if ext_transaction.is_imported:
             ext_transaction.internal_operation.source = Account.objects.get(id=ext_transaction.external_source.associated.id) if ext_transaction.external_source!=None else None
-            ext_transaction.internal_operation.target = Account.objects.get(id=ext_transaction.external_target.associated.id) if ext_transaction.external_target!=None else None
             ext_transaction.internal_operation.security = Security.objects.get(id=ext_transaction.external_security.associated.id) if ext_transaction.external_security!=None else None
+            ext_transaction.internal_operation.target = ext_transaction.portfolio.get_or_create_security_account(ext_transaction.internal_operation.security.currency.identifier) if ext_transaction.internal_operation.security!=None else None
         else:
             ext_transaction.internal_operation.source = None
             ext_transaction.internal_operation.target = None
