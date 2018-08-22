@@ -6,8 +6,13 @@ from portfolio.serializers import AccountSerializer,  OperationSerializer, Money
     FinancialOperationTypeSerializer, OperationStatusSerializer
 from django.db.models import Q
 from django.http.response import Http404, JsonResponse, HttpResponse
-from gso_finance_2.tracks_utility import get_track_content
+from gso_finance_2.tracks_utility import get_track_content, get_multi_content,\
+    to_pandas, get_multi_last
 from portfolio.computations import portfolios as pf_computer
+from datetime import datetime as dt
+import pandas as pd
+from security.models import Security
+from security.serializers import SecuritySerializer
 
 class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
@@ -58,7 +63,34 @@ class QuickOperationStatusViewSet(viewsets.ModelViewSet):
     queryset = OperationStatus.objects.filter(quick_access=True).order_by('identifier')
     serializer_class = OperationStatusSerializer
     
-    
+def portfolio_holdings(request, portfolio_id):
+    portfolio = Portfolio.objects.get(id=portfolio_id)
+    all_data = []
+    for account in portfolio.accounts.filter(type__identifier='ACC_SECURITY'):
+        all_quantity = get_multi_last('finance', account.id, 'positions')
+        if all_quantity:
+            qt_key = next(iter(all_quantity))
+            all_valued = get_multi_last('finance', account.id, 'valued_holdings')
+            all_local_w = get_multi_last('finance', account.id, 'holdings_weights_local')
+            all_portfolio_w = get_multi_last('finance', account.id, 'holdings_weights_portfolio')
+            all_buy_prices = get_multi_last('finance', account.id, 'buy_prices')
+            for security_id in all_quantity[qt_key]:
+                if all_quantity[qt_key][security_id]!=0.0:
+                    entry = {}
+                    security = Security.objects.get(id=security_id)
+                    serializer = SecuritySerializer(security)
+                    entry['security'] = serializer.data
+                    entry['quantity'] = all_quantity[qt_key][security_id]
+                    entry['value'] = all_valued[next(iter(all_valued))][security_id]
+                    entry['weight_local'] = all_local_w[next(iter(all_local_w))][security_id]
+                    entry['weight_portfolio'] = all_portfolio_w[next(iter(all_portfolio_w))][security_id]
+                    entry['buy_price'] = all_buy_prices[next(iter(all_buy_prices))][security_id]
+                    entry['current_price'] = entry['value'] / entry['quantity']
+                    entry['gross_performance_local'] = ((entry['current_price'] / entry['buy_price']) - 1.0) if entry['buy_price']!=0.0 else 0.0
+                    entry['holding_account_id'] = account.id
+                    all_data.append(entry)
+    return JsonResponse(sorted(all_data, key=lambda entry: entry['security']['currency']['identifier'] + entry['security']['name'],safe=False)
+
 def portfolios_history(request, portfolio_id, data_type):
     try:
         working_portfolio = Portfolio.objects.get(id=portfolio_id)

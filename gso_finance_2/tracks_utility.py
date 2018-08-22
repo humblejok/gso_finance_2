@@ -115,6 +115,20 @@ def compute_track_content(source_key, entity_id, track_type, engine_name, target
     f_client = FStoryClient(source_key)
     f_client.request({'command': 'compute', 'collection_name': container_id, 'element_id': track_id, 'arguments':[engine_name, container_id, 'track_' + str(target_type)]})
     return get_track_content(source_key, entity_id, target_type)
+
+def get_multi_last(source_key, entity_id, data_type):
+    if SOURCES[source_key.lower()]['escape']:
+        try:
+            container_id = 'entity_' + base64.b64encode(entity_id, '+-'.encode('utf8')).decode('utf8')
+        except:
+            container_id = 'entity_' + base64.b64encode(entity_id.encode('utf8'), '+-'.encode('utf8')).decode('utf8')
+    else:
+        container_id = 'entity_' + str(entity_id)
+    f_client = FStoryClient(source_key)
+    query = {'command': 'filter', 'filter_type': 'last', 'collection_name': container_id, 'element_id': data_type, 'expand_today': True, 'nofill': False}
+    raw_values = f_client.request(query)
+    LOGGER.info('Loaded track content of ' + container_id + ' - ' + data_type + ' with ' + str(len(raw_values)) + ' elements.')
+    return raw_values
     
 def get_multi_content(source_key, entity_id, data_type, expand_today=True, nofill=False, nafill=None):
     if SOURCES[source_key.lower()]['escape']:

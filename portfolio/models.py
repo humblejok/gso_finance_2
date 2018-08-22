@@ -80,13 +80,6 @@ class Account(models.Model):
         new_instance.save()
         return new_instance
 
-class SecurityPosition(models.Model):
-    security = models.ForeignKey(Security, related_name='valuation_security_position')
-    opening_date = models.DateField(null=True, blank=True)
-    quantity = models.FloatField()
-    buy_price = models.FloatField(null=True, blank=True)
-    current_price = models.FloatField(null=True, blank=True)
-
 class Valuation(models.Model):
     source = models.ForeignKey(Company, related_name='valuation_source', blank=True, null=True)
     value_date = models.DateField()

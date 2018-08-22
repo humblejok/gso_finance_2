@@ -98,7 +98,7 @@ def compute_valuation(portfolio, account):
     holdings = positions * prices
     holdings = holdings.fillna(0.0)
     holdings['date'] = holdings.index.strftime('%Y-%m-%d')
-    valued_holdings = from_pandas(holdings)
+    valued_holdings = from_pandas(holdings, True)
     set_multi_content('finance', account.id, 'valued_holdings', valued_holdings, True)
     holdings = holdings.drop('date', axis=1)
     holdings['account'] = holdings.sum(axis='columns')
