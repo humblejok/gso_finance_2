@@ -11,15 +11,13 @@ from portfolio.views import PortfolioViewSet, AccountViewSet, AccountOperations,
     AccountTypeViewSet, QuickAccountTypeViewSet,\
     QuickFinancialOperationTypeViewSet, FinancialOperationTypeViewSet,\
     OperationStatusViewSet, QuickOperationStatusViewSet, portfolios_history,\
-    portfolios_setup, portfolio_compute, portfolio_holdings
+    portfolios_setup, portfolio_compute, portfolio_holdings,\
+    portfolio_security_operations
 from providers.views import ExternalSecurityViewSet, ExternalSecuritySearch,\
     ExternalSecurityUnmapped, external_securities_history,\
-    ExternalAccountViewSet, PortfolioSecurityHoldingViewSet,\
-    ExternalPortfolioHoldingsViewSet
+    ExternalAccountViewSet, ExternalPortfolioHoldingsViewSet
 from security.views import SecurityViewSet, securities_history,\
      SecuritiesSearch, SecurityTypeViewSet, QuickSecurityTypeViewSet
-from eamcom.views import get_positions
-import eamcom
 
 router = routers.DefaultRouter()
 router.register(r'currencies', CurrencyViewSet)
@@ -84,6 +82,8 @@ urlpatterns = [
 
     url(r'^providers_search/(?P<provider_code>.+)/$', ProviderSearch.as_view()),
     url(r'^portfolio/compute/(?P<portfolio_id>[0-9]+)$', portfolio_compute),
+    url(r'^portfolio/security/operations/(?P<portfolio_id>[0-9]+)/(?P<account_id>[0-9]+)/(?P<security_id>[0-9]+)$', portfolio_security_operations),
+    
     url(r'^portfolios_history/(?P<portfolio_id>[0-9]+)/(?P<data_type>.+)/$', portfolios_history),
     url(r'^portfolios_setup$', portfolios_setup),
     

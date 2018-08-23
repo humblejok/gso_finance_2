@@ -6,11 +6,8 @@ from portfolio.serializers import AccountSerializer,  OperationSerializer, Money
     FinancialOperationTypeSerializer, OperationStatusSerializer
 from django.db.models import Q
 from django.http.response import Http404, JsonResponse, HttpResponse
-from gso_finance_2.tracks_utility import get_track_content, get_multi_content,\
-    to_pandas, get_multi_last
+from gso_finance_2.tracks_utility import get_track_content, get_multi_last
 from portfolio.computations import portfolios as pf_computer
-from datetime import datetime as dt
-import pandas as pd
 from security.models import Security
 from security.serializers import SecuritySerializer
 
@@ -89,7 +86,23 @@ def portfolio_holdings(request, portfolio_id):
                     entry['gross_performance_local'] = ((entry['current_price'] / entry['buy_price']) - 1.0) if entry['buy_price']!=0.0 else 0.0
                     entry['holding_account_id'] = account.id
                     all_data.append(entry)
-    return JsonResponse(sorted(all_data, key=lambda entry: entry['security']['currency']['identifier'] + entry['security']['name'],safe=False)
+    return JsonResponse(sorted(all_data, key=lambda entry: entry['security']['currency']['identifier'] + entry['security']['name']),safe=False)
+
+def portfolio_security_operations(request, portfolio_id, account_id, security_id):
+    try:
+        portfolio = Portfolio.objects.get(id=portfolio_id)
+    except:
+        return Http404("Portfolio does not exists")
+    try:
+        account = portfolio.accounts.get(id=account_id)
+    except:
+        return Http404("Account does not exists")
+    operations = Operation.objects.filter(target__id=account.id, security__id=security_id,
+                                          operation_type__identifier__in=['OPE_TYPE_SWITCH', 'OPE_TYPE_BUY', 'OPE_TYPE_BUY_FOP', 'OPE_TYPE_SELL_FOP', 'OPE_TYPE_SELL']
+                                          ).order_by('-value_date')
+    serializer = OperationSerializer(operations, many=True)
+    return JsonResponse(serializer.data, safe=False)
+                        
 
 def portfolios_history(request, portfolio_id, data_type):
     try:
