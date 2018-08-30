@@ -6,7 +6,7 @@ from common.views import CurrencyViewSet, CompanyViewSet, QuickCurrencyViewSet,\
     CountryViewSet, QuickCountryViewSet, VisibilityLevelViewSet,\
     QuickVisibilityLevelViewSet, AddressTypeViewSet, QuickAddressTypeViewSet,\
     PhoneTypeViewSet, QuickPhoneTypeViewSet, MailTypeViewSet,\
-    QuickMailTypeViewSet, PersonViewSet, ProviderSearch, CompaniesSearch
+    QuickMailTypeViewSet, PersonViewSet, ProviderSearch, CompaniesSearch, whoami
 from portfolio.views import PortfolioViewSet, AccountViewSet, AccountOperations,\
     AccountTypeViewSet, QuickAccountTypeViewSet,\
     QuickFinancialOperationTypeViewSet, FinancialOperationTypeViewSet,\
@@ -18,6 +18,8 @@ from providers.views import ExternalSecurityViewSet, ExternalSecuritySearch,\
     ExternalAccountViewSet, ExternalPortfolioHoldingsViewSet
 from security.views import SecurityViewSet, securities_history,\
      SecuritiesSearch, SecurityTypeViewSet, QuickSecurityTypeViewSet
+from authentication import views as auth_views
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 router = routers.DefaultRouter()
 router.register(r'currencies', CurrencyViewSet)
@@ -64,9 +66,11 @@ router.register(r'external_portfolio_holdings', ExternalPortfolioHoldingsViewSet
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
     url(r'^', include(router.urls)),
-    url(r'^index.html', views.index, name='index'),
+    url(r'^whoami/$', whoami),
+    url(r'^login/', auth_views.UserLogin.as_view(), name='login'),
+    url(r'^api/token/', TokenObtainPairView.as_view()),
+    url(r'^api/refresh/', TokenRefreshView.as_view()),
 
     url(r'^external_securities_search/(?P<provider_code>.+)/(?P<provider_identifier>.+)/$', ExternalSecuritySearch.as_view()),
     url(r'^external_securities_unmapped/$', ExternalSecurityUnmapped.as_view()),
@@ -81,11 +85,11 @@ urlpatterns = [
     url(r'^portfolio/holdings/(?P<portfolio_id>[0-9]+)/$', portfolio_holdings),
 
     url(r'^providers_search/(?P<provider_code>.+)/$', ProviderSearch.as_view()),
-    url(r'^portfolio/compute/(?P<portfolio_id>[0-9]+)$', portfolio_compute),
-    url(r'^portfolio/security/operations/(?P<portfolio_id>[0-9]+)/(?P<account_id>[0-9]+)/(?P<security_id>[0-9]+)$', portfolio_security_operations),
+    url(r'^portfolio/compute/(?P<portfolio_id>[0-9]+)/$', portfolio_compute),
+    url(r'^portfolio/security/operations/(?P<portfolio_id>[0-9]+)/(?P<account_id>[0-9]+)/(?P<security_id>[0-9]+)/$', portfolio_security_operations),
     
     url(r'^portfolios_history/(?P<portfolio_id>[0-9]+)/(?P<data_type>.+)/$', portfolios_history),
-    url(r'^portfolios_setup$', portfolios_setup),
+    url(r'^portfolios_setup/$', portfolios_setup),
     
     url(r'^eamcom/', include('eamcom.urls')),
     url(r'^providers/', include('providers.urls')),

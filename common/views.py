@@ -1,17 +1,19 @@
-from django.shortcuts import render
 from rest_framework import viewsets, generics
 from common.models import Currency, Company, Country, VisibilityLevel,\
     AddressType, PhoneType, MailType, Person
 from common.serializers import CurrencySerializer, CompleteCompanySerializer,\
     CountrySerializer, VisibilityLevelSerializer, AddressTypeSerializer,\
     PhoneTypeSerializer, MailTypeSerializer, CompanySerializer,\
-    CompletePersonSerializer, PersonSerializer
+    CompletePersonSerializer, PersonSerializer, UserSerializer
 import base64
 from gso_finance_2.utility import base64urldecode
 from django.db.models import Q
+from django.contrib.auth.models import User
+from django.http.response import JsonResponse
 
-def index(request):
-    return render(request, 'index.html', {})
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class CurrencyViewSet(viewsets.ModelViewSet):
     queryset = Currency.objects.all().order_by('default_name')
@@ -95,3 +97,11 @@ class CompaniesSearch(generics.ListAPIView):
                                            | Q(provider_code__icontains=search_filter)).order_by('name')
         
         return queryset
+
+def whoami(request):
+    user = {}
+    if request.user.is_authenticated():
+        user = User.objects.get(id=request.user.id)
+        serializer = UserSerializer(user)
+        user = serializer.data
+    return JsonResponse(user, safe=False)

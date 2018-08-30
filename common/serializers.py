@@ -7,6 +7,12 @@ from rest_framework import serializers
 from common.models import Currency, Company, Country, VisibilityLevel,\
     AddressType, PhoneType, MailType, CompanyMemberRole, CompanySubsidiaryRole,\
     Address, Email, Phone, Person, CompanyMember, CompanySubsidiary
+from django.contrib.auth.models import User
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'first_name', 'last_name', 'email', 'is_staff', 'is_active', 'date_joined', 'username', 'last_login')
 
 class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
