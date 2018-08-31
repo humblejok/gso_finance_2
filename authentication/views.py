@@ -8,6 +8,7 @@ from random import randint
 import json
 import requests
 import hashlib
+from gso_finance_2.settings import EXTERNAL_HOST_NAME
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -46,7 +47,7 @@ class UserLogin(View):
         Method used to pass user info in a POST request in order to obtain a JWToken
         '''
         data = {'username': _username, 'password': _password}
-        r = requests.post('http://vegeto:8001/api/token/', data=data)
+        r = requests.post(EXTERNAL_HOST_NAME + '/api/token/', data=data)
         return r
 
     def hashingFunc(self, _value, _salt):

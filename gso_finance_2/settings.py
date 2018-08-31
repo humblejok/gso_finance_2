@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['vegeto', 'localhost', '127.0.0.1']
 
+EXTERNAL_HOST_NAME='http://vegeto:8001'
+
 
 # Application definition
 

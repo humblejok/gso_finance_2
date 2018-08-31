@@ -1,8 +1,8 @@
 from rest_framework import viewsets, generics
-from portfolio.models import Portfolio, Account, Operation, MoneyAccountChain,\
+from portfolio.models import Portfolio, Account, Operation, MoneyAccountChain, \
     AccountType, FinancialOperationType, OperationStatus
-from portfolio.serializers import AccountSerializer,  OperationSerializer, MoneyAccountChainSerializer,\
-    CompletePortfolioSerializer, PortfolioSerializer, AccountTypeSerializer,\
+from portfolio.serializers import AccountSerializer, OperationSerializer, MoneyAccountChainSerializer, \
+    CompletePortfolioSerializer, PortfolioSerializer, AccountTypeSerializer, \
     FinancialOperationTypeSerializer, OperationStatusSerializer
 from django.db.models import Q
 from django.http.response import Http404, JsonResponse, HttpResponse
@@ -72,7 +72,7 @@ def portfolio_holdings(request, portfolio_id):
             all_portfolio_w = get_multi_last('finance', account.id, 'holdings_weights_portfolio')
             all_buy_prices = get_multi_last('finance', account.id, 'buy_prices')
             for security_id in all_quantity[qt_key]:
-                if all_quantity[qt_key][security_id]!=0.0:
+                if all_quantity[qt_key][security_id] != 0.0:
                     entry = {}
                     security = Security.objects.get(id=security_id)
                     serializer = SecuritySerializer(security)
@@ -83,10 +83,10 @@ def portfolio_holdings(request, portfolio_id):
                     entry['weight_portfolio'] = all_portfolio_w[next(iter(all_portfolio_w))][security_id]
                     entry['buy_price'] = all_buy_prices[next(iter(all_buy_prices))][security_id]
                     entry['current_price'] = entry['value'] / entry['quantity']
-                    entry['gross_performance_local'] = ((entry['current_price'] / entry['buy_price']) - 1.0) if entry['buy_price']!=0.0 else 0.0
+                    entry['gross_performance_local'] = ((entry['current_price'] / entry['buy_price']) - 1.0) if entry['buy_price'] != 0.0 else 0.0
                     entry['holding_account_id'] = account.id
                     all_data.append(entry)
-    return JsonResponse(sorted(all_data, key=lambda entry: entry['security']['currency']['identifier'] + entry['security']['name']),safe=False)
+    return JsonResponse(sorted(all_data, key=lambda entry: entry['security']['currency']['identifier'] + entry['security']['name']), safe=False)
 
 def portfolio_security_operations(request, portfolio_id, account_id, security_id):
     try:
@@ -110,7 +110,7 @@ def portfolios_history(request, portfolio_id, data_type):
     except:
         raise Http404("Portfolio with id [" + portfolio_id + "] is not available.")
     track_data = get_track_content('finance', working_portfolio.id, data_type)
-    return JsonResponse(track_data,safe=False)
+    return JsonResponse(track_data, safe=False)
 
 def portfolio_compute(request, portfolio_id):
     portfolio = Portfolio.objects.get(id=portfolio_id)
