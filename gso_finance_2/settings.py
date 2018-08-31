@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,7 @@ SECRET_KEY = '1-5awwa(vby89vmf_xra6+@5_)oml==&2yrf(!60+i(b92&nbz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['vegeto', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'common',
+    'eamcom',
     'portfolio',
     'security',
     'providers',
@@ -46,23 +48,36 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_HEADERS = default_headers + (
+    'origin', 'cache-control'
+)
+
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'authentication.utility.AuthenticationMiddlewareJWT'
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+#REST_FRAMEWORK = {
+#    'DEFAULT_PERMISSION_CLASSES': (
+#        'rest_framework.permissions.AllowAny',
+#    ),
+#}
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_AUTHENTICATION_CLASSES' : ('rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 
 ROOT_URLCONF = 'gso_finance_2.urls'
@@ -92,7 +107,7 @@ WSGI_APPLICATION = 'gso_finance_2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'gso_finance_2',                      # Or path to database file if using sqlite3.
+        'NAME': 'amx_eamcom',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'gso_finance',
         'PASSWORD': 'boudux',
@@ -183,6 +198,15 @@ LOGGING = {
             'level': 'INFO'
         },
         'common': {
+            'handlers': ['console'],
+            'level': 'DEBUG'
+        },
+                
+        'corsheaders': {
+            'handlers': ['console'],
+            'level': 'DEBUG'
+        },
+        'eamcom': {
             'handlers': ['console'],
             'level': 'DEBUG'
         },
