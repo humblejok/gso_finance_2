@@ -16,17 +16,16 @@ class AuthenticationMiddlewareJWT(object):
 
 
     def __call__(self, request):
-        token = request.META.get('HTTP_AUTHORIZATION', " ")
-        data = {'user_id': token}
-        print(token)
-        try:
-            valid_data = JWTTokenUserAuthentication().get_user(data)
-            t = JWTAuthentication()
-            valid_data.get_username()
-            user = valid_data['user']
-            request.user = user
-        except InvalidToken as iv:
-            print("Invalid token", iv)
-            
+        authenticator = JWTAuthentication()
+        token = authenticator.get_header(request)
+        request.user = None
+        if token!=None:
+            raw_token = authenticator.get_raw_token(token)
+            if raw_token != None:
+                try:
+                    validated_token = authenticator.get_validated_token(raw_token)
+                    request.user = authenticator.get_user(validated_token)
+                except InvalidToken:
+                    print("Invalid token")
 
         return self.get_response(request)
