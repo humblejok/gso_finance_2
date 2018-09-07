@@ -14,7 +14,8 @@ import pandas as pd
 SOURCES = {'novastone': {'url': 'http://jiren:5003/query', 'escape': False},
            'finance': {'url': 'https://f2positions.providers.finance2.ch/query', 'escape': False},
            'vpbank': {'url': 'http://jiren:5001/query', 'escape': False},
-           'bloomberg': {'url': 'https://bloomberg.providers.finance2.ch/query', 'escape': True}}
+           'bloomberg': {'url': 'https://bloomberg.providers.finance2.ch/query', 'escape': True},
+           'pictet': {'url': 'https://pictet-securities.finance2.ch/query', 'escape': True}}
 
 LOGGER = logging.getLogger(__name__)
 HEADERS = {'Content-Type': 'application/json; charset=utf-8', 'Accept': 'application/json'}

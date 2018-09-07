@@ -18,8 +18,7 @@ class UserLogin(View):
         # loading the json data found in the request's body
         user = json.loads(request.body.decode('utf-8'))
         # using django authentication method with loaded data
-        auth_user = authenticate(
-            request, username=user['username'], password=user['password'])
+        auth_user = authenticate(request, username=user['username'], password=user['password'])
         if auth_user is not None:
             login(request, auth_user)
             # requesting token for specific user
@@ -40,7 +39,7 @@ class UserLogin(View):
                 'refresh': r_tok.json()['refresh'],
                 'session_id': session_id
             })
-        return HttpResponse(status=200)
+        return HttpResponse(status=403)
 
     def getToken(self, _username, _password):
         '''

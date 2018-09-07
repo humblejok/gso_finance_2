@@ -109,7 +109,8 @@ WSGI_APPLICATION = 'gso_finance_2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'amx_eamcom',                      # Or path to database file if using sqlite3.
+        #'NAME': 'amx_eamcom',                      # Or path to database file if using sqlite3.
+        'NAME': 'nv_finance',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'gso_finance',
         'PASSWORD': 'boudux',

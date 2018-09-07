@@ -1,6 +1,7 @@
 from rest_framework import viewsets, generics
 from security.models import SecurityType, Security
-from security.serializers import SecurityTypeSerializer, SecuritySerializer
+from security.serializers import SecurityTypeSerializer, SecuritySerializer,\
+    CompleteSecuritySerializer
 from django.http.response import Http404, JsonResponse, HttpResponseBadRequest
 from gso_finance_2.tracks_utility import get_track_content
 from django.db.models import Q
@@ -18,8 +19,13 @@ class QuickSecurityTypeViewSet(viewsets.ModelViewSet):
     
 class SecurityViewSet(viewsets.ModelViewSet):
     queryset = Security.objects.all().order_by('identifier')
-    serializer_class = SecuritySerializer
     
+    def get_serializer_class(self):
+        if self.action in ['list', 'retrieve']:
+            return CompleteSecuritySerializer
+        return SecuritySerializer
+
+
 class SecuritiesSearch(generics.ListAPIView):
     serializer_class = SecuritySerializer
     

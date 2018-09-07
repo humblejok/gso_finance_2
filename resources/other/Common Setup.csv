@@ -537,3 +537,5 @@ SECTYP_MM;Money market;True;security.models.SecurityType
 SECTYP_STRUC_PROD;Structured Product;True;security.models.SecurityType
 SECTYP_REAL_ESTATE;Real Estate;True;security.models.SecurityType
 SECTYP_ETF_CERTIFICATE;ETF or Certificate;True;security.models.SecurityType
+SECTYP_HEDGE_FUND;Hedge Fund;True;security.models.SecurityType
+SECTYP_CDS;Credit Default Swap;True;security.models.SecurityType
