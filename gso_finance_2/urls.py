@@ -1,6 +1,4 @@
 from django.conf.urls import url, include
-from django.contrib import admin
-from common import views
 from rest_framework import routers
 from common.views import CurrencyViewSet, CompanyViewSet, QuickCurrencyViewSet,\
     CountryViewSet, QuickCountryViewSet, VisibilityLevelViewSet,\
@@ -12,7 +10,7 @@ from portfolio.views import PortfolioViewSet, AccountViewSet, AccountOperations,
     QuickFinancialOperationTypeViewSet, FinancialOperationTypeViewSet,\
     OperationStatusViewSet, QuickOperationStatusViewSet, portfolios_history,\
     portfolios_setup, portfolio_compute, portfolio_holdings,\
-    portfolio_security_operations
+    portfolio_security_operations, portfolio_initialize
 from providers.views import ExternalSecurityViewSet, ExternalSecuritySearch,\
     ExternalSecurityUnmapped, external_securities_history,\
     ExternalAccountViewSet, ExternalPortfolioHoldingsViewSet
@@ -87,6 +85,7 @@ urlpatterns = [
     url(r'^providers_search/(?P<provider_code>.+)/$', ProviderSearch.as_view()),
     url(r'^portfolio/compute/(?P<portfolio_id>[0-9]+)/$', portfolio_compute),
     url(r'^portfolio/security/operations/(?P<portfolio_id>[0-9]+)/(?P<account_id>[0-9]+)/(?P<security_id>[0-9]+)/$', portfolio_security_operations),
+    url(r'^portfolio/valuation/initialize/(?P<portfolio_identifier>.+)/(?P<as_of>.+)/$', portfolio_initialize),
     
     url(r'^portfolios_history/(?P<portfolio_id>[0-9]+)/(?P<data_type>.+)/$', portfolios_history),
     url(r'^portfolios_setup/$', portfolios_setup),

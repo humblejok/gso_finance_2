@@ -59,6 +59,30 @@ class Account(models.Model):
     additional_information = HStoreField(null=True, blank=True)
     additional_description = JSONField(null=True, blank=True)
 
+    def create_initialization(self, application_date, amount, spot_portfolio=0.0, spot_management=0.0):
+        init_operation = Operation()
+        init_operation.identifier = 'INIT_' + self.identifier
+        init_operation.name = 'Initialize account'
+        init_operation.description = 'Created automatically'
+        init_operation.spot_rate = 1.0
+        init_operation.amount = amount
+        init_operation.amount_portfolio = amount * spot_portfolio # TODO: Correct
+        init_operation.amount_management = amount * spot_management # TODO: Correct
+        init_operation.operation_date = application_date
+        init_operation.value_date = application_date
+        init_operation.status = OperationStatus.objects.get(identifier='OPE_STATUS_EXECUTED')
+        init_operation.additional_information = None
+        init_operation.additional_description = None
+        init_operation.operation_type = FinancialOperationType.objects.get(identifier='OPE_TYPE_CONTRIBUTION' if amount>0.0 else 'OPE_TYPE_WITHDRAWAL')
+        init_operation.source = None if amount>0.0 else self
+        init_operation.target = self if amount>0.0 else None
+        init_operation.security = None
+        init_operation.quantity = 0.0
+        init_operation.price = 0.0
+        init_operation.save()
+        return init_operation
+
+
     @staticmethod
     def instanciate_from_dict(data):
         new_instance = Account()
@@ -205,6 +229,46 @@ class Portfolio(models.Model):
 
     additional_information = HStoreField(null=True, blank=True)
     additional_description = JSONField(null=True, blank=True)
+    
+    def create_security_position(self, security, quantity, buy_price, as_of):
+        new_op = Operation()
+        new_op.identifier = ('BUY_' if quantity>0 else 'SELL_') + security.identifier
+        new_op.name = ('BUY ' if quantity>0 else 'SELL ') + security.identifier
+        new_op.description = 'Initialization of a security position'
+        new_op.spot_rate = 1.0
+        new_op.amount = quantity * buy_price * security.get_price_divisor()
+        new_op.operation_date = as_of
+        new_op.value_date = as_of
+        new_op.status = OperationStatus.objects.get(identifier='OPE_STATUS_EXECUTED')
+        new_op.operation_type = FinancialOperationType.objects.get(identifier='OPE_TYPE_BUY_FOP' if quantity>0 else 'OPE_TYPE_SELL_FOP')
+        new_op.source = None
+        new_op.target = None
+        new_op.security = security
+        new_op.target = self.get_or_create_security_account(security.currency.identifier)
+        new_op.quantity = quantity
+        new_op.price = buy_price
+        new_op.save()
+        return new_op
+        
+    def create_account_from_external(self, e_account):
+        new_account = Account()
+        new_account.active = True
+        new_account.name = e_account.name
+        new_account.identifier = e_account.provider_identifier
+        new_account.currency = e_account.currency
+        new_account.bank = self.bank
+        new_account.current_amount_local = 0.0
+        new_account.current_amount_portfolio = 0.0 # TODO: Complete
+        new_account.include_valuation = True
+        new_account.inception_date = self.inception_date
+        new_account.closing_date = self.closing_date
+        new_account.last_computation = dt.now()
+        new_account.last_update = dt.now()
+        new_account.type = e_account.type 
+        new_account.additional_description = {'aliases': {self.provider.provider_code: e_account.provider_identifier }}
+        new_account.save()
+        self.accounts.add(new_account)
+        return new_account
     
     def get_or_create_security_account(self, currency_code):
         try:

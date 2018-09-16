@@ -117,5 +117,9 @@ def get_positions(request, portfolio_id):
                     LOGGER.error('EAMCOM - An error occurred while calling EAMCOM, see details below.')
                     LOGGER.error(dumps(content))
                     return HttpResponseBadRequest('EAMCOM - An error occurred while calling EAMCOM, please check the log file!')
+            else:
+                LOGGER.error('EAMCOM - An error occurred while calling EAMCOM, see details below.')
+                LOGGER.error(str(proxy_response.content))
+                return HttpResponseBadRequest('EAMCOM - An error occurred while calling EAMCOM, please check the log file!')
         except Portfolio.DoesNotExist:
             return HttpResponseNotFound()

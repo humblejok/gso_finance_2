@@ -51,22 +51,6 @@ def extract_status(external_status):
         return OperationStatus.objects.get(identifier='OPE_STATUS_CANCELLED')
     return OperationStatus.objects.get(identifier='OPE_STATUS_PENDING')
 
-def extract_security_type(external_type):
-    if external_type=='Stock':
-        return SecurityType.objects.get(identifier='SECTYP_STOCK')
-    if external_type=='Fund':
-        return SecurityType.objects.get(identifier='SECTYP_FUND')
-    return SecurityType.objects.get(identifier='SECTYP_SECURITY')
-
-def extract_account_type(external_type):
-    if external_type=='Cash':
-        return AccountType.objects.get(identifier='ACC_CURRENT')
-    if external_type=='Loan':
-        return AccountType.objects.get(identifier='ACC_LOAN')
-    if external_type=='Fiduciary':
-        return AccountType.objects.get(identifier='ACC_CAPITAL_CALL')
-    return AccountType.objects.get(identifier='ACC_CURRENT_BANK_TECHNICAL')
-
 def extract_potential_securities(data):
     identifiers_query = None
     alias_based_results = []
@@ -93,7 +77,7 @@ def create_security_holdings(portfolio_holding, data):
     done = True
     results = []
     for entry in data:
-        if entry['asset_class'] in ['Fund', 'Stock', 'Other']:
+        if entry['asset_class'].startswith('SECTYP_'):
             try:
                 e_security = ExternalSecurity.objects.get(provider=me, provider_identifier=entry['identifier'])
             except:
@@ -117,7 +101,7 @@ def create_account_holdings(portfolio_holding, data):
     done = True
     results = []
     for entry in data:
-        if entry['asset_class'] not in ['Fund', 'Stock', 'Other']:
+        if entry['asset_class'].startswith('ACC_'):
             try:
                 e_account = ExternalAccount.objects.get(provider=me, provider_identifier=entry['identifier'])
             except:
@@ -142,8 +126,7 @@ def import_positions(data):
             LOGGER.error('EAMCOM - Could not find portfolio with identifier [' + entry['portfolio_id'] + '] or too many results!')
             done = False
             break
-        if entry['asset_class'] in ['Fund', 'Stock', 'Other']:
-            extract_potential_securities(entry)
+        if entry['asset_class'].startswith('SECTYP_'):
             try:
                 LOGGER.debug('EAMCOM - Searching existing security - [' + entry['label'] + ',' + entry['identifier'] + ']')
                 e_security = ExternalSecurity.objects.get(provider=me, provider_identifier=entry['identifier'], currency__identifier=entry['currency'])
@@ -152,7 +135,7 @@ def import_positions(data):
                 LOGGER.debug('EAMCOM - Not found, creating external security')
                 e_security = ExternalSecurity()
             e_security.name = entry['label']
-            e_security.type = extract_security_type(entry['asset_class'])
+            e_security.type = SecurityType.objects.get(identifier=entry['asset_class'])
             e_security.currency = Currency.objects.get(identifier=entry['currency'])
             e_security.provider = me
             e_security.provider_identifier = entry['identifier']
@@ -178,7 +161,7 @@ def import_positions(data):
                 LOGGER.debug('EAMCOM - Not found, creating external account')
                 e_account = ExternalAccount()
             e_account.name = entry['label']
-            e_account.type = extract_account_type(entry['asset_class'])
+            e_account.type = AccountType.objects.get(identifier=entry['asset_class'])
             e_account.currency = Currency.objects.get(identifier=entry['currency'])
             e_account.provider = me
             e_account.provider_identifier = entry['identifier']

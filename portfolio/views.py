@@ -5,11 +5,18 @@ from portfolio.serializers import AccountSerializer, OperationSerializer, MoneyA
     CompletePortfolioSerializer, PortfolioSerializer, AccountTypeSerializer, \
     FinancialOperationTypeSerializer, OperationStatusSerializer
 from django.db.models import Q
-from django.http.response import Http404, JsonResponse, HttpResponse
+from django.http.response import Http404, JsonResponse, HttpResponse,\
+    HttpResponseServerError
 from gso_finance_2.tracks_utility import get_track_content, get_multi_last
 from portfolio.computations import portfolios as pf_computer
 from security.models import Security
 from security.serializers import SecuritySerializer
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+from json import loads
+from eamcom.utility import import_positions
+from providers.models import ExternalAccount, ExternalSecurity
+from datetime import datetime as dt
 
 class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
@@ -120,6 +127,34 @@ def portfolio_compute(request, portfolio_id):
     pf_computer.update_portfolio_model(portfolio)
     return HttpResponse(status=200)
 
+@csrf_exempt
+@require_http_methods(["POST"])
+def portfolio_initialize(request, portfolio_identifier, as_of):
+    try:
+        portfolio = Portfolio.objects.get(identifier=portfolio_identifier)
+    except Portfolio.DoesNotExist:
+        return Http404('Portfolio with this identifier doesn''t exist!')
+    request_data = loads(request.body)
+    status = import_positions(request_data)
+    if status:
+        for entry in request_data:
+            if entry['asset_class'].startswith('ACC_'):
+                e_account = ExternalAccount.objects.get(provider=portfolio.provider, provider_identifier=entry['identifier'])
+                if e_account.associated==None:
+                    account = portfolio.create_account_from_external(e_account)
+                else:
+                    account = Account.objects.get(id=e_account.associated.id)
+                if entry['quantity']!=0.0:
+                    account.create_initialization(as_of, entry['quantity'])
+            else:
+                e_security = ExternalSecurity.objects.get(provider=portfolio.provider, provider_identifier=entry['identifier'], currency__identifier=entry['currency'])
+                portfolio.create_security_position(e_security.associated, entry['quantity'], entry['price'], as_of)
+                
+    else:
+        return HttpResponseServerError('Positions could not be treated.')
+    return HttpResponse(status=201)
+
+@require_http_methods(["GET"])
 def portfolios_setup(request):
     # TODO: Use configuration file
     pf_setup = {

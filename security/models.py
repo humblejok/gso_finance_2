@@ -53,10 +53,10 @@ class Security(models.Model):
         
     
     @staticmethod
-    def import_from_csv(clean=False, skip_save=False, tracks=False):
+    def import_from_csv(clean=False, skip_save=False, tracks=False, file_name='securities.csv'):
         if clean:
             Security.objects.all().delete()
-        import_reader = csv.reader(open(os.path.join(RESOURCES_DIR,'securities.csv'), encoding='utf-8'), delimiter=';')
+        import_reader = csv.reader(open(os.path.join(RESOURCES_DIR,file_name), encoding='utf-8'), delimiter=';')
         header = None
         print("Securities - First pass")
         for row in import_reader:

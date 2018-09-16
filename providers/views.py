@@ -76,7 +76,9 @@ def create_account_from(request, account_holding_id, holdings_id):
         holdings = ExternalPortfolioHoldings.objects.get(id=holdings_id)
         account_holding = PortfolioAccountHolding.objects.get(id=account_holding_id)
     except (ExternalPortfolioHoldings.DoesNotExist, PortfolioAccountHolding.DoesNotExist) as e:
+        # TODO: Log exception
         return Http404('Either the external portfolio information are not present anymore or the external account information.')
+    # Factorize with Portfolio.create_account_from_account
     new_account = Account()
     new_account.active = True
     new_account.name = account_holding.external_account.name
@@ -97,7 +99,6 @@ def create_account_from(request, account_holding_id, holdings_id):
     account_holding.internal_account = new_account
     account_holding.internal_quantity = account_holding.external_quantity
     account_holding.save()
-    
     return HttpResponse(status=201)
         
 @csrf_exempt
