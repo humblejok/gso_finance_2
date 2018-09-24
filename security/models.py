@@ -46,7 +46,7 @@ class Security(models.Model):
     
     def get_price_divisor(self):
         if self.additional_information!=None and 'price_divisor' in self.additional_information:
-            return self.additional_information['price_divisor']
+            return float(self.additional_information['price_divisor'])
         if self.type.identifier=='SECTYP_BOND':
             return 100.0
         return 1.0

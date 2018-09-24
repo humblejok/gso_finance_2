@@ -236,7 +236,7 @@ class Portfolio(models.Model):
         new_op.name = ('BUY ' if quantity>0 else 'SELL ') + security.identifier
         new_op.description = 'Initialization of a security position'
         new_op.spot_rate = 1.0
-        new_op.amount = quantity * buy_price * security.get_price_divisor()
+        new_op.amount = quantity * buy_price / security.get_price_divisor()
         new_op.operation_date = as_of
         new_op.value_date = as_of
         new_op.status = OperationStatus.objects.get(identifier='OPE_STATUS_EXECUTED')
