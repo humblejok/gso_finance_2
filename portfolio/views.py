@@ -10,7 +10,7 @@ from django.http.response import Http404, JsonResponse, HttpResponse,\
 from gso_finance_2.tracks_utility import get_track_content, get_multi_last
 from portfolio.computations import portfolios as pf_computer
 from security.models import Security
-from security.serializers import SecuritySerializer
+from security.serializers import CompleteSecuritySerializer
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from json import loads
@@ -82,7 +82,7 @@ def portfolio_holdings(request, portfolio_id):
                 if all_quantity[qt_key][security_id] != 0.0:
                     entry = {}
                     security = Security.objects.get(id=security_id)
-                    serializer = SecuritySerializer(security)
+                    serializer = CompleteSecuritySerializer(security)
                     entry['security'] = serializer.data
                     entry['quantity'] = all_quantity[qt_key][security_id]
                     entry['value'] = all_valued[next(iter(all_valued))][security_id]

@@ -22,34 +22,10 @@ me = Company.objects.get(provider_code='EAMCOM')
 available_provider_codes = Company.objects.filter(is_provider=True).values_list('provider_code', flat=True)
 
 def extract_operation_type(external_type):
-    if external_type=='Contribution':
-        return FinancialOperationType.objects.get(identifier='OPE_TYPE_CONTRIBUTION')
-    if external_type=='Cashier contribution':
-        return FinancialOperationType.objects.get(identifier='OPE_TYPE_CASH_CONTRIBUTION')
-    if external_type=='Withdrawal':
-        return FinancialOperationType.objects.get(identifier='OPE_TYPE_WITHDRAWAL')
-    if external_type=='Cashier withdrawal':
-        return FinancialOperationType.objects.get(identifier='OPE_TYPE_CASH_WITHDRAWAL')
-    if external_type=='Buy':
-        return FinancialOperationType.objects.get(identifier='OPE_TYPE_BUY')
-    if external_type=='Sell':
-        return FinancialOperationType.objects.get(identifier='OPE_TYPE_SELL')
-    if external_type=='Dividend':
-        return FinancialOperationType.objects.get(identifier='OPE_TYPE_DIVIDEND')
-    if external_type=='Coupon':
-        return FinancialOperationType.objects.get(identifier='OPE_TYPE_COUPON')
-    return FinancialOperationType.objects.get(identifier='OPE_TYPE_CONTRIBUTION')
+    return FinancialOperationType.objects.get(identifier=external_type)
 
 def extract_status(external_status):
-    if external_status=='Received':
-        return OperationStatus.objects.get(identifier='OPE_STATUS_SENT')
-    if external_status=='Acknowledged':
-        return OperationStatus.objects.get(identifier='OPE_STATUS_ACK')
-    if external_status=='Executed':
-        return OperationStatus.objects.get(identifier='OPE_STATUS_EXECUTED')
-    if external_status=='Cancelled':
-        return OperationStatus.objects.get(identifier='OPE_STATUS_CANCELLED')
-    return OperationStatus.objects.get(identifier='OPE_STATUS_PENDING')
+    return OperationStatus.objects.get(identifier=external_status)
 
 def extract_potential_securities(data):
     identifiers_query = None
@@ -301,6 +277,11 @@ def import_security_operations(data):
         if e_security!=None and e_security.associated!=None:
             price_divisor = e_security.associated.get_price_divisor()
         ext_transaction.internal_operation.amount = float(entry['price']) * float(entry['quantity']) / price_divisor
+        ext_transaction.internal_operation.quantity = float(entry['quantity'])
+        ext_transaction.internal_operation.price = float(entry['price'])
+        if 'amount' in entry and entry['amount']==ext_transaction.internal_operation.amount*price_divisor:
+            ext_transaction.internal_operation.price = float(entry['price']) * price_divisor
+            ext_transaction.internal_operation.amount = float(entry['price']) * float(entry['quantity'])
         ext_transaction.internal_operation.amount_portfolio = 0.0
         ext_transaction.internal_operation.amount_management = 0.0
         ext_transaction.internal_operation.operation_date = entry['operation_date']
@@ -317,8 +298,6 @@ def import_security_operations(data):
             ext_transaction.internal_operation.source = None
             ext_transaction.internal_operation.target = None
             ext_transaction.internal_operation.security = None
-        ext_transaction.internal_operation.quantity = float(entry['quantity'])
-        ext_transaction.internal_operation.price = float(entry['price'])
         LOGGER.debug('EAMCOM - Saving')
         ext_transaction.internal_operation.save()
         LOGGER.debug('EAMCOM - Reloading saved operation')
