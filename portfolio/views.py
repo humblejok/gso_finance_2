@@ -7,7 +7,8 @@ from portfolio.serializers import AccountSerializer, OperationSerializer, MoneyA
 from django.db.models import Q
 from django.http.response import Http404, JsonResponse, HttpResponse,\
     HttpResponseServerError
-from gso_finance_2.tracks_utility import get_track_content, get_multi_last
+from gso_finance_2.tracks_utility import get_track_content, get_multi_last,\
+    set_track_content
 from portfolio.computations import portfolios as pf_computer
 from security.models import Security
 from security.serializers import CompleteSecuritySerializer
@@ -152,6 +153,20 @@ def portfolio_initialize(request, portfolio_identifier, as_of):
                 
     else:
         return HttpResponseServerError('Positions could not be treated.')
+    return HttpResponse(status=201)
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def portfolio_import_history(request, portfolio_identifier):
+    try:
+        portfolio = Portfolio.objects.get(identifier=portfolio_identifier)
+    except Portfolio.DoesNotExist:
+        return Http404('Portfolio with this identifier doesn''t exist!')
+    request_data = loads(request.body)
+    track_content = []
+    for entry in request_data:
+        track_content.append({'date': entry['date'], 'value': entry['performance']})
+    set_track_content('finance', portfolio.id, 'performance_past', track_content, True)
     return HttpResponse(status=201)
 
 @require_http_methods(["GET"])
