@@ -12,8 +12,8 @@ import requests
 import pandas as pd
 
 SOURCES = {'novastone': {'url': 'http://jiren:5003/query', 'escape': False},
-           #'finance': {'url': 'https://f2positions.providers.finance2.ch/query', 'escape': False},
-           'finance': {'url': 'https://f2-novastone.providers.finance2.ch/query', 'escape': False},
+           'finance': {'url': 'https://f2positions.providers.finance2.ch/query', 'escape': False},
+           #'finance': {'url': 'https://f2-novastone.providers.finance2.ch/query', 'escape': False},
            'vpbank': {'url': 'http://jiren:5001/query', 'escape': False},
            'bloomberg': {'url': 'https://bloomberg.providers.finance2.ch/query', 'escape': True},
            'pictet_provider': {'url': 'https://pictet-securities.finance2.ch/query', 'escape': False}}
