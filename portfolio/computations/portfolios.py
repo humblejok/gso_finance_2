@@ -10,6 +10,7 @@ from gso_finance_2.tracks_utility import get_track_content, set_track_content,\
     to_pandas
 from portfolio.computations import security_accounts, cash_accounts
 from portfolio.models import MoneyAccountChain
+from dateutil.parser import parser
 
 LOGGER = logging.getLogger(__name__)
 
@@ -145,7 +146,20 @@ def compute_valuation(portfolio):
     cumulated = (performance + 1).cumprod() * 100
     cumulated = cumulated.fillna(100.0)
     performance['date'] = performance.index.strftime('%Y-%m-%d')
-    set_track_content('finance', portfolio.id, 'performance', performance.to_dict('records'), True)
+    if portfolio.additional_information!=None and 'COMPUTATION_MERGE_DATE' in portfolio.additional_information:
+        past_performances = get_track_content('finance', portfolio.id, 'performance_past', nofill=True)
+        current_performances = performance[performance.index>=portfolio.additional_information['COMPUTATION_MERGE_DATE']].to_dict('records')
+        set_track_content('finance', portfolio.id, 'performance', past_performances + current_performances, True)
+        # RECOMPUTING EVERYTHING AS THERE ARE UNATTENDED VALUES FROM THE PAST
+        p_perf = get_track_content('finance', portfolio.id, 'performance', expand_today=True, nofill=True)
+        p_perf = to_pandas(p_perf)
+        p_perf = p_perf.reindex(dates_range).fillna(0.0)
+        mtd = p_perf.groupby([(p_perf.index.year), (p_perf.index.month)]).apply(lambda x:x.add(1).cumprod())-1
+        ytd = p_perf.groupby(p_perf.index.year).apply(lambda x:x.add(1).cumprod()) - 1
+        cumulated = (p_perf + 1).cumprod() * 100
+        cumulated = cumulated.fillna(100.0)
+    else:
+        set_track_content('finance', portfolio.id, 'performance', performance.to_dict('records'), True)
     cumulated['date'] = cumulated.index.strftime('%Y-%m-%d')
     set_track_content('finance', portfolio.id, 'cumulated', cumulated.to_dict('records'), True)
     ytd['date'] = ytd.index.strftime('%Y-%m-%d')

@@ -16,7 +16,7 @@ from datetime import datetime as dt
 
 def build_chain(account):
     Operation = my_class_import('portfolio.models.Operation')
-    all_operations = Operation.objects.filter(Q(target__id=account.id)).distinct().order_by('value_date', 'id')
+    all_operations = Operation.objects.filter(Q(target__id=account.id), Q(operation_type__identifier__in=['OPE_TYPE_BUY', 'OPE_TYPE_BUY_FOP', 'OPE_TYPE_SELL', 'OPE_TYPE_SELL_FOP'])).distinct().order_by('value_date', 'id')
     
     previous_date = None
     
@@ -49,14 +49,14 @@ def build_chain(account):
                 buy_prices[key_date][key_security] = (((operation.price * operation.quantity) + (positions[key_date][key_security] * buy_prices[key_date][key_security])) / positions[key_date][key_security]) if 'BUY' in operation.operation_type.identifier else buy_prices[key_date][key_security]
             if 'BUY' in operation.operation_type.identifier:
                 if 'FOP' in operation.operation_type.identifier:
-                    increase_fop[-1]['value'] = increase_fop[-1]['value'] + (operation.price * operation.quantity)
+                    increase_fop[-1]['value'] = increase_fop[-1]['value'] + (operation.price * operation.quantity) / operation.security.get_price_divisor()
                 else:
-                    increase[-1]['value'] = increase[-1]['value'] + (operation.price * operation.quantity)
+                    increase[-1]['value'] = increase[-1]['value'] + (operation.price * operation.quantity) / operation.security.get_price_divisor()
             else:
                 if 'FOP' in operation.operation_type.identifier:
-                    decrease_fop[-1]['value'] = decrease_fop[-1]['value'] + (operation.price * operation.quantity)
+                    decrease_fop[-1]['value'] = decrease_fop[-1]['value'] + (operation.price * operation.quantity) / operation.security.get_price_divisor()
                 else:
-                    decrease[-1]['value'] = decrease[-1]['value'] + (operation.price * operation.quantity)
+                    decrease[-1]['value'] = decrease[-1]['value'] + (operation.price * operation.quantity) / operation.security.get_price_divisor()
             previous_date = key_date
     set_multi_content('finance', account.id, 'positions', positions, True)
     set_multi_content('finance', account.id, 'buy_prices', buy_prices, True)

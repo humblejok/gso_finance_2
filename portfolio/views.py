@@ -90,7 +90,7 @@ def portfolio_holdings(request, portfolio_id):
                     entry['weight_local'] = all_local_w[next(iter(all_local_w))][security_id]
                     entry['weight_portfolio'] = all_portfolio_w[next(iter(all_portfolio_w))][security_id]
                     entry['buy_price'] = all_buy_prices[next(iter(all_buy_prices))][security_id]
-                    entry['current_price'] = entry['value'] / entry['quantity']
+                    entry['current_price'] = entry['value'] / entry['quantity'] * security.get_price_divisor()
                     entry['gross_performance_local'] = ((entry['current_price'] / entry['buy_price']) - 1.0) if entry['buy_price'] != 0.0 else 0.0
                     entry['holding_account_id'] = account.id
                     all_data.append(entry)
