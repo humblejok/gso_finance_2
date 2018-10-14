@@ -115,7 +115,7 @@ def assign_account_to(request, account_holding_id, account_id):
     if 'aliases' not in account.additional_description:
         account.additional_description['aliases'] = {} 
     account.additional_description['aliases'][account_holding.provider.provider_code] = account_holding.external_account.provider_identifier
-    account.save/()
+    account.save()
     account_holding.internal_account = account
     account_holding.internal_quantity = account.current_amount_local
     account_holding.save()
@@ -124,16 +124,17 @@ def assign_account_to(request, account_holding_id, account_id):
 @csrf_exempt
 @require_http_methods(["POST"])
 def accept_external_transaction(request, external_transaction_id):
-    try:
-        transaction = ExternalTransaction.objects.get(id=external_transaction_id)
-    except ExternalTransaction.DoesNotExist:
-        return Http404('External transaction could not be found.')
-    wrk_operation = Operation.objects.get(id=transaction.internal_operation.id)
-    wrk_operation.source = Account.objects.get(id=transaction.external_source.associated.id) if transaction.external_source!=None else None
-    wrk_operation.security = Security.objects.get(id=transaction.external_security.associated.id) if transaction.external_security!=None else None
-    wrk_operation.target = transaction.portfolio.get_or_create_security_account(wrk_operation.security.currency.identifier) if wrk_operation.security!=None else None
-    wrk_operation.save()
-    transaction.is_imported = True
-    transaction.save()
+    for current_transaction_id in external_transaction_id.split(','):
+        try:
+            transaction = ExternalTransaction.objects.get(id=current_transaction_id)
+        except ExternalTransaction.DoesNotExist:
+            return Http404('External transaction could not be found.')
+        wrk_operation = Operation.objects.get(id=transaction.internal_operation.id)
+        wrk_operation.source = Account.objects.get(id=transaction.external_source.associated.id) if transaction.external_source!=None else None
+        wrk_operation.security = Security.objects.get(id=transaction.external_security.associated.id) if transaction.external_security!=None else None
+        wrk_operation.target = transaction.portfolio.get_or_create_security_account(wrk_operation.security.currency.identifier) if wrk_operation.security!=None else None
+        wrk_operation.save()
+        transaction.is_imported = True
+        transaction.save()
     return HttpResponse(status=204)
     

@@ -18,6 +18,7 @@ SOURCES = {'novastone': {'url': 'http://jiren:5003/query', 'escape': False},
            'bloomberg': {'url': 'https://bloomberg.providers.finance2.ch/query', 'escape': True},
            'pictet_provider': {'url': 'https://pictet-securities.finance2.ch/query', 'escape': False}}
 
+STATISTICS_ENGINE = 'http://localhost:1664/compute'
 LOGGER = logging.getLogger(__name__)
 HEADERS = {'Content-Type': 'application/json; charset=utf-8', 'Accept': 'application/json'}
 

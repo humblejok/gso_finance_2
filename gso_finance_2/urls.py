@@ -16,7 +16,8 @@ from providers.views import ExternalSecurityViewSet, ExternalSecuritySearch,\
     ExternalSecurityUnmapped, external_securities_history,\
     ExternalAccountViewSet, ExternalPortfolioHoldingsViewSet
 from security.views import SecurityViewSet, securities_history,\
-     SecuritiesSearch, SecurityTypeViewSet, QuickSecurityTypeViewSet
+     SecuritiesSearch, SecurityTypeViewSet, QuickSecurityTypeViewSet,\
+    securities_statistics
 from authentication import views as auth_views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -76,7 +77,9 @@ urlpatterns = [
     url(r'^external_securities_history/(?P<external_security_id>[0-9]+)/$', external_securities_history),
 
     url(r'^securities_history/(?P<security_id>[0-9]+)/$', securities_history),
+    url(r'^securities_statistics/(?P<security_id>[0-9]+)/$', securities_statistics),    
     url(r'^securities_search/(?P<search_filter>.+)/$', SecuritiesSearch.as_view()),
+    
     
     url(r'^companies_search/(?P<search_filter>.+)/$', CompaniesSearch.as_view()),
 
