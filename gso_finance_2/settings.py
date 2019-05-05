@@ -26,9 +26,9 @@ SECRET_KEY = '1-5awwa(vby89vmf_xra6+@5_)oml==&2yrf(!60+i(b92&nbz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['vegeto', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['lazuli', 'localhost', '127.0.0.1']
 
-EXTERNAL_HOST_NAME='http://vegeto:8001'
+EXTERNAL_HOST_NAME='http://lazuli:8001'
 
 
 # Application definition
@@ -110,7 +110,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         #'NAME': 'amx_eamcom',                      # Or path to database file if using sqlite3.
-        'NAME': 'nv_finance',                      # Or path to database file if using sqlite3.
+        'NAME': 'gso_finance_nv',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'gso_finance',
         'PASSWORD': 'boudux',
@@ -162,10 +162,10 @@ STATIC_URL = '/statics/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    'D:/DEV/Sources/gso_finance_2/resources/statics/',
+    'C:/DEV/Sources/gso_finance_2/resources/statics/',
 )
 
-RESOURCES_DIR = 'D:/DEV/Sources/gso_finance_2/resources/other'
+RESOURCES_DIR = 'C:/DEV/Sources/gso_finance_2/resources/other'
 
 LOGGING = {
     'version': 1,
