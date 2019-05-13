@@ -114,7 +114,7 @@ def assign_account_to(request, account_holding_id, account_id):
         account.additional_description = {}
     if 'aliases' not in account.additional_description:
         account.additional_description['aliases'] = {} 
-    account.additional_description['aliases'][account_holding.provider.provider_code] = account_holding.external_account.provider_identifier
+    account.additional_description['aliases'][account_holding.external_account.provider.provider_code] = account_holding.external_account.provider_identifier
     account.save()
     account_holding.internal_account = account
     account_holding.internal_quantity = account.current_amount_local

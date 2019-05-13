@@ -16,8 +16,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from json import loads
 from eamcom.utility import import_positions
-from providers.models import ExternalAccount, ExternalSecurity
+from providers.models import ExternalAccount, ExternalSecurity,\
+    ExternalTransaction
 from datetime import datetime as dt
+from providers.serializers import ExternalTransactionSerializer
 
 class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
@@ -179,3 +181,14 @@ def portfolios_setup(request):
             ]
         }
     return JsonResponse(pf_setup, safe=True)
+
+
+@require_http_methods(["GET"])
+def portfolio_transactions_external_pending(request, portfolio_id):
+    try:
+        portfolio = Portfolio.objects.get(id=portfolio_id)
+    except:
+        return Http404("Portfolio does not exists")
+    transactions = ExternalTransaction.objects.filter(portfolio__id=portfolio.id, is_imported=False).order_by('internal_operation__value_date')
+    serializer = ExternalTransactionSerializer(transactions, many=True)
+    return JsonResponse(serializer.data, safe=False)
