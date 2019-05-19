@@ -263,7 +263,24 @@ def import_security_operations(data):
                 e_security = ExternalSecurity.objects.get(provider=me, provider_identifier=entry['security'], currency__identifier=entry['currency'])
                 LOGGER.debug('EAMCOM - Found')
             except ExternalSecurity.DoesNotExist:
-                LOGGER.debug('EAMCOM - Not found')
+                securities = Security.objects.filter(Q(name__icontains=entry['security'])
+                                       | Q(identifier__icontains=entry['security'])
+                                       | Q(provider_identifier__icontains=entry['security'])
+                                       | Q(additional_description__icontains=entry['security'])).order_by('name')
+                if securities.exists():
+                    e_security = ExternalSecurity()
+                    e_security.currency = securities[0].currency
+                    e_security.type = securities[0].type
+                    e_security.provider = me
+                    e_security.provider_identifier = entry['security']
+                    e_security.associated = securities[0]
+                    e_security.save()
+                    if securities.count()>1:
+                        for security in securities:
+                            e_security.potential_matches.add(security)
+                        e_security.save()
+                else:
+                    LOGGER.debug('EAMCOM - Not found')
         ext_transaction.is_valid = (e_security!=None and e_security.associated!=None)
         ext_transaction.external_security = e_security
         ext_transaction.external_source = f_account
