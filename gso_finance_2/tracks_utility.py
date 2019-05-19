@@ -98,7 +98,7 @@ def set_track_content(source_key, entity_id, track_type, values, clean):
         except:
             container_id = 'entity_' + base64.b64encode(entity_id.encode('utf8'), '+-'.encode('utf8')).decode('utf8')
     else:
-        container_id = 'entity_' + str(entity_id)
+        container_id = 'entity_' + str(entity_id.decode('utf8'))
     track_id = 'track_' + str(track_type)
     # TODO: Historical formatting, keep it?
     clean_values = {value['date'] if isinstance(value['date'], str) else value['date'].strftime('%Y-%m-%d'): value['value'] for value in values}

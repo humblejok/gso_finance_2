@@ -1,0 +1,4 @@
+model;identifier;name;currency;active;inception_date;closing_date;management_company;bank;provider;provider_identifier;type;logo;additional_description
+security.models.Security;VIRTUAL_SECURITY_USD;Temporary Security USD;USD;True;2018-01-01;;;;FinaLE Engine;VIRTUAL_SECURITY_USD;SECTYP_FUND;;"{""aliases"": {""FINALE"": {""additional"": ""Technical usage"", ""value"": ""VIRTUAL_SECURITY_USD""}}}"
+security.models.Security;VIRTUAL_SECURITY_EUR;Temporary Security EUR;EUR;True;2018-01-01;;;;FinaLE Engine;VIRTUAL_SECURITY_EUR;SECTYP_FUND;;"{""aliases"": {""FINALE"": {""additional"": ""Technical usage"", ""value"": ""VIRTUAL_SECURITY_EUR""}}}"
+security.models.Security;VIRTUAL_SECURITY_CHF;Temporary Security CHF;CHF;True;2018-01-01;;;;FinaLE Engine;VIRTUAL_SECURITY_CHF;SECTYP_FUND;;"{""aliases"": {""FINALE"": {""additional"": ""Technical usage"", ""value"": ""VIRTUAL_SECURITY_CHF""}}}"
