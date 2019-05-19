@@ -26,18 +26,18 @@ class SecurityType(models.Model):
 class Security(models.Model):
     identifier = models.CharField(max_length=128, null=False, blank=False)
     name = models.CharField(max_length=128, null=False, blank=False)
-    currency = models.ForeignKey(Currency, related_name='security_currency_rel')
+    currency = models.ForeignKey(Currency, related_name='security_currency_rel', on_delete=models.DO_NOTHING)
     active = models.BooleanField(default=True)
     inception_date = models.DateField(null=False)
     closing_date = models.DateField(null=True)
-    management_company = models.ForeignKey(Company, related_name='security_mgmt_company_rel', blank=True, null=True)
-    bank = models.ForeignKey(Company, related_name='security_bank_company_rel', blank=True, null=True)
-    provider = models.ForeignKey(Company, related_name='security_provider_company_rel', blank=True, null=True)
+    management_company = models.ForeignKey(Company, related_name='security_mgmt_company_rel', blank=True, null=True, on_delete=models.DO_NOTHING)
+    bank = models.ForeignKey(Company, related_name='security_bank_company_rel', blank=True, null=True, on_delete=models.DO_NOTHING)
+    provider = models.ForeignKey(Company, related_name='security_provider_company_rel', blank=True, null=True, on_delete=models.DO_NOTHING)
     provider_identifier = models.CharField(max_length=128, null=True, blank=True)
     
     last_update = models.DateField(null=True)
     
-    type = models.ForeignKey(SecurityType, related_name='security_type_rel')
+    type = models.ForeignKey(SecurityType, related_name='security_type_rel', on_delete=models.DO_NOTHING)
     
     logo = models.CharField(max_length=256, blank=True, null=True)
     

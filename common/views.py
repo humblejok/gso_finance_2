@@ -100,7 +100,7 @@ class CompaniesSearch(generics.ListAPIView):
 
 def whoami(request):
     user = {}
-    if request.user!=None and request.user.is_authenticated():
+    if request.user!=None and request.user.is_authenticated:
         user = User.objects.get(id=request.user.id)
         serializer = UserSerializer(user)
         user = serializer.data

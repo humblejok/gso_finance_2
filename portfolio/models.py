@@ -43,9 +43,9 @@ class OperationStatus(models.Model):
 class Account(models.Model):
     identifier = models.CharField(max_length=32, null=False, blank=False)
     name = models.CharField(max_length=128, null=False, blank=False)
-    currency = models.ForeignKey(Currency, related_name='account_currency_rel')
+    currency = models.ForeignKey(Currency, related_name='account_currency_rel', on_delete=models.DO_NOTHING)
     active = models.BooleanField(default=True)
-    bank = models.ForeignKey(Company, related_name='account_bank_company_rel', null=True, blank=True)
+    bank = models.ForeignKey(Company, related_name='account_bank_company_rel', null=True, blank=True, on_delete=models.DO_NOTHING)
     current_amount_local = models.DecimalField(default=0.0, max_digits=26, decimal_places=12)
     current_amount_portfolio = models.DecimalField(default=0.0, max_digits=26, decimal_places=12)
     include_valuation = models.BooleanField(default=True)
@@ -54,7 +54,7 @@ class Account(models.Model):
     last_update = models.DateTimeField(null=True)
     last_computation = models.DateTimeField(null=True)
 
-    type = models.ForeignKey(AccountType, related_name='account_type_rel', null=True, blank=True)
+    type = models.ForeignKey(AccountType, related_name='account_type_rel', null=True, blank=True, on_delete=models.DO_NOTHING)
 
     additional_information = HStoreField(null=True, blank=True)
     additional_description = JSONField(null=True, blank=True)
@@ -105,7 +105,7 @@ class Account(models.Model):
         return new_instance
 
 class Valuation(models.Model):
-    source = models.ForeignKey(Company, related_name='valuation_source', blank=True, null=True)
+    source = models.ForeignKey(Company, related_name='valuation_source', blank=True, null=True, on_delete=models.DO_NOTHING)
     value_date = models.DateField()
     investments_portfolio = models.FloatField()
     investments_management = models.FloatField()
@@ -143,19 +143,19 @@ class Operation(models.Model):
     amount_management = models.FloatField(blank=True, null=True)
     operation_date = models.DateField(null=True, blank=True)
     value_date = models.DateField(null=True, blank=True)
-    status = models.ForeignKey(OperationStatus, related_name='operation_status_rel')
+    status = models.ForeignKey(OperationStatus, related_name='operation_status_rel', on_delete=models.DO_NOTHING)
 
     additional_information = HStoreField(null=True, blank=True)
     additional_description = JSONField(null=True, blank=True)
 
-    operation_type = models.ForeignKey(FinancialOperationType, related_name='investmemt_operation_type_rel', blank=True, null=True)
-    source = models.ForeignKey(Account, related_name='operation_source', blank=True, null=True)
-    target = models.ForeignKey(Account, related_name='operation_target', blank=True, null=True)
-    security = models.ForeignKey(Security, related_name='operation_security', blank=True, null=True)
+    operation_type = models.ForeignKey(FinancialOperationType, related_name='investmemt_operation_type_rel', blank=True, null=True, on_delete=models.DO_NOTHING)
+    source = models.ForeignKey(Account, related_name='operation_source', blank=True, null=True, on_delete=models.DO_NOTHING)
+    target = models.ForeignKey(Account, related_name='operation_target', blank=True, null=True, on_delete=models.DO_NOTHING)
+    security = models.ForeignKey(Security, related_name='operation_security', blank=True, null=True, on_delete=models.DO_NOTHING)
     quantity = models.FloatField(null=True, blank=True)
     price = models.FloatField(null=True, blank=True)
 
-    associated_operation = models.ForeignKey('Operation', related_name='operation_parent', null=True)
+    associated_operation = models.ForeignKey('Operation', related_name='operation_parent', null=True, on_delete=models.CASCADE)
 
     @staticmethod
     def create_from_v1(portfolio, operation_dict):
@@ -204,14 +204,14 @@ class Portfolio(models.Model):
     identifier = models.CharField(max_length=128, null=False, blank=False)
     name = models.CharField(max_length=128, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
-    currency = models.ForeignKey(Currency, related_name='portfolio_currency_rel')
+    currency = models.ForeignKey(Currency, related_name='portfolio_currency_rel', on_delete=models.DO_NOTHING)
     active = models.BooleanField(default=True)
     inception_date = models.DateField(null=False)
     closing_date = models.DateField(null=True)
-    management_company = models.ForeignKey(Company, related_name='portfolio_mgmt_company_rel', null=True, blank=True)
-    relationship_manager = models.ForeignKey(Person, related_name='portfolio_rm_person_rel', null=True, blank=True)
-    bank = models.ForeignKey(Company, related_name='portfolio_bank_company_rel', null=True, blank=True)
-    provider = models.ForeignKey(Company, related_name='portfolio_provider_company_rel', null=True, blank=True)
+    management_company = models.ForeignKey(Company, related_name='portfolio_mgmt_company_rel', null=True, blank=True, on_delete=models.DO_NOTHING)
+    relationship_manager = models.ForeignKey(Person, related_name='portfolio_rm_person_rel', null=True, blank=True, on_delete=models.DO_NOTHING)
+    bank = models.ForeignKey(Company, related_name='portfolio_bank_company_rel', null=True, blank=True, on_delete=models.DO_NOTHING)
+    provider = models.ForeignKey(Company, related_name='portfolio_provider_company_rel', null=True, blank=True, on_delete=models.DO_NOTHING)
     last_update = models.DateField(null=True)
     last_computation = models.DateField(null=True)
     logo = models.CharField(max_length=256, blank=True, null=True)
@@ -446,12 +446,12 @@ class Portfolio(models.Model):
             new_portfolio.save()
 
 class ConsolidationPortfolio(Portfolio):
-    reference_portfolio = models.ForeignKey(Portfolio, related_name='conso_portfolio_reference_rel', null=False)
+    reference_portfolio = models.ForeignKey(Portfolio, related_name='conso_portfolio_reference_rel', null=False, on_delete=models.DO_NOTHING)
     included_portfolio = models.ManyToManyField(Portfolio, related_name='conso_included_portfolio_rel', blank=True)
 
 class MoneyAccountChain(models.Model):
-    account = models.ForeignKey(Account, related_name='account_chain')
-    operation = models.ForeignKey(Operation, related_name='account_operation_chain')
+    account = models.ForeignKey(Account, related_name='account_chain', on_delete=models.DO_NOTHING)
+    operation = models.ForeignKey(Operation, related_name='account_operation_chain', on_delete=models.DO_NOTHING)
     valid_until = models.DateField(null=True, blank=True)
     account_amount = models.DecimalField(max_digits=26, decimal_places=12)
     operation_amount = models.DecimalField(max_digits=26, decimal_places=12)

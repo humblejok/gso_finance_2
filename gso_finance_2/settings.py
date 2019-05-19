@@ -26,9 +26,9 @@ SECRET_KEY = '1-5awwa(vby89vmf_xra6+@5_)oml==&2yrf(!60+i(b92&nbz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['lazuli', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['gogeta','lazuli', 'localhost', '127.0.0.1']
 
-EXTERNAL_HOST_NAME='http://lazuli:8001'
+EXTERNAL_HOST_NAME='http://gogeta:8001'
 
 
 # Application definition

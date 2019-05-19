@@ -77,12 +77,12 @@ class CompanySubsidiaryRole(models.Model):
 #                       COMMON MODELS                        #
 ##############################################################
 class Address(models.Model):
-    address_type = models.ForeignKey(AddressType, related_name='address_type_rel', null=True)
+    address_type = models.ForeignKey(AddressType, related_name='address_type_rel', null=True, on_delete=models.DO_NOTHING)
     line_1 = models.CharField(max_length=128, null=True)
     line_2 = models.CharField(max_length=128, null=True)
     zip_code = models.CharField(max_length=32, null=True)
     city = models.CharField(max_length=128, null=True)
-    country = models.ForeignKey(Country, related_name='address_country_rel', null=True)
+    country = models.ForeignKey(Country, related_name='address_country_rel', null=True, on_delete=models.DO_NOTHING)
     
     @staticmethod
     def instanciate_from_dict(data):
@@ -101,7 +101,7 @@ class Address(models.Model):
         
     
 class Email(models.Model):
-    address_type = models.ForeignKey(MailType, related_name='email_type_rel', null=True)
+    address_type = models.ForeignKey(MailType, related_name='email_type_rel', null=True, on_delete=models.DO_NOTHING)
     email_address = models.EmailField()
     
     @staticmethod
@@ -118,7 +118,7 @@ class Email(models.Model):
         return new_instance
     
 class Phone(models.Model):
-    line_type = models.ForeignKey(PhoneType, related_name='phone_type_rel', null=True)
+    line_type = models.ForeignKey(PhoneType, related_name='phone_type_rel', null=True, on_delete=models.DO_NOTHING)
     phone_number = models.TextField(max_length=32)
     
     @staticmethod
@@ -175,8 +175,8 @@ class Person(models.Model):
             new_person.save()
     
 class CompanyMember(models.Model):
-    person = models.ForeignKey(Person, null=False, related_name='company_member_person_rel')
-    role = models.ForeignKey(CompanyMemberRole, related_name='company_member_role_rel', null=False)
+    person = models.ForeignKey(Person, null=False, related_name='company_member_person_rel', on_delete=models.DO_NOTHING)
+    role = models.ForeignKey(CompanyMemberRole, related_name='company_member_role_rel', null=False, on_delete=models.DO_NOTHING)
     
     @staticmethod
     def instanciate_from_dict(data):
@@ -196,7 +196,7 @@ class CompanyMember(models.Model):
 class Company(models.Model):
     default_name = models.CharField(max_length=256)
     creation_date = models.DateField(null=True)
-    base_currency = models.ForeignKey(Currency, null=True, related_name='company_currency_name')
+    base_currency = models.ForeignKey(Currency, null=True, related_name='company_currency_name', on_delete=models.DO_NOTHING)
     addresses = models.ManyToManyField(Address, blank=True)
     emails = models.ManyToManyField(Email, blank=True)
     phones = models.ManyToManyField(Phone, blank=True)
@@ -241,8 +241,8 @@ class Company(models.Model):
             new_company.save()
     
 class CompanySubsidiary(models.Model):
-    company = models.ForeignKey('Company', related_name='company_subsidiary_company_rel', null=False)
-    role = models.ForeignKey(CompanySubsidiaryRole, related_name='company_subsidiary_role_rel', null=False)
+    company = models.ForeignKey('Company', related_name='company_subsidiary_company_rel', null=False, on_delete=models.DO_NOTHING)
+    role = models.ForeignKey(CompanySubsidiaryRole, related_name='company_subsidiary_role_rel', null=False, on_delete=models.DO_NOTHING)
     
     @staticmethod
     def instanciate_from_dict(data):
