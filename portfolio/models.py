@@ -465,20 +465,18 @@ class MoneyAccountChain(models.Model):
         for operation in all_operations:
             print('Operation:' + operation.name + ' === ' + str(operation.amount))
             operation_amount = Decimal(operation.amount)
-            if operation.status.identifier!='OPE_CANCELLED':
-                if operation.target!=None and operation.security==None:
-                    print(operation.amount)
-                    if operation.target.id==account.id:
-                        operation_amount = operation_amount * Decimal(operation.spot_rate)
-                    else:
-                        operation_amount = operation_amount * Decimal(-1.0)
-                if operation.security!=None:
-                    operation_amount = operation_amount * Decimal(operation.spot_rate) * (Decimal(-1.0) if operation.operation_type.identifier in ['OPE_TYPE_BUY'] else Decimal(1.0))
-                if operation.target==None and operation.source!=None:
+            
+            if operation.target!=None and operation.security==None:
+                print(operation.amount)
+                if operation.target.id==account.id:
                     operation_amount = operation_amount * Decimal(operation.spot_rate)
-            else:
-                operation_amount = Decimal(0.0)
-            amount = amount + operation_amount
+                else:
+                    operation_amount = operation_amount * Decimal(-1.0)
+            if operation.security!=None:
+                operation_amount = operation_amount * Decimal(operation.spot_rate) * (Decimal(-1.0) if operation.operation_type.identifier in ['OPE_TYPE_BUY', 'OPE_TYPE_BUY_FOP'] else Decimal(1.0))
+            if operation.target==None and operation.source!=None:
+                operation_amount = operation_amount * Decimal(operation.spot_rate)
+            amount = amount + (operation_amount if operation.status.identifier!='OPE_CANCELLED' and not operation.operation_type.identifier in ['OPE_TYPE_BUY_FOP', 'OPE_TYPE_SELL_FOP'] else Decimal(0.0))
             new_chain = MoneyAccountChain()
             new_chain.account = account
             new_chain.operation = operation
