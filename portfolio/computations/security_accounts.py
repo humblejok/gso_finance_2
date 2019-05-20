@@ -84,7 +84,7 @@ def compute_valuation(portfolio, account):
     decrease_fop_mvts = decrease_fop_mvts.set_index('date')
     decrease_fop_mvts.index = pd.to_datetime(decrease_fop_mvts.index)
     fop_mvts = pd.DataFrame()
-    fop_mvts['account'] = increase_fop_mvts['value'] + decrease_fop_mvts['value']
+    fop_mvts['account'] = increase_fop_mvts['value'] - decrease_fop_mvts['value']
     tracks = []
     
     for security_id in positions:
