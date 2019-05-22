@@ -270,6 +270,14 @@ class Portfolio(models.Model):
         self.accounts.add(new_account)
         return new_account
     
+    def get_cash_account(self, currency_code):
+        try:
+            account = self.accounts.get(type__identifier='ACC_CURRENT', currency__identifier=currency_code)
+        except:
+            account = None
+        return account
+            
+    
     def get_or_create_security_account(self, currency_code):
         try:
             account = self.accounts.get(type__identifier='ACC_SECURITY', currency__identifier=currency_code)

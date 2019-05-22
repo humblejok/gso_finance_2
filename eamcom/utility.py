@@ -296,7 +296,7 @@ def import_security_operations(data):
         ext_transaction.internal_operation.amount = float(entry['price']) * float(entry['quantity']) / price_divisor
         ext_transaction.internal_operation.quantity = float(entry['quantity'])
         ext_transaction.internal_operation.price = float(entry['price'])
-        if 'amount' in entry and entry['amount']==ext_transaction.internal_operation.amount*price_divisor:
+        if 'amount' in entry and round(entry['amount'])==round(ext_transaction.internal_operation.amount*price_divisor):
             ext_transaction.internal_operation.price = float(entry['price']) * price_divisor
             ext_transaction.internal_operation.amount = float(entry['price']) * float(entry['quantity'])
         ext_transaction.internal_operation.amount_portfolio = 0.0
@@ -310,7 +310,13 @@ def import_security_operations(data):
         if ext_transaction.is_imported:
             ext_transaction.internal_operation.source = Account.objects.get(id=ext_transaction.external_source.associated.id) if ext_transaction.external_source!=None else None
             ext_transaction.internal_operation.security = Security.objects.get(id=ext_transaction.external_security.associated.id) if ext_transaction.external_security!=None else None
-            ext_transaction.internal_operation.target = ext_transaction.portfolio.get_or_create_security_account(ext_transaction.internal_operation.security.currency.identifier) if ext_transaction.internal_operation.security!=None else None
+            if entry['movement_type'] in ['OPE_TYPE_SELL_FOP', 'OPE_TYPE_SELL', 'OPE_TYPE_BUY_FOP', 'OPE_TYPE_BUY']:
+                ext_transaction.internal_operation.target = ext_transaction.portfolio.get_or_create_security_account(ext_transaction.internal_operation.security.currency.identifier) if ext_transaction.internal_operation.security!=None else None
+                if ext_transaction.internal_operation.source==None:
+                    ext_transaction.internal_operation.source = portfolio.get_cash_account(entry['currency'])
+            else:
+                ext_transaction.internal_operation.target = portfolio.get_cash_account(entry['currency'])
+                ext_transaction.is_valid = ext_transaction.internal_operation.target!=None
         else:
             ext_transaction.internal_operation.source = None
             ext_transaction.internal_operation.target = None
