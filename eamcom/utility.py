@@ -199,7 +199,7 @@ def import_cash_operations(data):
         ext_transaction.internal_operation.identifier = entry['identifier']
         ext_transaction.internal_operation.name = entry['label']
         ext_transaction.internal_operation.description = entry['label']
-        ext_transaction.internal_operation.spot_rate = 1.0
+        ext_transaction.internal_operation.spot_rate = float(entry['spot_rate']) if 'spot_rate' in entry else 1.0
         ext_transaction.internal_operation.amount = float(entry['amount'])
         ext_transaction.internal_operation.amount_portfolio = 0.0 # TODO: Recomp
         ext_transaction.internal_operation.amount_management = 0.0 # TODO: Recompute
@@ -289,7 +289,7 @@ def import_security_operations(data):
         ext_transaction.internal_operation.identifier = entry['identifier']
         ext_transaction.internal_operation.name = entry['label']
         ext_transaction.internal_operation.description = entry['label']
-        ext_transaction.internal_operation.spot_rate = float(entry['spot_rate'])
+        ext_transaction.internal_operation.spot_rate = float(entry['spot_rate']) if 'spot_rate' in entry else 1.0
         price_divisor = 1.0
         if e_security!=None and e_security.associated!=None:
             price_divisor = e_security.associated.get_price_divisor()

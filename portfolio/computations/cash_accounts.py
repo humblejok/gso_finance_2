@@ -37,7 +37,7 @@ def build_chain(account):
             operation_amount = operation_amount * operation.spot_rate * (-1.0 if operation.operation_type.identifier in ['OPE_TYPE_BUY', 'OPE_TYPE_BUY_FOP'] else 1.0)
         if operation.target==None and operation.source!=None:
             operation_amount = operation_amount * operation.spot_rate
-        amount = amount + (operation_amount if operation.status.identifier!='OPE_CANCELLED' and not operation.operation_type.identifier in ['OPE_TYPE_BUY_FOP', 'OPE_TYPE_SELL_FOP'] else 0.0)
+        amount = amount + (operation_amount if operation.status.identifier!='OPE_STATUS_CANCELLED' and not operation.operation_type.identifier in ['OPE_TYPE_BUY_FOP', 'OPE_TYPE_SELL_FOP'] else 0.0)
         history.append({'date': key_date, 'value': amount})
         if operation.operation_type.identifier in ['OPE_TYPE_FEES','OPE_TYPE_ACCRUED_PAYMENT','OPE_TYPE_COUPON', 'OPE_TYPE_DIVIDEND', 'OPE_TYPE_COMMISSION', 'OPE_TYPE_TAX', 'OPE_TYPE_PNL']:
             mvt_pnl[key_date] = mvt_pnl[key_date] + operation_amount

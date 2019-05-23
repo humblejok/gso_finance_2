@@ -28,7 +28,7 @@ def build_chain(account):
     decrease_fop = []
     
     for operation in all_operations:
-        if operation.status.identifier!='OPE_CANCELLED':
+        if operation.status.identifier!='OPE_STATUS_CANCELLED':
             key_date = operation.value_date.strftime('%Y-%m-%d')
             key_security = str(operation.security.id)
             print('Operation:' + operation.name + ' as of ' + operation.value_date.strftime('%Y-%m-%d'))

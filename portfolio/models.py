@@ -484,7 +484,7 @@ class MoneyAccountChain(models.Model):
                 operation_amount = operation_amount * Decimal(operation.spot_rate) * (Decimal(-1.0) if operation.operation_type.identifier in ['OPE_TYPE_BUY', 'OPE_TYPE_BUY_FOP'] else Decimal(1.0))
             if operation.target==None and operation.source!=None:
                 operation_amount = operation_amount * Decimal(operation.spot_rate)
-            amount = amount + (operation_amount if operation.status.identifier!='OPE_CANCELLED' and not operation.operation_type.identifier in ['OPE_TYPE_BUY_FOP', 'OPE_TYPE_SELL_FOP'] else Decimal(0.0))
+            amount = amount + (operation_amount if operation.status.identifier!='OPE_STATUS_CANCELLED' and not operation.operation_type.identifier in ['OPE_TYPE_BUY_FOP', 'OPE_TYPE_SELL_FOP'] else Decimal(0.0))
             new_chain = MoneyAccountChain()
             new_chain.account = account
             new_chain.operation = operation
