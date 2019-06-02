@@ -225,6 +225,7 @@ def import_cash_operations(data):
         ext_transaction.internal_operation = Operation.objects.get(id=ext_transaction.internal_operation.id)
         ext_transaction.save()
         results.append(ext_transaction)
+    LOGGER.debug('EAMCOM - Cash operations import over')
     return done, results
         
         
