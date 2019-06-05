@@ -18,7 +18,6 @@ from json import loads
 from eamcom.utility import import_positions
 from providers.models import ExternalAccount, ExternalSecurity,\
     ExternalTransaction
-from datetime import datetime as dt
 from providers.serializers import ExternalTransactionSerializer
 
 class AccountViewSet(viewsets.ModelViewSet):
@@ -145,6 +144,8 @@ def portfolio_initialize(request, portfolio_identifier, as_of):
                 e_account = ExternalAccount.objects.get(provider=portfolio.provider, provider_identifier=entry['identifier'])
                 if e_account.associated==None:
                     account = portfolio.create_account_from_external(e_account)
+                    e_account.associated = account
+                    e_account.save()
                 else:
                     account = Account.objects.get(id=e_account.associated.id)
                 if entry['quantity']!=0.0:

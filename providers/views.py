@@ -132,7 +132,7 @@ def accept_external_transaction(request, external_transaction_id):
         wrk_operation = Operation.objects.get(id=transaction.internal_operation.id)
         wrk_operation.source = Account.objects.get(id=transaction.external_source.associated.id) if transaction.external_source!=None else None
         wrk_operation.security = Security.objects.get(id=transaction.external_security.associated.id) if transaction.external_security!=None else None
-        wrk_operation.target = transaction.portfolio.get_or_create_security_account(wrk_operation.security.currency.identifier) if wrk_operation.security!=None else None
+        wrk_operation.target = transaction.portfolio.get_or_create_security_account(wrk_operation.security.currency.identifier) if wrk_operation.security!=None else Account.objects.get(id=transaction.external_target.associated.id) if transaction.external_target!=None else None
         wrk_operation.save()
         transaction.is_imported = True
         transaction.save()

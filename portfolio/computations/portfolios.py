@@ -10,7 +10,7 @@ from gso_finance_2.tracks_utility import get_track_content, set_track_content,\
     to_pandas
 from portfolio.computations import security_accounts, cash_accounts
 from portfolio.models import MoneyAccountChain
-from dateutil.parser import parser
+from pandas.core.frame import DataFrame
 
 LOGGER = logging.getLogger(__name__)
 
@@ -29,7 +29,10 @@ def update_portfolio_model(portfolio):
     portfolio.quarter_to_date = 0.0
     portfolio.year_to_date = yearly_performances[-1]['value']
     portfolio.current_aum_local = valuation[-1]['value']
-    portfolio.current_aum_mgmt = valuation_mgmt[-1]['value']
+    if len(valuation_mgmt)>0:
+        portfolio.current_aum_mgmt = valuation_mgmt[-1]['value']
+    else:
+        portfolio.current_aum_mgmt = 0.0
     portfolio.save()
     
 
@@ -168,5 +171,8 @@ def compute_valuation(portfolio):
     set_track_content('finance', portfolio.id, 'mtd', mtd.to_dict('records'), True)
     portfolio_valuation['date'] = portfolio_valuation.index.strftime('%Y-%m-%d')
     set_track_content('finance', portfolio.id, 'valuation', portfolio_valuation.to_dict('records'), True)
-    portfolio_valuation_mgmt['date'] = portfolio_valuation_mgmt.index.strftime('%Y-%m-%d')
-    set_track_content('finance', portfolio.id, 'valuation_mgmt', portfolio_valuation_mgmt.to_dict('records'), True)
+    if isinstance(portfolio_valuation_mgmt, DataFrame):
+        portfolio_valuation_mgmt['date'] = portfolio_valuation_mgmt.index.strftime('%Y-%m-%d')
+        set_track_content('finance', portfolio.id, 'valuation_mgmt', portfolio_valuation_mgmt.to_dict('records'), True)
+    else:
+        set_track_content('finance', portfolio.id, 'valuation_mgmt', {}, True)

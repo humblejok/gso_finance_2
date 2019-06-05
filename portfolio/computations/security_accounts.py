@@ -46,7 +46,7 @@ def build_chain(account):
             else:
                 print('Existing position')
                 positions[key_date][key_security] = positions[key_date][key_security] + (operation.quantity * (1.0 if 'BUY' in operation.operation_type.identifier else -1.0))
-                buy_prices[key_date][key_security] = (((operation.price * operation.quantity) + (positions[key_date][key_security] * buy_prices[key_date][key_security])) / positions[key_date][key_security]) if 'BUY' in operation.operation_type.identifier else buy_prices[key_date][key_security]
+                buy_prices[key_date][key_security] = (((operation.price * operation.quantity) + (positions[key_date][key_security] * buy_prices[key_date][key_security])) / positions[key_date][key_security]) if 'BUY' in operation.operation_type.identifier and positions[key_date][key_security]!=0.0 else buy_prices[key_date][key_security]
             if 'BUY' in operation.operation_type.identifier:
                 if 'FOP' in operation.operation_type.identifier:
                     increase_fop[-1]['value'] = increase_fop[-1]['value'] + (operation.price * operation.quantity) / operation.security.get_price_divisor()
