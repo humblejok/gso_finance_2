@@ -183,14 +183,40 @@ def import_cash_operations(data):
                 f_account = ExternalAccount.objects.get(provider=me, provider_identifier=entry['from_account_id'])
                 LOGGER.debug('EAMCOM - Found')
             except ExternalAccount.DoesNotExist:
-                LOGGER.debug('EAMCOM - Not found')
+                accounts = Account.objects.filter(identifier=entry['from_account_id'])
+                if accounts.exists():
+                    f_account = ExternalAccount()
+                    f_account.name = accounts[0].name
+                    f_account.type = accounts[0].type
+                    f_account.currency = accounts[0].currency
+                    f_account.provider = me
+                    f_account.associated = accounts[0]
+                    f_account.save()
+                    if accounts.count()>1:
+                        for account in accounts:
+                            f_account.potential_matches.add(account)
+                else:
+                    LOGGER.debug('EAMCOM - Not found')
         if entry['to_account_id'] not in [None, '', 'None']:
             try:
                 LOGGER.debug('EAMCOM - Searching existing to account - [' + entry['to_account_id'] + ']')
                 t_account = ExternalAccount.objects.get(provider=me, provider_identifier=entry['to_account_id'])
                 LOGGER.debug('EAMCOM - Found')
             except ExternalAccount.DoesNotExist:
-                LOGGER.debug('EAMCOM - Not found')
+                accounts = Account.objects.filter(identifier=entry['to_account_id'])
+                if accounts.exists():
+                    t_account = ExternalAccount()
+                    t_account.name = accounts[0].name
+                    t_account.type = accounts[0].type
+                    t_account.currency = accounts[0].currency
+                    t_account.provider = me
+                    t_account.associated = accounts[0]
+                    t_account.save()
+                    if accounts.count()>1:
+                        for account in accounts:
+                            t_account.potential_matches.add(account)
+                else:
+                    LOGGER.debug('EAMCOM - Not found')
         ext_transaction.is_valid = (t_account!=None and t_account.associated!=None) or (f_account!=None and f_account.associated!=None)
         ext_transaction.external_security = e_security
         ext_transaction.external_source = f_account
@@ -198,6 +224,7 @@ def import_cash_operations(data):
         LOGGER.debug('EAMCOM - Filling internal operation fields')
         ext_transaction.internal_operation.identifier = entry['identifier']
         ext_transaction.internal_operation.name = entry['label']
+        LOGGER.debug('EAMCOM - ' + entry['label'])
         ext_transaction.internal_operation.description = entry['label']
         ext_transaction.internal_operation.spot_rate = float(entry['spot_rate']) if 'spot_rate' in entry else 1.0
         ext_transaction.internal_operation.amount = float(entry['amount'])
@@ -261,7 +288,7 @@ def import_security_operations(data):
         if entry['security'] not in [None, '', 'None']:
             try:
                 LOGGER.debug('EAMCOM - Searching existing security - [' + entry['security'] + ']')
-                e_security = ExternalSecurity.objects.get(provider=me, provider_identifier=entry['security'], currency__identifier=entry['currency'])
+                e_security = ExternalSecurity.objects.get(provider=me, provider_identifier=entry['security'])
                 LOGGER.debug('EAMCOM - Found')
             except ExternalSecurity.DoesNotExist:
                 securities = Security.objects.filter(Q(name__icontains=entry['security'])

@@ -158,6 +158,30 @@ class Operation(models.Model):
     associated_operation = models.ForeignKey('Operation', related_name='operation_parent', null=True, on_delete=models.CASCADE)
 
     @staticmethod
+    def create_spot(identifier, from_account, to_account, amount, spot_rate, operation_date, value_date, label=None, status='OPE_STATUS_EXECUTED'):
+        LOGGER.info('Trying to create SPOT operation between [' + from_account.identifier + ',' + to_account.identifier + ']')
+        operation = Operation()
+        operation.identifier = identifier
+        operation.name = label if label!=None else 'Sell {0:.2f}{1} against {2} @ {3:.2f}'.format(amount, from_account.currency.identifier, to_account.currency.identifier, spot_rate)
+        operation.description = operation.name
+        operation.spot_rate = spot_rate
+        operation.amount = amount
+        operation.amount_portfolio = 0.0
+        operation.amount_management = 0.0
+        operation.operation_date = operation_date
+        operation.value_date = value_date
+        operation.source = from_account
+        operation.target = to_account
+        operation.security = None
+        operation.status = OperationStatus.objects.get(identifier=status)
+        operation.additional_information = {}
+        operation.operation_type = FinancialOperationType.objects.get(identifier='OPE_TYPE_SPOT_SELL')
+        operation.quantity = 0.0
+        operation.price = 0.0
+        operation.save()
+        return operation
+
+    @staticmethod
     def create_from_v1(portfolio, operation_dict):
         LOGGER.info('Trying to create operation [' + operation_dict['name'] + ']')
         operation = Operation()

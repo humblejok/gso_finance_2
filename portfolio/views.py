@@ -139,6 +139,7 @@ def portfolio_initialize(request, portfolio_identifier, as_of):
     request_data = loads(request.body)
     status = import_positions(request_data)
     if status:
+        forwards = {}
         for entry in request_data:
             if entry['asset_class'].startswith('ACC_'):
                 e_account = ExternalAccount.objects.get(provider=portfolio.provider, provider_identifier=entry['identifier'])
@@ -148,12 +149,25 @@ def portfolio_initialize(request, portfolio_identifier, as_of):
                     e_account.save()
                 else:
                     account = Account.objects.get(id=e_account.associated.id)
-                if entry['quantity']!=0.0:
+                if entry['quantity']!=0.0 and entry['asset_class']!='ACC_FORWARD':
                     account.create_initialization(as_of, entry['quantity'])
+                elif entry['asset_class']=='ACC_FORWARD':
+                    key = entry['identifier'][-4:]
+                    if key not in forwards:
+                        forwards[key] = []
+                    forwards[key].append(entry)
             else:
-                e_security = ExternalSecurity.objects.get(provider=portfolio.provider, provider_identifier=entry['identifier'], currency__identifier=entry['currency'])
+                print(entry['identifier'])
+                e_security = ExternalSecurity.objects.get(provider=portfolio.provider, provider_identifier=entry['identifier'])
                 portfolio.create_security_position(e_security.associated, entry['quantity'], entry['price'], as_of)
-                
+        for forward_key in forwards:
+            forward = forwards[forward_key]
+            if forward[0]['quantity']!=0.0 and forward[1]['quantity']!=0.0:
+                source_index = 0 if forward[0]['quantity']<0.0 else 1
+                target_index = 1 if forward[0]['quantity']<0.0 else 0
+                from_account = Account.objects.get(identifier=forward[source_index]['identifier'])
+                to_account = Account.objects.get(identifier=forward[target_index]['identifier'])
+                Operation.create_spot('INIT_' + forward[0]['identifier'], from_account, to_account, abs(forward[source_index]['quantity']), abs(forward[target_index]['quantity'] / forward[source_index]['quantity']), as_of, as_of)
     else:
         return HttpResponseServerError('Positions could not be treated.')
     return HttpResponse(status=201)

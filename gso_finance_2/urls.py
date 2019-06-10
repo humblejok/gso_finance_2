@@ -20,6 +20,7 @@ from security.views import SecurityViewSet, securities_history,\
     securities_statistics
 from authentication import views as auth_views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from portfolio.views_account import accounts_create_or_update
 
 router = routers.DefaultRouter()
 router.register(r'currencies', CurrencyViewSet)
@@ -92,6 +93,8 @@ urlpatterns = [
     url(r'^portfolio/valuation/initialize/(?P<portfolio_identifier>.+)/(?P<as_of>.+)/$', portfolio_initialize),
     url(r'^portfolio/valuation/history/(?P<portfolio_identifier>.+)/$', portfolio_import_history),
     url(r'^portfolio/transactions/external/pending/(?P<portfolio_id>.+)/$', portfolio_transactions_external_pending),
+    
+    url(r'^portfolio/(?P<portfolio_identifier>.+)/accounts/$', accounts_create_or_update),
     
     
     url(r'^portfolios_history/(?P<portfolio_id>[0-9]+)/(?P<data_type>.+)/$', portfolios_history),

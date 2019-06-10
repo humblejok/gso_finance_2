@@ -43,4 +43,4 @@ class ExternalTransactionSerializer(serializers.ModelSerializer):
         model = ExternalTransaction
         fields = ('id', 'portfolio', 'provider', 'provider_identifier', 'internal_operation',
                   'external_source', 'external_target', 'external_security', 'is_valid', 'is_imported')
-        depth = 3
+        depth = 2
