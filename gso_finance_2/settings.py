@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['gogeta','lazuli', 'localhost', '127.0.0.1']
 
-EXTERNAL_HOST_NAME='http://gogeta:8001'
+EXTERNAL_HOST_NAME='http://lazuli:8001'
 
 
 # Application definition

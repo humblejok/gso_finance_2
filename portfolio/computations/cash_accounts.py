@@ -10,6 +10,7 @@ from gso_finance_2.utility import my_class_import
 from security import forex_utility
 
 import pandas as pd
+from builtins import AttributeError
 
 
 def build_chain(account):
@@ -72,26 +73,38 @@ def compute_valuation(portfolio, account):
     mvt_no_pnl =  mvt_no_pnl.rename(columns={'value': 'account'})
     
     if account.currency.identifier!=portfolio.currency.identifier:
-        spot_portfolio = pd.DataFrame(forex_utility.find_spot_track(account.currency.identifier, portfolio.currency.identifier))
-        spot_portfolio = spot_portfolio.set_index('date')
-        spot_portfolio.index = pd.to_datetime(spot_portfolio.index)
-        spot_portfolio = spot_portfolio.reindex(history.index)
-        history['portfolio'] = history['account'] * spot_portfolio['value']
-        mvt_pnl['portfolio'] = mvt_pnl['account'] * spot_portfolio['value']
-        mvt_no_pnl['portfolio'] = mvt_no_pnl['account'] * spot_portfolio['value']
+        try:
+            spot_portfolio = pd.DataFrame(forex_utility.find_spot_track(account.currency.identifier, portfolio.currency.identifier))
+            spot_portfolio = spot_portfolio.set_index('date')
+            spot_portfolio.index = pd.to_datetime(spot_portfolio.index)
+            spot_portfolio = spot_portfolio.reindex(history.index)
+            history['portfolio'] = history['account'] * spot_portfolio['value']
+            mvt_pnl['portfolio'] = mvt_pnl['account'] * spot_portfolio['value']
+            mvt_no_pnl['portfolio'] = mvt_no_pnl['account'] * spot_portfolio['value']
+        except AttributeError:
+            print('************************* WARNING NO SPOT FOR {0}/{1}'.format(account.currency.identifier, portfolio.currency.identifier))
+            history['portfolio'] = history['account']
+            mvt_pnl['portfolio'] = mvt_pnl['account']
+            mvt_no_pnl['portfolio'] = mvt_no_pnl['account']
     else:
         history['portfolio'] = history['account']
         mvt_pnl['portfolio'] = mvt_pnl['account']
         mvt_no_pnl['portfolio'] = mvt_no_pnl['account']
         
     if account.currency.identifier!=portfolio.management_company.base_currency.identifier:
-        spot_mgmt = pd.DataFrame(forex_utility.find_spot_track(account.currency.identifier, portfolio.management_company.base_currency.identifier))
-        spot_mgmt = spot_mgmt.set_index('date')
-        spot_mgmt.index = pd.to_datetime(spot_mgmt.index)
-        spot_mgmt = spot_mgmt.reindex(history.index)
-        history['mgmt'] = history['account'] * spot_mgmt['value']
-        mvt_pnl['mgmt'] = mvt_pnl['account'] * spot_mgmt['value']
-        mvt_no_pnl['mgmt'] = mvt_no_pnl['account'] * spot_mgmt['value']
+        try:
+            spot_mgmt = pd.DataFrame(forex_utility.find_spot_track(account.currency.identifier, portfolio.management_company.base_currency.identifier))
+            spot_mgmt = spot_mgmt.set_index('date')
+            spot_mgmt.index = pd.to_datetime(spot_mgmt.index)
+            spot_mgmt = spot_mgmt.reindex(history.index)
+            history['mgmt'] = history['account'] * spot_mgmt['value']
+            mvt_pnl['mgmt'] = mvt_pnl['account'] * spot_mgmt['value']
+            mvt_no_pnl['mgmt'] = mvt_no_pnl['account'] * spot_mgmt['value']
+        except AttributeError:
+            print('************************* WARNING NO SPOT FOR {0}/{1}'.format(account.currency.identifier, portfolio.management_company.base_currency.identifier))
+            history['mgmt'] = history['account']
+            mvt_pnl['mgmt'] = mvt_pnl['account']
+            mvt_no_pnl['mgmt'] = mvt_no_pnl['account']
     else:
         history['mgmt'] = history['account']
         mvt_pnl['mgmt'] = mvt_pnl['account']
