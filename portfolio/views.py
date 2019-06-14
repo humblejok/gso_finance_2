@@ -5,7 +5,7 @@ from portfolio.serializers import AccountSerializer, OperationSerializer, MoneyA
     CompletePortfolioSerializer, PortfolioSerializer, AccountTypeSerializer, \
     FinancialOperationTypeSerializer, OperationStatusSerializer
 from django.db.models import Q
-from django.http.response import Http404, JsonResponse, HttpResponse,\
+from django.http.response import Http404, JsonResponse, HttpResponse, \
     HttpResponseServerError
 from gso_finance_2.tracks_utility import get_track_content, get_multi_last,\
     set_track_content
@@ -68,8 +68,16 @@ class OperationStatusViewSet(viewsets.ModelViewSet):
 class QuickOperationStatusViewSet(viewsets.ModelViewSet):
     queryset = OperationStatus.objects.filter(quick_access=True).order_by('identifier')
     serializer_class = OperationStatusSerializer
+
+@require_http_methods(["GET"])
+def portfolio_holdings_accounts(request, portfolio_id):
+    portfolio = Portfolio.objects.get(id=portfolio_id)
+    accounts = portfolio.accounts.filter(include_valuation=True, active=True).exclude(type__identifier='ACC_SECURITY').order_by('current_amount_portfolio')
+    all_accounts = AccountSerializer(accounts, many=True)
+    return JsonResponse(all_accounts.data, safe=False)
     
-def portfolio_holdings(request, portfolio_id):
+@require_http_methods(["GET"])
+def portfolio_holdings_securities(request, portfolio_id):
     portfolio = Portfolio.objects.get(id=portfolio_id)
     all_data = []
     for account in portfolio.accounts.filter(type__identifier='ACC_SECURITY'):

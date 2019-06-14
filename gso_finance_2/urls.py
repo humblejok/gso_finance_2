@@ -9,9 +9,10 @@ from portfolio.views import PortfolioViewSet, AccountViewSet, AccountOperations,
     AccountTypeViewSet, QuickAccountTypeViewSet,\
     QuickFinancialOperationTypeViewSet, FinancialOperationTypeViewSet,\
     OperationStatusViewSet, QuickOperationStatusViewSet, portfolios_history,\
-    portfolios_setup, portfolio_compute, portfolio_holdings,\
+    portfolios_setup, portfolio_compute, \
     portfolio_security_operations, portfolio_initialize,\
-    portfolio_import_history, portfolio_transactions_external_pending
+    portfolio_import_history, portfolio_transactions_external_pending,\
+    portfolio_holdings_securities, portfolio_holdings_accounts
 from providers.views import ExternalSecurityViewSet, ExternalSecuritySearch,\
     ExternalSecurityUnmapped, external_securities_history,\
     ExternalAccountViewSet, ExternalPortfolioHoldingsViewSet
@@ -85,7 +86,9 @@ urlpatterns = [
     url(r'^companies_search/(?P<search_filter>.+)/$', CompaniesSearch.as_view()),
 
     url(r'^account_operations/(?P<account_id>[0-9]+)/$', AccountOperations.as_view()),
-    url(r'^portfolio/holdings/(?P<portfolio_id>[0-9]+)/$', portfolio_holdings),
+    url(r'^portfolio/(?P<portfolio_id>[0-9]+)/holdings/securities/$', portfolio_holdings_securities),
+    url(r'^portfolio/(?P<portfolio_id>[0-9]+)/holdings/accounts/$', portfolio_holdings_accounts),
+    
 
     url(r'^providers_search/(?P<provider_code>.+)/$', ProviderSearch.as_view()),
     url(r'^portfolio/compute/(?P<portfolio_id>[0-9]+)/$', portfolio_compute),

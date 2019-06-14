@@ -17,5 +17,5 @@ def find_spot_track(source_currency, target_currency, expand_today=True):
         LOGGER.debug('\tFound')
         security = security[0]
         # TODO: Handle error and dual sources
-    return get_track_content(security.provider.provider_code, security.provider_identifier, 'price', expand_today=expand_today)
+    return get_track_content(security.provider.provider_code, security.provider_identifier, 'price', expand_today=expand_today, divisor=security.get_price_divisor())
     
