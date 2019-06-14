@@ -62,9 +62,9 @@ class SecuritySerializer(serializers.ModelSerializer):
     
     def update(self, instance, validated_data):
         if instance.additional_description!=None:
-            self.additional_description.update(instance.additional_description)
+            instance.additional_description.update(self.additional_description)
         if instance.additional_information!=None:
-            self.additional_information.update(instance.additional_information)
+            instance.additional_information.update(self.additional_information)
         security = serializers.ModelSerializer.update(self, instance, validated_data)
         security.additional_information = self.additional_information
         security.additional_description = self.additional_description
